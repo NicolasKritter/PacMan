@@ -100,7 +100,8 @@ public class Main {
 	        if(play){
 	        	pause = 0;
 	        	 StdDraw.clear(StdDraw.BLACK);
-	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/8,"(x,y): "+map.coord[(int)(player.x)][(int)(player.y)]);
+	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/8,"(x,y): "+player.vie);
+	        	 
 	        	 
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
 	                 player.dir = 0;

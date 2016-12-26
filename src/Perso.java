@@ -2,6 +2,7 @@
 public class Perso {
 	double x;
 	double y;
+	//direction
 	int dir;
 	int score;
 	int vie;

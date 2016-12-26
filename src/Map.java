@@ -44,6 +44,7 @@ public class Map {
 		 
 		 
 	 }
+	 
 	 public void generateWall(Map map){
 		 int j = 0;
 		 //Création des bords, de largeur 5
