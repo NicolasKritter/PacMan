@@ -4,8 +4,7 @@ public class Perso {
 	double y;
 	//direction
 	int dir;
-	int score;
-	int vie;
+	
 	String name;
 	
 	public Perso (int x0, int y0,int dir0, String nom){
@@ -13,9 +12,8 @@ public class Perso {
 		y = y0;
 		name = nom;
 		dir = dir0;
-		vie = 3;
 	}
-	
+	// 0: bas 1: haut 2: gauche 3: droite
 	 public static void move (Perso perso){
 		 switch(perso.dir){
 		 case 0:

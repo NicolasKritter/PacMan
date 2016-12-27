@@ -13,13 +13,12 @@ public class Main {
 	    public final static int WIN_HEIGHT= 640;
 	    public final static int FPS= 1000;
 	    static double STEP= 1.5;
-	    static Perso player;
+	    static Joueur player;
 	    static Ghost red;
 	    static Ghost blue;
 	    static Ghost pink;
 	    static Ghost orange;
 	    static Map map;
-	    static int tailleMur = 20;
 	    static int taille = 10;
 	    
 	    //TODO Init fonction	
@@ -76,7 +75,7 @@ public class Main {
 	     int pause = 0;
 	    //Jeux
 		 Map map = new Map();
-	     player = new Perso(map.xStart,map.yStart,-1,"Joueur");
+	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur");
 	     red = new Ghost(map.xRSpawn, map.yRSpawn, random.nextInt(3),"red");
 	     blue = new Ghost(map.xBSpawn, map.yBSpawn, random.nextInt(3),"blue");
 	     pink = new Ghost(map.xPSpawn, map.yPSpawn, random.nextInt(4),"pink");
@@ -87,22 +86,24 @@ public class Main {
 		//TODO Ecran Menu
 		//TODO Bouton Play
 		//TODO Text field nom
+	     
 		//TODO generer labyrinthe
 		//TODO generer coockie;
 
-		
+		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
         StdDraw.setYscale(0, WIN_HEIGHT);
         while(true){
         	
         	
-        	
+        	//gestion du jeux
 	        if(play){
+	        	
 	        	pause = 0;
-	        	 StdDraw.clear(StdDraw.BLACK);
+	        	 //StdDraw.clear(StdDraw.BLACK);
 	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/8,"(x,y): "+player.vie);
 	        	 
-	        	 
+	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
 	                 player.dir = 0;
 	             }
@@ -115,9 +116,12 @@ public class Main {
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
 	            	 player.dir = 3;
 	             }
+	             //Afficher tous les murs
 	             for (Mur mur: map.listmur){
 	            	 afficherMur(mur);
 	             }
+	             
+	            
 	             for (Ghost ghost: listGhost){  
 	            	//TODO check collision wall
 	            	 map.checkhitghost(player, ghost);
@@ -126,8 +130,9 @@ public class Main {
 	            	 afficherPerso(ghost);
 	            	  
 	             }
-	             map.checkhitwall(player,map);
 	             Perso.move(player);
+	             map.checkhitwall(player,map);
+	             
 	             afficherPerso(player);
 	             //Affichage du jeux
 	            

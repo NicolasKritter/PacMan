@@ -8,8 +8,7 @@ public class Mur {
 		 x= x0;
 		 y = y0;
 		 large = la;
-		 longe = lo;
-		 
+		 longe = lo;	 
 			
 	}
 

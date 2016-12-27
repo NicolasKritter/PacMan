@@ -1,6 +1,6 @@
 
 public class Map {
-	 int nbfromage;
+	 int nbcoockies;
 	 int xRSpawn;
 	 int yRSpawn;
 	 int xOSpawn;
@@ -13,9 +13,8 @@ public class Map {
 	 int yStart;
 	 int largeur;
 	 int longeur;
+	 Coockie[] listcoockie;
 	 Mur[] listmur;
-	 int[] coordMurx;
-	 int[] coordMury;
 	 int [][] coord;
 	 public Map(){
 		  xRSpawn = Main.WIN_WIDTH/2;
@@ -52,7 +51,9 @@ public class Map {
 		 map.listmur[1] = new Mur(map.largeur-5,map.longeur/2,5,map.longeur/2);
 		 map.listmur[2] = new Mur(map.largeur/2,0+5,map.largeur/2,5);
 		 map.listmur[3] = new Mur(map.largeur/2,map.longeur-5,map.largeur/2,5);
-		 //
+		 
+		 
+		 //teste de création de murs
 		  for (int k=4;k<7;k++){
 			  map.listmur[k]  = new Mur(34+j,25,10,20);
 			  j = j+20;
@@ -73,7 +74,7 @@ public class Map {
 		 
 	 }
 	 
-	 public void checkhitwall(Perso perso,Map map){
+	 public void checkhitwall(Joueur perso,Map map){
 		 //TODO prendre en compte la taille
 			 if(map.coord[(int)(perso.x)][(int)(perso.y)]==2){
 				 switch(perso.dir){
@@ -90,6 +91,7 @@ public class Map {
 					 perso.x = perso.x-Main.STEP;
 					 break;
 				 }
+				 
 				 perso.dir =-1;
 			 }
 	}
@@ -119,7 +121,7 @@ public class Map {
 		 }
 		 
 	 }
-	 public void checkhitghost(Perso perso,Ghost ghost){
+	 public void checkhitghost(Joueur perso,Ghost ghost){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= Main.taille *2){
 			 perso.vie = perso.vie-1;
