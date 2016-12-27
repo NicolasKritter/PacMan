@@ -1,0 +1,20 @@
+# generated from C:/Program Files (x86)/umbrello/share/apps/umbrello/layouts/class-export.desktop
+digraph G {
+	graph [splines=polyline,rankdir=TB,outputorder=nodesfirst,ranksep=0.5,nodesep=0.5];
+"nwP9SC5L4iXj" [shape=box,label="Main\n+ win_width : Integer\n+ win_height : Integer\n+ step : Double\n+ taille : Integer\n+ init()\n+ afficherPerso(perso : Perso)\n+ afficherMur(mur : Mur)\n+ restart()\n+ afficherCoockie(coockie : Coockie)",width="2.90278",height="2.08333"];
+"m9R3MIvOYSpV" [shape=box,label="Map\n+ nbcoockies : int\n+ xStart : int\n+ yStart : int\n+ xFstart : int\n+ yFstart : int\n+ listMur : Mur[]\n+ coord : int[][]\n+ listCoockie : Coockie[]\n+ generateWall(map : Map)\n+ generateCoockie(map : Map)\n+ checkHitWall(perso : Joueur, new_parameter : Map)\n+ checkHitWall(ghost : Ghost, map : Map)",width="4.19444",height="2.70833"];
+"CSJf8bhAtF1N" [shape=box,label="Perso\n+ x : double\n+ y : double\n+ dir : int\n+ nom : String\n+ move(perso : Perso)",width="1.83333",height="1.25"];
+"IdCHbyulrecL" [shape=box,label="Mur\n+ x : int\n+ y : int\n+ large : int\n+ longe : int",width="1.01389",height="1.13889"];
+"9OecimuGu9um" [shape=box,label="Ghost",width="0.597222",height="0.402778"];
+"13f7lBto0mQ6" [shape=box,label="Joueur\n+ vie : int\n+ score : int",width="1.01389",height="0.722222"];
+"cU8kZ3CwGHgY" [shape=box,label="Coockie\n+ x : int\n+ y : int\n+ visible : Boolean",width="1.52778",height="0.930556"];
+"CSJf8bhAtF1N" -> "9OecimuGu9um" [weight=1.0,arrowtail=onormal,dir=back,label="",headlabel="  ",taillabel="  "];
+"CSJf8bhAtF1N" -> "13f7lBto0mQ6" [weight=1.0,arrowtail=onormal,dir=back,label="",headlabel="  ",taillabel="  "];
+"IdCHbyulrecL" -> "nwP9SC5L4iXj" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+"CSJf8bhAtF1N" -> "nwP9SC5L4iXj" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+"m9R3MIvOYSpV" -> "nwP9SC5L4iXj" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+"IdCHbyulrecL" -> "m9R3MIvOYSpV" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+"cU8kZ3CwGHgY" -> "m9R3MIvOYSpV" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+"cU8kZ3CwGHgY" -> "nwP9SC5L4iXj" [weight=0.001,arrowtail=vee,style=dashed,dir=back,label="",headlabel="  ",taillabel="  "];
+
+}
