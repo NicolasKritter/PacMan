@@ -15,7 +15,7 @@ public class Map {
 	 int largeur;
 	 int longeur;
 	 Mur muraille;
-	 Coockie[] listcoockie;
+	 Coockie listcoockie;
 	 int [][] coord;
 	 public Map(){
 		  xRSpawn = Main.WIN_WIDTH/2;
@@ -110,14 +110,6 @@ public class Map {
 	 }
 	 public void generateCoockie(Map map){
 		 
-		 int xStart = 0;
-		 int yStart = 0;
-		 while (xStart <5 || xStart>map.largeur-5){
-			 xStart =map.largeur/2;
-		 }
-		 while (yStart <5 || yStart>map.largeur-5){
-			 yStart =map.longeur/2;
-		 }
 		
 
 		 /*creuser(xStart,yStart,map);

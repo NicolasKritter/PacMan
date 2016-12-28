@@ -23,6 +23,9 @@ public class Main {
 	    
 	    //TODO Init fonction	
 	    public  static void init(Map map){
+	    	if (player.vie<1){
+	    		map = new Map();
+	    	}
 	    	 StdDraw.clear(StdDraw.BLACK);
         	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
         	 StdDraw.show();
@@ -69,6 +72,11 @@ public class Main {
 	    public static void afficherMur(Mur mur){
 	    	 StdDraw.setPenColor(StdDraw.GRAY);
 	    	 StdDraw.filledRectangle(mur.x,mur.y,mur.large,mur.longe);
+	    	 
+	    }
+	    public static void afficherCoockie(Coockie coockie){
+	    	 StdDraw.setPenColor(StdDraw.WHITE);
+	    	 StdDraw.filledCircle(coockie.x,coockie.y,coockie.taille);
 	    	 
 	    }
 	   
@@ -124,8 +132,16 @@ public class Main {
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
 	            	 player.dir = 3;
 	             }
-	             //Afficher tous les murs
-	             
+	             //TODO delete coockie with this = null ?
+	           //Afficher tous les coockies
+	             Coockie courantCoockie = map.listcoockie;
+	             while(courantCoockie!=null){
+	            	 if(courantCoockie.visible){
+	            	 afficherCoockie(courantCoockie);
+	            	 }
+	            	 courantCoockie = courantCoockie.suivant;
+	             }
+	           //Afficher tous les murs
 	             Mur courant = map.muraille;
 	             while(courant!=null){
 	            	 afficherMur(courant);
