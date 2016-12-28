@@ -23,7 +23,10 @@ public class Main {
 	    
 	    //TODO Init fonction	
 	    public  static void init(Map map){
-	    	StdDraw.pause(1000);
+	    	 StdDraw.clear(StdDraw.BLACK);
+        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+        	 StdDraw.show();
+        	 StdDraw.pause(5000);
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
 	    	red.x = map.xRSpawn;
