@@ -22,7 +22,8 @@ public class Main {
 	    static int taille = 10;
 	    
 	    //TODO Init fonction	
-	    public  static void init(){
+	    public  static void init(Map map){
+	    	StdDraw.pause(1000);
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
 	    	red.x = map.xRSpawn;
@@ -99,9 +100,13 @@ public class Main {
         	//gestion du jeux
 	        if(play){
 	        	
-	        	pause = 0;
-	        	 //StdDraw.clear(StdDraw.BLACK);
-	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/8,"(x,y): "+player.vie);
+	        	if (pause>1){
+		        	pause -= 1;
+		        	}else{
+		        		pause=0;
+		        	}
+	        	 StdDraw.clear(StdDraw.BLACK);
+	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-30,"Vie: "+player.vie);
 	        	 
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -117,14 +122,21 @@ public class Main {
 	            	 player.dir = 3;
 	             }
 	             //Afficher tous les murs
-	             for (Mur mur: map.listmur){
-	            	 afficherMur(mur);
+	             
+	             Mur courant = map.muraille;
+	             while(courant!=null){
+	            	 afficherMur(courant);
+	            	 courant = courant.suivant;
 	             }
+
 	             
 	            
 	             for (Ghost ghost: listGhost){  
 	            	//TODO check collision wall
-	            	 map.checkhitghost(player, ghost);
+	            	 map.checkhitghost(player, ghost,map);
+	            	 if(random.nextInt(100)==5){
+	            		 ghost.dir = random.nextInt(4);
+	            	 }
 	            	 map.checkhitwall(ghost,map);
 	            	 Perso.move(ghost);
 	            	 afficherPerso(ghost);
@@ -140,13 +152,19 @@ public class Main {
 	             
 	        }
 	        else{
-	        	StdDraw.pause(1);
-	        	pause = 0;
+	        	if (pause>1){
+	        	pause -= 1;
+	        	}else{
+	        		pause=0;
+	        	}
+	        	
+	        	StdDraw.pause(10);
+	        	
 	        	
 	        }
 	        
 	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
-	        	pause = 1;
+	        	pause = 10;
 	        	play = !play;
 	       	 
 	        }
