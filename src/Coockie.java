@@ -2,18 +2,16 @@
 public class Coockie {
 	int x;
 	int y;
-	boolean visible;
 	int taille;
 	Coockie suivant;
 	public Coockie(int x0, int y0){
 		x = x0;
 		y = y0;
-		visible = true;
 		suivant = null;
-		taille = Main.taille;
+		taille = Main.taille/2;
 	}
-	public static Coockie addCoockie(Coockie coockie,Coockie next) {
-		Coockie courant = coockie;
+	public static Coockie addCoockie(Coockie liste ,Coockie next) {
+		Coockie courant = liste;
 		if (courant.suivant==null){
 			courant.suivant = next;
 		}
@@ -22,13 +20,19 @@ public class Coockie {
 		}
 		
 		
-		return coockie;
+		return liste;
 	
 		
 	}
 	//TODO mettre le coockie a la fin et le mettre null?
-	public static void deleteCoockie(Coockie coockie){
-		coockie.visible = false;
+	public static Coockie deleteCoockie(Coockie coockie,Coockie liste){
+		Coockie courant  = liste;
+		while(courant != coockie){
+			courant = courant.suivant;
+		}
+		courant = courant.suivant;
+		coockie = null;
+		return liste;
 	}
 
 }

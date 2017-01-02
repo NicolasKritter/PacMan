@@ -18,6 +18,7 @@ public class Map {
 	 Coockie listcoockie;
 	 int [][] coord;
 	 public Map(){
+		  nbcoockies = 1;
 		  xRSpawn = Main.WIN_WIDTH/2;
 		  yRSpawn = Main.WIN_HEIGHT/4;
 		  xOSpawn = Main.WIN_WIDTH-Main.taille-10;
@@ -38,10 +39,10 @@ public class Map {
 			  }
 		  }
 		 
-		  generateCoockie(this);
+
 		  generateWall(this);
 		  
-		 
+		  generateCoockie(this);
 		 
 	 }
 	 //TODO fantome tracking si pas de mur entre
@@ -89,9 +90,6 @@ public class Map {
 		 }
 		
 
-		  
-		  
-		  
 		  Mur wall = map.muraille;
 		  //Impression des murs sur  la carte
 			  while(wall!=null){
@@ -109,138 +107,30 @@ public class Map {
 		 
 	 }
 	 public void generateCoockie(Map map){
-		 
+		 map.listcoockie = new Coockie(map.xBSpawn,map.yBSpawn);
+		 int x,y;
+		 for(int k=0;k<map.nbcoockies-1;k++){
+			 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
+			 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
+			 while(map.coord[x][y]!=0){
+				 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
+				 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
+			 }
+			 map.listcoockie.suivant = new Coockie(x,y);
+			 map.coord[x][y] = 1;
+			 //TODO faire un algo reccursif qui parcour la map et dépose des coockie
+		 }
 		
 
-		 /*creuser(xStart,yStart,map);
-		 creuser(map.xBSpawn,map.xBSpawn,map);
-		 creuser(map.xPSpawn,map.xPSpawn,map);
-		 creuser(map.xRSpawn,map.xRSpawn,map);
-		 creuser(map.xOSpawn,map.xOSpawn,map);*/
-	 }
-	 private static void creuser(int x, int y,Map map){
-		 int [][]coord = map.coord;
-		 int taille = Main.taille;
-		 if(x < taille || y < taille || x >= map.largeur-taille|| y >=map.longeur-taille) {
-	            return;
-	        }else{
-	        	imprimer(x,y,map,taille);
-	        	creuser(x+2*taille,y+2*taille,map);
-	        }
-		 /*
-	        if (coord[x][y]==2 )
-	        {
-	        	
-	        		System.out.println(x +"\t"+y);
-	        	
-	            if (coord[x-taille][y]==2 && Main.random.nextBoolean()) {
-	            	imprimer(x-2*taille, y,map,taille);
-	                
-	                creuser(x,y-taille, map);
-	            }
-	            if (coord[x+taille][y]==2 && Main.random.nextBoolean()) {
-	            	imprimer(x+2*taille, y,map,taille);
-	                creuser(x,y+taille, map);
-	            }
-	            if (coord[x][y+taille]==2 && Main.random.nextBoolean()) {
-	            	imprimer(x, y+2*taille,map,taille);
-	                creuser(x+taille,y, map);
-	            }
-	            if (coord[x][y-taille]==2 && Main.random.nextBoolean()) {
-	            	imprimer(x, y-taille,map,taille);
-	                creuser(x-taille,y, map);
-	            }
-	            
-	            
-	        }*/
 	 }
 	 
-	 private static void imprimer(int x, int y,Map map,int taille){
-		 for (int k=0;k<2*taille;k++){
-     		for (int j=0; j<2*taille;j++){
-     			map.coord[x-taille+k][y-taille+j] = 1;
-     		}
-		 }
-	 }
-	 public void checkhitwall(Joueur perso,Map map){
-		 int x = (int)(perso.x);
-		 int y = (int)(perso.y);
-		 int taille = (int)(Main.taille);
-		
-			 
-		 
-		//TODO Ne pas prendre en compte la direction
-				 switch(perso.dir){
-				 case 0:
-					 if (map.coord[x][y-taille]==2){
-					 perso.y = perso.y+Main.STEP;
-					 perso.dir =-1;
-					 }
-					 break;
-				 case 1:
-					 if (map.coord[x][y+taille]==2){
-					 perso.y = perso.y-Main.STEP;
-					 perso.dir =-1;
-					 }
-					 break;
-				 case 2:
-					 if (map.coord[x-taille][y]==2){
-					 perso.x = perso.x+Main.STEP;
-					 perso.dir =-1;
-					 }
-					 break;
-				 case 3:
-					 if (map.coord[x+taille][y]==2){
-					 perso.x = perso.x-Main.STEP;
-					 perso.dir =-1;
-					 }
-					 break;
-				 }
-				 
-				 
-			 
-	}
-		 
-	 
-	 public void checkhitwall(Ghost ghost,Map map){
-		 int x = (int)(ghost.x);
-		 int y = (int)(ghost.y);
-		 int taille = (int)(Main.taille);
-		 int oldir  =ghost.dir;
-		 boolean hit = false;
-		 
-		 
-				 switch(oldir){
-				 case 0:
-					 if (map.coord[x][y-taille]==2){
-						 ghost.y = ghost.y+Main.STEP;
-						 hit = true;
-					 }
-					 break;
-				 case 1:
-					 if (map.coord[x][y+taille]==2){
-						 ghost.y = ghost.y-Main.STEP;
-						 hit = true;
-					 }
-					 break;
-				 case 2:
-					 if (map.coord[x-taille][y]==2){
-						 ghost.x = ghost.x+Main.STEP;
-						 hit = true;
-					 }
-					 break;
-				 case 3:
-					 if (map.coord[x+taille][y]==2){
-						 ghost.x = ghost.x-Main.STEP;
-						 hit = true;
-					 }
-					 break;
-				 }
-				 while (ghost.dir==oldir && hit==true){
-					 ghost.dir = Main.random.nextInt(4);
-				 }
-		 }
-	//TODO return boolean ?	 
+	 //TODO passer les check hit dans la classe correspondante;
+	 //teste si un perso touche un mur
+
+		 	
+	 //TODO passer dans la classe perso?
+
+	//check si le joueur toucche un fantôme
 	 public void checkhitghost(Joueur perso,Ghost ghost,Map map){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= Main.taille *2){
@@ -251,7 +141,13 @@ public class Map {
 			 }
 		 }
 		 
-	 
+	 public void checkhitCoockie(Joueur perso,Map map){
+		 //TODO trouver le coockie touché et le retirer
+		 if(map.coord[(int) perso.x][(int) perso.y]==1){
+			 perso.score = perso.score+2;
+			 map.coord[(int) perso.x][(int) perso.y]=0;
+		 }
+	 }
 	 
 	 
 }

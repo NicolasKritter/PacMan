@@ -35,6 +35,7 @@ public class Main {
         	 StdDraw.pause(5000);
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
+	    	player.dir = -1;
 	    	red.x = map.xRSpawn;
 	    	red.y = map.yRSpawn;
 	    	blue.x = map.xBSpawn;
@@ -43,7 +44,7 @@ public class Main {
 	    	pink.y = map.yPSpawn;
 	    	orange.x = map.xOSpawn;
 	    	orange.y = map.yOSpawn;
-	    	map.generateCoockie(map);
+	    	
 	    }
 	    // Nommer le perso
 	    public  void creerPerso(Perso perso,String nom){
@@ -108,14 +109,7 @@ public class Main {
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
         StdDraw.setYscale(0, WIN_HEIGHT);
-	     StdDraw.clear(StdDraw.BLACK);
-	     
-	     //Message de début (à utiliser dans le init )
-	     StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
-		//TODO Ajouter des lignes
-	     StdDraw.text(WIN_WIDTH/2, 200,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
-		StdDraw.show();
-		StdDraw.pause(5000);
+	    
         while(true){
         	
         	
@@ -147,9 +141,9 @@ public class Main {
 	           //Afficher tous les coockies
 	             Coockie courantCoockie = map.listcoockie;
 	             while(courantCoockie!=null){
-	            	 if(courantCoockie.visible){
+	            	 
 	            	 afficherCoockie(courantCoockie);
-	            	 }
+	            	 
 	            	 courantCoockie = courantCoockie.suivant;
 	             }
 	           //Afficher tous les murs
@@ -167,13 +161,13 @@ public class Main {
 	            	 if(random.nextInt(100)==5){
 	            		 ghost.dir = random.nextInt(4);
 	            	 }
-	            	 map.checkhitwall(ghost,map);
+	            	 ghost.checkhitwall(map);
 	            	 Perso.move(ghost);
 	            	 afficherPerso(ghost);
 	            	  
 	             }
 	             Perso.move(player);
-	             map.checkhitwall(player,map);
+	             player.checkhitwall(map);
 	             
 	             afficherPerso(player);
 	             //Affichage du jeux

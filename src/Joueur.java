@@ -8,5 +8,44 @@ public class Joueur extends Perso{
 		vie = 3;
 		
 	}
+	
+	 public void checkhitwall(Map map){
+		 int x = (int)(this.x);
+		 int y = (int)(this.y);
+		 int taille = (int)(Main.taille);
+		
+			 
+		 
+		//TODO Ne pas prendre en compte la direction
+				 switch(this.dir){
+				 case 0:
+					 if (map.coord[x][y-taille]==2){
+						 this.y = this.y+Main.STEP;
+						 this.dir =-1;
+					 }
+					 break;
+				 case 1:
+					 if (map.coord[x][y+taille]==2){
+						 this.y = this.y-Main.STEP;
+						 this.dir =-1;
+					 }
+					 break;
+				 case 2:
+					 if (map.coord[x-taille][y]==2){
+						 this.x = this.x+Main.STEP;
+						 this.dir =-1;
+					 }
+					 break;
+				 case 3:
+					 if (map.coord[x+taille][y]==2){
+						 this.x = this.x-Main.STEP;
+						 this.dir =-1;
+					 }
+					 break;
+				 }
+				 
+				 
+			 
+	}
 
 }
