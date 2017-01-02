@@ -21,13 +21,16 @@ public class Main {
 	    static Map map;
 	    static int taille = 10;
 	    
-	    //TODO Init fonction	
+	    //TODO  Utiliser la fonction Init pour la première partie ?
 	    public  static void init(Map map){
+	    	 StdDraw.clear(StdDraw.BLACK);
 	    	if (player.vie<1){
 	    		map = new Map();
+	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
 	    	}
-	    	 StdDraw.clear(StdDraw.BLACK);
-        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+	    	
         	 StdDraw.show();
         	 StdDraw.pause(5000);
 	    	player.x = map.xStart;
@@ -93,8 +96,8 @@ public class Main {
 	     pink = new Ghost(map.xPSpawn, map.yPSpawn, random.nextInt(4),"pink");
 	     orange = new Ghost(map.xOSpawn, map.yOSpawn, random.nextInt(3),"orange");
 	     Ghost[] listGhost= {red,blue,pink,orange};
-	     
-	    
+
+ 		
 		//TODO Ecran Menu
 		//TODO Bouton Play
 		//TODO Text field nom
@@ -105,6 +108,14 @@ public class Main {
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
         StdDraw.setYscale(0, WIN_HEIGHT);
+	     StdDraw.clear(StdDraw.BLACK);
+	     
+	     //Message de début (à utiliser dans le init )
+	     StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+		//TODO Ajouter des lignes
+	     StdDraw.text(WIN_WIDTH/2, 200,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
+		StdDraw.show();
+		StdDraw.pause(5000);
         while(true){
         	
         	
