@@ -78,13 +78,13 @@ public class Main {
 	    	 StdDraw.filledRectangle(mur.x,mur.y,mur.large,mur.longe);
 	    	 
 	    }
-	    public static void afficherCoockie(Coockie coockie){
+	    public static void affichercookie(Cookie cookie){
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	 StdDraw.filledCircle(coockie.x,coockie.y,coockie.taille);
+	    	 StdDraw.filledCircle(cookie.x,cookie.y,cookie.taille);
 	    	 
 	    }
 	   
-	    //TODO afficher coockies
+	    //TODO afficher cookies
 	public  static void main(String[] args) {
 		//controle
 		 boolean play = true;
@@ -104,7 +104,7 @@ public class Main {
 		//TODO Text field nom
 	     
 		//TODO generer labyrinthe
-		//TODO generer coockie;
+		//TODO generer cookie;
 
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
@@ -137,14 +137,14 @@ public class Main {
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
 	            	 player.dir = 3;
 	             }
-	             //TODO delete coockie with this = null ?
-	           //Afficher tous les coockies
-	             Coockie courantCoockie = map.listcoockie;
-	             while(courantCoockie!=null){
+	             //TODO delete cookie with this = null ?
+	           //Afficher tous les cookies
+	             Cookie courantcookie = map.listcookie;
+	             while(courantcookie!=null){
 	            	 
-	            	 afficherCoockie(courantCoockie);
+	            	 affichercookie(courantcookie);
 	            	 
-	            	 courantCoockie = courantCoockie.suivant;
+	            	 courantcookie = courantcookie.suivant;
 	             }
 	           //Afficher tous les murs
 	             Mur courant = map.muraille;

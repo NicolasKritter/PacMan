@@ -1,7 +1,7 @@
 
-// case: 1 coockie, 2 mur, 0 vide
+// case: 1 cookie, 2 mur, 0 vide
 public class Map {
-	 int nbcoockies;
+	 int nbcookies;
 	 int xRSpawn;
 	 int yRSpawn;
 	 int xOSpawn;
@@ -15,10 +15,10 @@ public class Map {
 	 int largeur;
 	 int longeur;
 	 Mur muraille;
-	 Coockie listcoockie;
+	 Cookie listcookie;
 	 int [][] coord;
 	 public Map(){
-		  nbcoockies = 1;
+		  nbcookies = 1;
 		  xRSpawn = Main.WIN_WIDTH/2;
 		  yRSpawn = Main.WIN_HEIGHT/4;
 		  xOSpawn = Main.WIN_WIDTH-Main.taille-10;
@@ -42,7 +42,7 @@ public class Map {
 
 		  generateWall(this);
 		  
-		  generateCoockie(this);
+		  generatecookie(this);
 		 
 	 }
 	 //TODO fantome tracking si pas de mur entre
@@ -106,19 +106,19 @@ public class Map {
 		  }
 		 
 	 }
-	 public void generateCoockie(Map map){
-		 map.listcoockie = new Coockie(map.xBSpawn,map.yBSpawn);
+	 public void generatecookie(Map map){
+		 map.listcookie = new Cookie(map.xBSpawn,map.yBSpawn);
 		 int x,y;
-		 for(int k=0;k<map.nbcoockies-1;k++){
+		 for(int k=0;k<map.nbcookies-1;k++){
 			 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 			 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 			 while(map.coord[x][y]!=0){
 				 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 				 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 			 }
-			 map.listcoockie.suivant = new Coockie(x,y);
+			 map.listcookie.suivant = new Cookie(x,y);
 			 map.coord[x][y] = 1;
-			 //TODO faire un algo reccursif qui parcour la map et dépose des coockie
+			 //TODO faire un algo reccursif qui parcour la map et dépose des cookie
 		 }
 		
 
@@ -141,8 +141,8 @@ public class Map {
 			 }
 		 }
 		 
-	 public void checkhitCoockie(Joueur perso,Map map){
-		 //TODO trouver le coockie touché et le retirer
+	 public void checkhitcookie(Joueur perso,Map map){
+		 //TODO trouver le cookie touché et le retirer
 		 if(map.coord[(int) perso.x][(int) perso.y]==1){
 			 perso.score = perso.score+2;
 			 map.coord[(int) perso.x][(int) perso.y]=0;
