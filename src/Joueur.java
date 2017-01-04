@@ -42,10 +42,17 @@ public class Joueur extends Perso{
 						 this.dir =-1;
 					 }
 					 break;
-				 }
-				 
-				 
+				 } 
 			 
 	}
+	 
+	 public void checkhitcookie(Map map){
+		 //TODO trouver le cookie touché et le retirer
+		 //TODO etendre la zone de recherche
+		 if(map.coord[(int) this.x][(int) this.y]==1){
+			 this.score = this.score+2;
+			 map.coord[(int) this.x][(int) this.y]=0;
+		 }
+	 }
 
 }

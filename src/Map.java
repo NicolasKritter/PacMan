@@ -1,3 +1,7 @@
+import java.util.Random;
+
+import edu.princeton.cs.introcs.StdDraw;
+
 
 // case: 1 cookie, 2 mur, 0 vide
 public class Map {
@@ -17,6 +21,7 @@ public class Map {
 	 Mur muraille;
 	 Cookie listcookie;
 	 int [][] coord;
+	 boolean[][] carte;
 	 public Map(){
 		  nbcookies = 1;
 		  xRSpawn = Main.WIN_WIDTH/2;
@@ -38,11 +43,11 @@ public class Map {
 				  coord[k][j] = 1;
 			  }
 		  }
-		 
-
-		  generateWall(this);
+		  //carte =  generer(9,9);
 		  
-		  generatecookie(this);
+		 generateWall(this);
+		  
+		 generatecookie(this);
 		 
 	 }
 	 //TODO fantome tracking si pas de mur entre
@@ -141,13 +146,125 @@ public class Map {
 			 }
 		 }
 		 
-	 public void checkhitcookie(Joueur perso,Map map){
-		 //TODO trouver le cookie touché et le retirer
-		 if(map.coord[(int) perso.x][(int) perso.y]==1){
-			 perso.score = perso.score+2;
-			 map.coord[(int) perso.x][(int) perso.y]=0;
-		 }
-	 }
+	 /*
+	  * 
+	  * 
+	  * 
+	  * 
+	  */
+		static int xposA;
+		 static int yposA;
+		 static int xposD;
+		 static int yposD;
+		 static int xr;
+		 static int yr;
+		 static int xb;
+		 static int yb;
+		 
+		//Classe interne repr�sentant une case libre, utilis�e pour la g�n�ration du labyrinthe
+	    private static class Cell {
+	        boolean north=false,
+	                south=false,
+	                east=false,
+	                west=false,
+	                visited =false;
+
+	    }
+	    static Random random = new Random(System.currentTimeMillis());
+
+	 private static boolean [][] generer(int largeur, int longueur)
+	    {
+	        Cell [][] laby = new Cell[largeur][longueur];
+	        for(int i=0;i<laby.length;i++)
+	            for (int j=0;j<laby[i].length;j++)
+	                laby[i][j]=new Cell();
+
+	        int startX = random.nextInt(largeur);
+	        int startY = random.nextInt(longueur);
+	        creuser(startX,startY,laby);
+	        yposA = 2*longueur;
+	        xposA = random.nextInt(2*largeur+1);
+	        yposD =0;
+	        xposD =startX;
+	       
+	        return toBoolean(laby);
+
+	    }
+
+	    /**
+	     * Fait un labyrinthe al�atoirement
+	     * @param x
+	     * @param y
+	     * @param laby
+	     */
+	    private static void creuser(int x, int y, Cell [][] laby)
+	    {
+	        if(x < 0 || y < 0 || x >= laby.length || y >=laby[0].length) {
+	            return;
+	        } else if(laby[x][y]==null) {
+	            laby[x][y] = new Cell();
+	        }
+
+	        if (!laby[x][y].visited)
+	        {
+
+	            if (!laby[x][y].west && random.nextBoolean()) {
+	                laby[x][y].west = true;
+	                creuser(x,y-1, laby);
+	            }
+	            if (!laby[x][y].east && random.nextBoolean()) {
+	                laby[x][y].east = true;
+	                creuser(x,y+1, laby);
+	            }
+	            if (!laby[x][y].north && random.nextBoolean()) {
+	                laby[x][y].north = true;
+	                creuser(x-1,y, laby);
+	            }
+	            if (!laby[x][y].south && random.nextBoolean()) {
+	               laby[x][y].south = true;
+	                creuser(x+1,y, laby);
+	            }
+	            laby[x][y].visited = true;
+	        }
+	    }
+
+	   public static boolean [][] toBoolean(Cell [][] array) {
+	        boolean [][] out = new boolean[(array.length*2)+1][(array[0].length*2)+1];
+
+	        for(int i=0;i<array.length;i++)
+	        {
+	            for(int j=0;j < array[i].length;j++)
+	            {
+	                int x = (i*2)+1, y = (j*2)+1;
+	                out[x][y] = true;
+	                if(array[i][j].west) out[x][y-1] = true;
+	                if(array[i][j].east) out[x][y+1] = true;
+	                if(array[i][j].south) out[x+1][y] = true;
+	                if(array[i][j].north) out[x-1][y] = true;
+	            }
+	        }
+	        
+	       return out;
+	    }
+	    public void printLabyrinthe(boolean [][] laby) {
+
+	        
+	        for(int i =0;i<laby.length;i++) {
+	            for(int j=0;j<laby.length;j++){
+	            	
+	            	if(!laby[i][j]){
+	            	StdDraw.setPenColor(StdDraw.GRAY);
+	       	    	 StdDraw.filledRectangle(Main.WIN_WIDTH/19 *i,Main.WIN_HEIGHT/19*j,Main.WIN_WIDTH/40,Main.WIN_WIDTH/40);
+	            	}
+	            	
+	            }
+	            	
+	            
+	        }
+
+	       
+	    }
+	  
 	 
 	 
 }

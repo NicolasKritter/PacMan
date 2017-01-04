@@ -32,9 +32,10 @@ public class Main {
 	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
 	    	
         	 StdDraw.show();
-        	 StdDraw.pause(5000);
+        	 StdDraw.pause(3000);
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
+	    	player.vie = 3;
 	    	player.dir = -1;
 	    	red.x = map.xRSpawn;
 	    	red.y = map.yRSpawn;
@@ -109,8 +110,30 @@ public class Main {
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
         StdDraw.setYscale(0, WIN_HEIGHT);
+        
+        
+
+        
+        
+        
+        
+        while(pause==12){
+        	StdDraw.clear(StdDraw.BLACK);
+       	 StdDraw.setPenColor(StdDraw.BLACK);
+        	map.printLabyrinthe(map.carte);
+        	StdDraw.show(10000/FPS);
+        }
+        
+        
+        
+        /*
+         * 
+         * 
+         * 
+         * 
+         */
 	    
-        while(true){
+        while(pause==0){
         	
         	
         	//gestion du jeux
@@ -122,7 +145,8 @@ public class Main {
 		        		pause=0;
 		        	}
 	        	 StdDraw.clear(StdDraw.BLACK);
-	        	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-30,"Vie: "+player.vie);
+	        	 StdDraw.setPenColor(StdDraw.BLACK);
+	        	
 	        	 
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -171,7 +195,8 @@ public class Main {
 	             
 	             afficherPerso(player);
 	             //Affichage du jeux
-	            
+	             StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-30,"Vie: "+player.vie);
+	        	 StdDraw.text(WIN_WIDTH/2, 30,"Score: "+player.score);
 	             StdDraw.show(10000/FPS);
 	             
 	        }
