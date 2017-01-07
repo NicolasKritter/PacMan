@@ -48,11 +48,13 @@ public class Perso {
 	 }
 
 	 public boolean checkhitwall(Map map){
-		 int x = (int)(this.x);
-		 int y = (int)(this.y);
-		 int taille = (int)(this.taille);
+		//int x = (int)(this.x);
+		 //int y = (int)(this.y);
+		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
+		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
+		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
 		
-			 
+		
 		 
 		//TODO Ne pas prendre en compte la taille de la hitbox
 				 switch(this.dir){
@@ -89,10 +91,11 @@ public class Perso {
 
 	
 	public boolean checkhitwall(Map map, int direc){
-		 int x = (int)(this.x);
-		 int y = (int)(this.y);
-		 int taille = (int)(this.taille);
-		 int step = (int)(Math.round(Main.STEP));
+		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
+		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
+		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
+		 //int step = (int)(Math.round(Main.STEP));
+		 int step = (int)(Math.round(1));
 			 //TODO Hitbox de suppression
 		// 0: bas 1: haut 2: gauche 3: droite
 		 //TODO oasser le + en math.round

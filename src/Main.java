@@ -144,7 +144,7 @@ public class Main {
         	StdDraw.show(10000/FPS);
         }
         
-
+        
         
         /*
          * 
@@ -159,7 +159,7 @@ public class Main {
    	 afficherMur(courant);
    	 courant = courant.suivant;
     }
-   	 int buffer = 0;
+   	 
         while(pause==0){
         	 //StdDraw.clear(StdDraw.BLACK);
         	 //StdDraw.setPenColor(StdDraw.BLACK);
@@ -211,11 +211,11 @@ public class Main {
 	             for (Ghost ghost: listGhost){  
 	            	
 	            	 
-	            	 if(random.nextInt(10)==5 &&  ghost.buffer ==  ghost.dir){
+	            	 if(random.nextInt(100)==5 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);
 	            	 }
-	            	 if(!ghost.checkhitwall(map, buffer)){
-	            		 ghost.dir = buffer;
+	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
+	            		 ghost.dir = ghost.buffer;
 		             }
 	            	 ghost.move();
 	            	 
@@ -238,6 +238,7 @@ public class Main {
 	            	 player.dir =  player.buffer;
 	            	 
 	             }
+	             System.out.println("check: "+player.checkhitwall(map, player.buffer)+ " Check reel: "+player.checkhitwall(map)+" dir:"+player.dir+" buf: "+player.buffer);
 	             player.move();
 	             if(!player.checkhitwall(map)){
 	            	 //player.hitwall();
