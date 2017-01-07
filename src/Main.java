@@ -67,8 +67,8 @@ public class Main {
 	    //TODO Display Score
 	    // Afficher les perso
 	    public static void afficherPerso(Perso perso){
-	    	StdDraw.setPenColor(StdDraw.RED);
-	    	StdDraw.filledCircle(perso.x,perso.y,perso.taille+STEP);
+
+
 	    	switch (perso.name){
 	    	case "blue":
 	    		 StdDraw.setPenColor(StdDraw.BLUE);
@@ -217,28 +217,34 @@ public class Main {
 	            	 if(!ghost.checkhitwall(map, buffer)){
 	            		 ghost.dir = buffer;
 		             }
+	            	 ghost.move();
+	            	 
 	            	 if(ghost.checkhitwall(map)){
 	            		 ghost.bounchehitwall(map);
 	            	 }
 	            	 //map.checkhitghost(player, ghost,map);
-	            		 Perso.move(ghost);
+	            		 
 	            	 
 	            	
-	            	System.out.println("test: "+player.checkhitwall(map,  player.buffer)+" reel test: "+player.checkhitwall(map));
 	            	 afficherPerso(ghost);
 	            	  
 	             }
 	             
 
+
+	             //Perso.move(player);
 	             if(!player.checkhitwall(map,  player.buffer)){
 	            	 
 	            	 player.dir =  player.buffer;
-	             }
-	             Perso.move(player);
-			        if(player.checkhitwall(map)){
-		            	 //player.hitwall();
-		             }
 	            	 
+	             }
+	             player.move();
+	             if(!player.checkhitwall(map)){
+	            	 //player.hitwall();
+	            	
+	             }  
+	             
+			        
 
 	            	 
 	             

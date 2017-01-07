@@ -66,40 +66,17 @@ public class Map {
 		
 		 //teste de création de murs
 		 
-		 int taillex = 49;//largeur des murs horizontaux
-		 
-		 //Création des murs 
-		 for (int x =taillex+2*Main.taille+12;x<map.largeur-10-taillex-Main.taille;x = x+2*taillex+2*Main.taille){
-			  for (int y=3*Main.taille+12;y<map.longeur-10-2*Main.taille;y = y+4*Main.taille){
-				  	if(Main.random.nextInt(10)<7){
-					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,taillex,Main.taille));
-					 //taillex = Main.random.nextInt(map.largeur-x)/6 + 20;
-				  	}
-				  	
-				  
-					  	
-				  
-				  
-			  }
-		 }
-		 int tailley =49;// longueur des mrus verticaux
-		 //création des murs verticaux
-		 for (int y = tailley+2*Main.taille+12;y<map.longeur-10-tailley-Main.taille;y = y+2*tailley+2*Main.taille){
-			  for (int x=3*Main.taille+12;x<map.longeur-10-2*Main.taille;x = x+2*taillex+4*Main.taille){
-				  if (Main.random.nextInt(10)<7){
-					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,Main.taille,tailley));
-					 //tailley = Main.random.nextInt(map.largeur -y)/6 + 10;
-				  }
-					 
-				  
-			  }
-		 }
+		int taillex = (int) (0.1*Main.WIN_WIDTH);
+		int tailley = (int) (0.1*Main.WIN_HEIGHT);
+		
+		
+		//TODO coord[(x/Lain.WIDTH)*longueur]
 		
 		 
-		/* for (int x =taillex+2*Main.taille+11;x<map.largeur-taillex-Main.taille;x = x+2*taillex+2*Main.taille){
-			  for (int y=3*Main.taille+11;y<map.longeur-2*Main.taille;y = y+4*Main.taille){
+		 for (int x =taillex+12;x<map.largeur-taillex-12;x = x+2*taillex){
+			  for (int y=3*Main.taille+12;y<map.longeur;y = y+4*Main.taille){
 				  	if(Main.random.nextInt(10)<7){
-					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,taillex,Main.taille-1));
+					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,taillex-Main.taille-1,Main.taille));
 					 //taillex = Main.random.nextInt(map.largeur-x)/6 + 20;
 				  	}
 				  	
@@ -109,18 +86,18 @@ public class Map {
 				  
 			  }
 		 }
-		 int tailley =50;// longueur des mrus verticaux
+		 // longueur des mrus verticaux
 		 //création des murs verticaux
-		 for (int y = tailley+11+2*Main.taille;y<map.longeur-tailley-Main.taille;y = y+2*tailley+2*Main.taille){
-			  for (int x=3*Main.taille+11;x<map.longeur-2*Main.taille;x = x+2*taillex+4*Main.taille){
+		 for (int y = tailley+12;y<map.longeur-tailley-12;y = y+2*tailley){
+			  for (int x=3*Main.taille+12;x<map.longeur-Main.taille;x = x+2*taillex+4*Main.taille){
 				  if (Main.random.nextInt(10)<7){
-					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,Main.taille-1,tailley));
+					 map.muraille = Mur.addMur(map.muraille, new Mur(x,y,Main.taille,tailley-Main.taille-1));
 					 //tailley = Main.random.nextInt(map.largeur -y)/6 + 10;
 				  }
 					 
 				  
 			  }
-		 } */
+		 } 
 			  
 
 		  Mur wall = map.muraille;
