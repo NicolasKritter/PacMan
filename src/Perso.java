@@ -102,25 +102,25 @@ public class Perso {
 		
 				 switch(direc){
 				 case 0:
-					 if (map.coord[x-(taille)][y-(taille)-step]==2 || map.coord[x+(taille)][y-(taille)-step]==2){//|| map.coord[x-taille][y-taille]==2 || map.coord[x+taille][y-taille]==2){
+					 if (map.coord[x-(taille)][y-(taille)-step]==2 || map.coord[x+(taille)][y-(taille)-step]==2 || map.coord[x][y-(taille)-step]==2){//|| map.coord[x-taille][y-taille]==2 || map.coord[x+taille][y-taille]==2){
 						 
 						 return true;
 					 }
 					 break;
 				 case 1:
-					 if (map.coord[x-(taille)][y+(taille)+step]==2 || map.coord[x+(taille)][y+(taille)+step]==2){// || map.coord[x-taille][y+taille]==2 || map.coord[x+taille][y+taille]==2){
+					 if (map.coord[x-(taille)][y+(taille)+step]==2 || map.coord[x+(taille)][y+(taille)+step]==2 || map.coord[x][y+(taille)+step]==2){// || map.coord[x-taille][y+taille]==2 || map.coord[x+taille][y+taille]==2){
 						
 						 return true;
 					 }
 					 break;
 				 case 2:
-					 if (map.coord[x-(taille)-step][y+(taille)]==2 || map.coord[x-(taille)-step][y-(taille)]==2){//|| map.coord[x-taille][y+taille]==2 || map.coord[x-taille][y-taille]==2){
+					 if (map.coord[x-(taille)-step][y+(taille)]==2 || map.coord[x-(taille)-step][y-(taille)]==2 || map.coord[x-(taille)-step][y]==2){//|| map.coord[x-taille][y+taille]==2 || map.coord[x-taille][y-taille]==2){
 						 
 						 return true;
 					 }
 					 break;
 				 case 3:
-					 if (map.coord[x+(taille)+step][y+(taille)]==2 || map.coord[x+(taille)+step][y-(taille)]==2 ){//|| map.coord[x+taille][y+taille]==2 || map.coord[x+taille][y-taille]==2){
+					 if (map.coord[x+(taille)+step][y+(taille)]==2 || map.coord[x+(taille)+step][y-(taille)]==2 || map.coord[x+(taille)+step][y]==2){//|| map.coord[x+taille][y+taille]==2 || map.coord[x+taille][y-taille]==2){
 						
 						 return true;
 					 }

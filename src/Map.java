@@ -73,23 +73,27 @@ public class Map {
 	 
 	 public void generateWall(){
 		 //TODO possibilité de passer d'un coté à l'autre ?
-		 //Création des bords, de largeur 5
-		 this.muraille = new Mur(0+5,this.longeur/2,5,this.longeur/2);
-		 Mur.addMur(muraille, new Mur(this.largeur-5,this.longeur/2,5,this.longeur/2));
-		 Mur.addMur(muraille, new Mur(this.largeur/2,0+5,this.largeur/2,5));
-		 Mur.addMur(muraille, new Mur(this.largeur/2,this.longeur-5,this.largeur/2,5));
-		 for(int x = 0;x<lar+1;x++) {
-			 this.coord[x][0] = 2;
-			 this.coord[x][lon] = 2;
-			 this.muraille = Mur.addMur(this.muraille, new Mur(x*(largeur/lar),0*(longeur/lon),(longeur/lon)/2,(longeur/lon)/2));
-			 this.muraille = Mur.addMur(this.muraille, new Mur(x*(largeur/lar),lon*(longeur/lon),(longeur/lon)/2,(longeur/lon)/2));
+		 
+		 
+		 //Création des bords
+		 muraille = new Mur(1,-1,largeur,(longeur/lon));
+		 Mur.addMur(muraille, new  Mur(1,(lon)*(largeur/lar),largeur,(longeur/lon) ));
+		 Mur.addMur(muraille, new Mur(largeur/2,0+10,largeur/2,5));
+		 Mur.addMur(muraille, new Mur(largeur/2,longeur-5,largeur/2,10));
+		 Mur.addMur(muraille, new Mur(-1,1,(longeur/lon),longeur));
+			Mur.addMur(muraille, new Mur(largeur,(lon)*(largeur/lar),(longeur/lon),longeur));
+		 for(int x = 1;x<lar;x = x+1) {			
+			 coord[x][0] = 2;
+			 coord[x][lon] = 2;
 		 }
-		 for(int y = 0;y<lar+1;y++) {
-			 this.coord[0][y] = 2;
-			 this.coord[lar][y] = 2;
-			 this.muraille = Mur.addMur(this.muraille, new Mur(0*(largeur/lar),y*(longeur/lon),(longeur/lon)/2,(longeur/lon)/2));
-			 this.muraille = Mur.addMur(this.muraille, new Mur(lar*(largeur/lar),y*(longeur/lon),(longeur/lon)/2,(longeur/lon)/2));
-		 }
+				
+		 for(int y = 1;y<lon;y++) {
+			 	Mur.addMur(muraille, new Mur(-1,y*(largeur/lar),(longeur/lon),(longeur/lon)));
+				Mur.addMur(muraille, new Mur(largeur,y*(largeur/lar),(longeur/lon),(longeur/lon)));
+			 
+			 coord[0][y] = 2;
+			 coord[lar][y] = 2;
+			}
 		
 		 //teste de création de murs
 		 
@@ -99,20 +103,20 @@ public class Map {
 		
 		//TODO coord[(x/Lain.WIDTH)*longueur]
 		//TODO Display wall  constrcu  = milieux ->a changer
-		for(int x = 2;x<lar-2;x = x+2) {
-			for(int y = 2;y<lon-2;y = y+2) {
-				if(Main.random.nextInt(10)<5){
-					 this.muraille = Mur.addMur(this.muraille, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
-					 //taillex = Main.random.nextInt(this.largeur-x)/6 + 20;
-					 this.coord[x][y] = 2;
+		for(int x = 2;x<lar;x = x+4) {
+			for(int y = 2;y<lon;y = y+4) {
+				if(Main.random.nextInt(10)<7){
+					 Mur.addMur(muraille, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
+					 //taillex = Main.random.nextInt(largeur-x)/6 + 20;
+					 coord[x][y] = 2;
 				  	}
 			}
 		}
-		/* for (int x =taillex+Main.taille;x<this.largeur-taillex-Main.taille;x = x+2*taillex){
-			  for (int y=3*Main.taille+Main.taille;y<this.longeur;y = y+4*Main.taille){
+		/* for (int x =taillex+Main.taille;x<largeur-taillex-Main.taille;x = x+2*taillex){
+			  for (int y=3*Main.taille+Main.taille;y<longeur;y = y+4*Main.taille){
 				  	if(Main.random.nextInt(10)<7){
-					 this.muraille = Mur.addMur(this.muraille, new Mur(x,y,taillex-Main.taille-1,Main.taille));
-					 //taillex = Main.random.nextInt(this.largeur-x)/6 + 20;
+					 muraille = Mur.addMur(muraille, new Mur(x,y,taillex-Main.taille-1,Main.taille));
+					 //taillex = Main.random.nextInt(largeur-x)/6 + 20;
 				  	}
 				  	
 				  
@@ -123,11 +127,11 @@ public class Map {
 		 }
 		 // longueur des mrus verticaux
 		 //création des murs verticaux
-		 for (int y = tailley+Main.taille;y<this.longeur-tailley-Main.taille;y = y+2*tailley){
-			  for (int x=3*Main.taille+Main.taille;x<this.longeur-Main.taille-Main.taille;x = x+2*taillex+4*Main.taille){
+		 for (int y = tailley+Main.taille;y<longeur-tailley-Main.taille;y = y+2*tailley){
+			  for (int x=3*Main.taille+Main.taille;x<longeur-Main.taille-Main.taille;x = x+2*taillex+4*Main.taille){
 				  if (Main.random.nextInt(10)<7){
-					 this.muraille = Mur.addMur(this.muraille, new Mur(x,y,Main.taille,tailley-Main.taille-1));
-					 //tailley = Main.random.nextInt(this.largeur -y)/6 + 10;
+					 muraille = Mur.addMur(muraille, new Mur(x,y,Main.taille,tailley-Main.taille-1));
+					 //tailley = Main.random.nextInt(largeur -y)/6 + 10;
 				  }
 					 
 				  
@@ -135,14 +139,14 @@ public class Map {
 		 } */
 			  
 
-		 /* Mur wall = this.muraille;
+		 /* Mur wall = muraille;
 		  //Impression des murs sur  la carte
 			  while(wall!=null){
 			 
 			  for (int a = wall.x-wall.large;a<=wall.x+wall.large;a++){
 				  for (int b = wall.y-wall.longe;b<=wall.y+wall.longe;b++){
 					  
-					  this.coord[a][b] = 2;
+					  coord[a][b] = 2;
 				  }
 				  
 			  }
@@ -152,17 +156,17 @@ public class Map {
 		 
 	 }
 	 public void generatecookie(){
-		 this.listcookie = new Cookie(this.xBSpawn,this.yBSpawn);
+		 listcookie = new Cookie(xBSpawn,yBSpawn);
 		 int x,y;
-		 for(int k=0;k<this.nbcookies-1;k++){
+		 for(int k=0;k<nbcookies-1;k++){
 			 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 			 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
-			 while(this.coord[x][y]!=0){
+			 while(coord[x][y]!=0){
 				 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 				 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
 			 }
-			 this.listcookie.suivant = new Cookie(x,y);
-			 this.coord[x][y] = 1;
+			 listcookie.suivant = new Cookie(x,y);
+			 coord[x][y] = 1;
 			 //TODO faire un algo reccursif qui parcour la map et dépose des cookie
 		 }
 		
@@ -293,11 +297,11 @@ public class Map {
 	            for(int j=0;j<laby.length;j++){
 	            	
 	            	if(!laby[i][j]){
-	            		this.coord[i][j] =2;
+	            		coord[i][j] =2;
 	            	StdDraw.setPenColor(StdDraw.GRAY);
 	       	    	 StdDraw.filledRectangle(Main.WIN_WIDTH/19 *i,Main.WIN_HEIGHT/19*j,Main.WIN_WIDTH/40,Main.WIN_WIDTH/40);
 	            	}else{
-	            		this.coord[i][j] =1;
+	            		coord[i][j] =1;
 	            	}
 	            	
 	            }

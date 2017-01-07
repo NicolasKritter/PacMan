@@ -31,7 +31,8 @@ public class Main {
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
 	    	}
-	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
+	    	StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
+       	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
         	 StdDraw.show();
         	 StdDraw.pause(3000);
              StdDraw.clear(StdDraw.BLACK);
@@ -153,7 +154,8 @@ public class Main {
          * 
          */
      StdDraw.clear(StdDraw.BLACK);
-   	 StdDraw.setPenColor(StdDraw.BLACK);
+     StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
+	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
    	Mur courant = map.muraille;
     while(courant!=null){
    	 afficherMur(courant);
@@ -177,6 +179,7 @@ public class Main {
 	        	 
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
+	        		 
 	                 player.buffer = 0;
 	             }
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {
@@ -189,7 +192,11 @@ public class Main {
 	            	 player.buffer = 3;
 	             }
 	             
-	             
+	             if(!player.checkhitwall(map,  player.buffer)){
+	            	 
+	            	 player.dir =  player.buffer;
+	            	 
+	             }
 	             //TODO supprimer les coockies sur la map et les effacer
 	           //Afficher tous les cookies
 	            /* Cookie courantcookie = map.listcookie;
@@ -233,12 +240,8 @@ public class Main {
 
 
 	             //Perso.move(player);
-	             if(!player.checkhitwall(map,  player.buffer)){
-	            	 
-	            	 player.dir =  player.buffer;
-	            	 
-	             }
-	             System.out.println("check: "+player.checkhitwall(map, player.buffer)+ " Check reel: "+player.checkhitwall(map)+" dir:"+player.dir+" buf: "+player.buffer);
+	             
+	             //System.out.println("check: "+player.checkhitwall(map, player.buffer)+ " Check reel: "+player.checkhitwall(map)+" dir:"+player.dir+" buf: "+player.buffer);
 	             player.move();
 	             if(!player.checkhitwall(map)){
 	            	 //player.hitwall();
@@ -252,8 +255,7 @@ public class Main {
 	             
 	             afficherPerso(player);
 	             //Affichage du jeux
-	             StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-30,"Vie: "+player.vie);
-	        	 StdDraw.text(WIN_WIDTH/2, 30,"Score: "+player.score);
+	             
 	             StdDraw.show(10000/FPS);
 	             
 	        }
