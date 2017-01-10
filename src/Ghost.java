@@ -24,6 +24,6 @@ public void bounchehitwall(Map map){
 	 
 	 }
 	this.dir = newdir[Main.random.nextInt(2)];
-			 
+	this.buffer = this.dir;
 	 }
 }

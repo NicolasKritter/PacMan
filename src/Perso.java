@@ -1,4 +1,3 @@
-
 public class Perso {
 	double x;
 	double y;
@@ -132,6 +131,4 @@ public class Perso {
 	}
 	 
 	 
-	 
 }
-

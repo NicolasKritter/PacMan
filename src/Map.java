@@ -18,12 +18,12 @@ public class Map {
 	 int yStart;
 	 int largeur;
 	 int longeur;
-	 Mur muraille;
+	 Mur listemur;
 	 Cookie listcookie;
 	 int [][] coord;
 	 int lon;
 	 int lar;
-	 boolean[][] carte;
+	 Cookie[][] coordcookie;
 	 public Map(){
 
 		  largeur = Main.WIN_WIDTH;
@@ -31,16 +31,6 @@ public class Map {
 		   lon = longeur/(2*Main.taille);
 		   lar = largeur/(2*Main.taille);
 		  nbcookies = 1;
-		  /*xRSpawn = largeur/2;
-		  yRSpawn = longeur/4;
-		  xOSpawn = largeur -Main.taille-11;
-		  yOSpawn = longeur-Main.taille-11;
-		  xBSpawn = Main.taille+11;
-		  yBSpawn = longeur-Main.taille-11;
-		  xPSpawn = Main.taille+11;
-		  yPSpawn = Main.taille+11;
-		  xStart = largeur -Main.taille-12;
-		  yStart = Main.taille+12;*/
 		  
 		  xRSpawn = largeur/2;
 		  yRSpawn = longeur/4;
@@ -55,12 +45,13 @@ public class Map {
 		  
 		  //coord = new int[largeur+1][longeur+1];
 		  coord = new int[lar+1 ][lon+1 ];
+		  coordcookie = new Cookie[lar+1 ][lon+1 ];
 		  for (int k = 0; k<coord.length;k++){
 			  for (int j = 0; j<coord[0].length;j++){
 				  coord[k][j] = 1;
 			  }
 		  }
-		  //carte =  generer(lar/2,lon/2);
+		  //carte =  generer(lar,lon);
 		  
 		 generateWall();
 		  
@@ -74,39 +65,30 @@ public class Map {
 	 public void generateWall(){
 		 //TODO possibilité de passer d'un coté à l'autre ?
 		 
-		 
+		 //TODO refaire les murs de bord de façon plus propre largeur /2 ect...
 		 //Création des bords
-		 muraille = new Mur(1,-1,largeur,(longeur/lon));
-		 Mur.addMur(muraille, new  Mur(1,(lon)*(largeur/lar),largeur,(longeur/lon) ));
-		 Mur.addMur(muraille, new Mur(largeur/2,0+10,largeur/2,5));
-		 Mur.addMur(muraille, new Mur(largeur/2,longeur-5,largeur/2,10));
-		 Mur.addMur(muraille, new Mur(-1,1,(longeur/lon),longeur));
-			Mur.addMur(muraille, new Mur(largeur,(lon)*(largeur/lar),(longeur/lon),longeur));
+		 listemur = new Mur(1,-1,largeur,(longeur/lon));
+		 //Mur.addMur(listemur, new  Mur(1,(lon)*(largeur/lar),largeur-10,(longeur/lon) ));
+		 Mur.addMur(listemur, new Mur(largeur/2,0+10,largeur/2 -10,5));
+		 Mur.addMur(listemur, new Mur(largeur/2,longeur-5,largeur/2,10));
+		 Mur.addMur(listemur, new Mur(-1,1,(longeur/lon),longeur-10));
+			Mur.addMur(listemur, new Mur(largeur,(lon)*(largeur/lar),(longeur/lon),longeur-10));
 		 for(int x = 1;x<lar;x = x+1) {			
 			 coord[x][0] = 2;
 			 coord[x][lon] = 2;
 		 }
 				
 		 for(int y = 1;y<lon;y++) {
-			 	Mur.addMur(muraille, new Mur(-1,y*(largeur/lar),(longeur/lon),(longeur/lon)));
-				Mur.addMur(muraille, new Mur(largeur,y*(largeur/lar),(longeur/lon),(longeur/lon)));
-			 
 			 coord[0][y] = 2;
 			 coord[lar][y] = 2;
 			}
 		
-		 //teste de création de murs
-		 
-		int taillex = (int) (0.1*Main.WIN_WIDTH);
-		int tailley = (int) (0.1*Main.WIN_HEIGHT);
 		
-		
-		//TODO coord[(x/Lain.WIDTH)*longueur]
-		//TODO Display wall  constrcu  = milieux ->a changer
-		for(int x = 2;x<lar;x = x+4) {
-			for(int y = 2;y<lon;y = y+4) {
-				if(Main.random.nextInt(10)<7){
-					 Mur.addMur(muraille, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
+//TODO 	ajouter des mus verticalement ?
+		for(int x = 2;x<lar-2;x = x+2) {
+			for(int y = 4;y<lon-2;y = y+4) {
+				if(Main.random.nextInt(10)<8){
+					 Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 //taillex = Main.random.nextInt(largeur-x)/6 + 20;
 					 coord[x][y] = 2;
 				  	}
@@ -115,7 +97,7 @@ public class Map {
 		/* for (int x =taillex+Main.taille;x<largeur-taillex-Main.taille;x = x+2*taillex){
 			  for (int y=3*Main.taille+Main.taille;y<longeur;y = y+4*Main.taille){
 				  	if(Main.random.nextInt(10)<7){
-					 muraille = Mur.addMur(muraille, new Mur(x,y,taillex-Main.taille-1,Main.taille));
+					 listemur = Mur.addMur(listemur, new Mur(x,y,taillex-Main.taille-1,Main.taille));
 					 //taillex = Main.random.nextInt(largeur-x)/6 + 20;
 				  	}
 				  	
@@ -130,7 +112,7 @@ public class Map {
 		 for (int y = tailley+Main.taille;y<longeur-tailley-Main.taille;y = y+2*tailley){
 			  for (int x=3*Main.taille+Main.taille;x<longeur-Main.taille-Main.taille;x = x+2*taillex+4*Main.taille){
 				  if (Main.random.nextInt(10)<7){
-					 muraille = Mur.addMur(muraille, new Mur(x,y,Main.taille,tailley-Main.taille-1));
+					 listemur = Mur.addMur(listemur, new Mur(x,y,Main.taille,tailley-Main.taille-1));
 					 //tailley = Main.random.nextInt(largeur -y)/6 + 10;
 				  }
 					 
@@ -139,7 +121,7 @@ public class Map {
 		 } */
 			  
 
-		 /* Mur wall = muraille;
+		 /* Mur wall = listemur;
 		  //Impression des murs sur  la carte
 			  while(wall!=null){
 			 
@@ -156,28 +138,53 @@ public class Map {
 		 
 	 }
 	 public void generatecookie(){
-		 listcookie = new Cookie(xBSpawn,yBSpawn);
-		 int x,y;
-		 for(int k=0;k<nbcookies-1;k++){
-			 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
-			 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
-			 while(coord[x][y]!=0){
-				 x = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
-				 y = Main.random.nextInt(Main.WIN_WIDTH-10)+5;
-			 }
-			 listcookie.suivant = new Cookie(x,y);
-			 coord[x][y] = 1;
-			 //TODO faire un algo reccursif qui parcour la map et dépose des cookie
+		 listcookie = new Cookie(xBSpawn,yBSpawn,xBSpawn*(lar/largeur) ,yBSpawn*(lon/longeur) );
+		 for(int x = 2;x<lar-1;x = x+2) {
+				for(int y = 2;y<lon-1;y = y+2) {
+					 if(coord[x][y]!=2){
+					  		
+					  		Cookie nouveau =new Cookie(x*(largeur/lar),y*(longeur/lon),x,y);
+					  		Cookie.addCookie(listcookie, nouveau);
+					  		this.coord[x][y] = 1;
+					  		this.coordcookie[x][y] = nouveau; 
+					  		System.out.println(this.coordcookie[x][y]+ " "+x +" "+y);
+					  	}
+				}
 		 }
 		
-
 	 }
-	 
-	 //TODO passer les check hit dans la classe correspondante;
-	 //teste si un perso touche un mur
+	 //TODO si marche: parcourir la liste et supprimer direct sans tableau
+		public  void  deleteCookie(Cookie Cookie){
+			
 
-		 	
-	 //TODO passer dans la classe perso?
+			Cookie courant = this.listcookie;
+			int k = 0;
+					
+			while(!courant.equals(Cookie) && courant.suivant != null){
+				courant = courant.suivant;
+			
+				k =k+1;
+				
+			}
+			
+			if(courant!=null){
+				Cookie reste = courant.suivant;
+				courant.visible = "non";
+				System.out.println(courant);
+			courant = reste;
+			
+			System.out.println(courant);
+			
+			}
+			while(courant!=null){
+				k = k+1;
+				courant = courant.suivant;
+			}
+			
+			//return this.listcookie;
+			System.out.println(k);
+		}
+	 
 
 	//check si le joueur toucche un fantôme
 	 public void checkhitghost(Joueur perso,Ghost ghost,Map map){
@@ -189,128 +196,24 @@ public class Map {
 			 
 			 }
 		 }
-		 
-	 /*
-	  * 
-	  * 
-	  * 
-	  * 
-	  */
-		static int xposA;
-		 static int yposA;
-		 static int xposD;
-		 static int yposD;
-		 static int xr;
-		 static int yr;
-		 static int xb;
-		 static int yb;
-		 
-		//Classe interne repr�sentant une case libre, utilis�e pour la g�n�ration du labyrinthe
-	    private static class Cell {
-	        boolean north=false,
-	                south=false,
-	                east=false,
-	                west=false,
-	                visited =false;
-
-	    }
-	    static Random random = new Random(System.currentTimeMillis());
-
-	 private static boolean [][] generer(int largeur, int longueur)
-	    {
-	        Cell [][] laby = new Cell[largeur][longueur];
-	        for(int i=0;i<laby.length;i++)
-	            for (int j=0;j<laby[i].length;j++)
-	                laby[i][j]=new Cell();
-
-	        int startX = random.nextInt(largeur);
-	        int startY = random.nextInt(longueur);
-	        creuser(startX,startY,laby);
-	        yposA = 2*longueur;
-	        xposA = random.nextInt(2*largeur+1);
-	        yposD =0;
-	        xposD =startX;
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	
 	       
-	        return toBoolean(laby);
-
-	    }
-
-	    /**
-	     * Fait un labyrinthe al�atoirement
-	     * @param x
-	     * @param y
-	     * @param laby
-	     */
-	    private static void creuser(int x, int y, Cell [][] laby)
-	    {
-	        if(x < 0 || y < 0 || x >= laby.length || y >=laby[0].length) {
-	            return;
-	        } else if(laby[x][y]==null) {
-	            laby[x][y] = new Cell();
-	        }
-
-	        if (!laby[x][y].visited)
-	        {
-
-	            if (!laby[x][y].west && random.nextBoolean()) {
-	                laby[x][y].west = true;
-	                creuser(x,y-1, laby);
-	            }
-	            if (!laby[x][y].east && random.nextBoolean()) {
-	                laby[x][y].east = true;
-	                creuser(x,y+1, laby);
-	            }
-	            if (!laby[x][y].north && random.nextBoolean()) {
-	                laby[x][y].north = true;
-	                creuser(x-1,y, laby);
-	            }
-	            if (!laby[x][y].south && random.nextBoolean()) {
-	               laby[x][y].south = true;
-	                creuser(x+1,y, laby);
-	            }
-	            laby[x][y].visited = true;
-	        }
-	    }
-
-	   public static boolean [][] toBoolean(Cell [][] array) {
-	        boolean [][] out = new boolean[(array.length*2)+1][(array[0].length*2)+1];
-
-	        for(int i=0;i<array.length;i++)
-	        {
-	            for(int j=0;j < array[i].length;j++)
-	            {
-	                int x = (i*2)+1, y = (j*2)+1;
-	                out[x][y] = true;
-	                if(array[i][j].west) out[x][y-1] = true;
-	                if(array[i][j].east) out[x][y+1] = true;
-	                if(array[i][j].south) out[x+1][y] = true;
-	                if(array[i][j].north) out[x-1][y] = true;
-	            }
-	        }
-	        
-	       return out;
-	    }
-	    public void printLabyrinthe(boolean [][] laby) {
-
-	        
-	        for(int i =0;i<laby.length;i++) {
-	            for(int j=0;j<laby.length;j++){
-	            	
-	            	if(!laby[i][j]){
-	            		coord[i][j] =2;
-	            	StdDraw.setPenColor(StdDraw.GRAY);
-	       	    	 StdDraw.filledRectangle(Main.WIN_WIDTH/19 *i,Main.WIN_HEIGHT/19*j,Main.WIN_WIDTH/40,Main.WIN_WIDTH/40);
-	            	}else{
-	            		coord[i][j] =1;
-	            	}
-	            	
-	            }
-	            	
-	            
-	        }
-
-	       
-	    }
+	
 	  
 	 
 	 

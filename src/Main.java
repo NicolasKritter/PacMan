@@ -28,20 +28,21 @@ public class Main {
 	    	if (player.vie<1){
 	    		player.vie = 3;
 	    		map = new Map();
+	    		StdDraw.setPenColor(StdDraw.WHITE);
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
 	    	}
-	    	StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
-       	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
+	    	
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
         	 StdDraw.show();
         	 StdDraw.pause(3000);
              StdDraw.clear(StdDraw.BLACK);
+             StdDraw.setPenColor(StdDraw.WHITE);
+             StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
+           	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
            	
-           	Mur courant = map.muraille;
-            while(courant!=null){
-           	 afficherMur(courant);
-           	 courant = courant.suivant;
-            }
+             afficherMur(map.listemur);
+             //TODO récupperer les coockies restant et les afficher
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
 	    	player.buffer = -1;
@@ -60,13 +61,21 @@ public class Main {
 	    public  void creerPerso(Perso perso,String nom){
 	    	perso.name = nom;
 	    }
+	   public static void refreshScore(){
+	   StdDraw.setPenColor(StdDraw.BLACK);
+	    	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+(player.score-2));
+	    	 StdDraw.rectangle(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille, Main.taille/2, Main.taille/2);
+	    	 StdDraw.setPenColor(StdDraw.WHITE);
+	    	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+(player.score));
+	    	 
+	    	 
+	    	
+	    }
+
 	    
+
 	    
-	    
-	    //TODO faire un clear que sur les persos (fonction dispblack)
-	    
-	    //TODO Display Score
-	    // Afficher les perso
+	 // Afficher les perso
 	    public static void afficherPerso(Perso perso){
 
 
@@ -94,19 +103,39 @@ public class Main {
 	    	StdDraw.setPenColor(StdDraw.BLACK);
 	    	StdDraw.filledCircle(x,y,taille+1);
 	    }
-	  //TODO afficher murs
-	    public static void afficherMur(Mur mur){
-	    	 StdDraw.setPenColor(StdDraw.GRAY);
-	    	 StdDraw.filledRectangle(mur.x,mur.y,mur.large,mur.longe);
+	  // afficher murs
+	    public static void afficherMur(Mur listemur){
+	    	
+	    	Mur mur = listemur;
+	        while(mur!=null){
+	        	///TODO changer couleur
+	        		StdDraw.setPenColor(StdDraw.BLUE);
+		    	 StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
+		    	 mur = mur.suivant;
+	        }
+	    	
+	    	 
 	    	 
 	    }
-	    public static void affichercookie(Cookie cookie){
-	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	 StdDraw.filledCircle(cookie.x,cookie.y,cookie.taille);
+	    public static void afficherCookie(Cookie listecookie){
+	    	Cookie cookie = listecookie;
+	    	System.out.println("--------------------");
+	    	int k = 0;
+	        while(cookie!=null){
+	       	 if(cookie.visible==null){
+		    	 StdDraw.setPenColor(StdDraw.WHITE);
+		    	 StdDraw.filledCircle(cookie.x,cookie.y,cookie.taille);
+	       	 }
+	       	 k = k+1;
+	      
+	        	cookie = cookie.suivant;
+	        }
+	        System.out.println("-------------------- " +k);
+
 	    	 
 	    }
 	   
-	    //TODO afficher cookies
+	    
 	public  static void main(String[] args) {
 		//controle
 		 boolean play = true;
@@ -125,8 +154,6 @@ public class Main {
 		//TODO Bouton Play
 		//TODO Text field nom
 	     
-		
-		//TODO generer cookie;
 
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
@@ -138,12 +165,7 @@ public class Main {
         
         
         
-        while(pause==12){
-        	StdDraw.clear(StdDraw.BLACK);
-       	 StdDraw.setPenColor(StdDraw.BLACK);
-        	map.printLabyrinthe(map.carte);
-        	StdDraw.show(10000/FPS);
-        }
+        
         
         
         
@@ -154,17 +176,23 @@ public class Main {
          * 
          */
      StdDraw.clear(StdDraw.BLACK);
-     StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
+     
+    
+	 
+	 
+	 //Afficher tous les murs
+	 afficherMur(map.listemur);
+   	 //Afficher tous les coockies
+   	 afficherCookie(map.listcookie);
+   	 StdDraw.setPenColor(StdDraw.WHITE);
+   	 StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
 	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
-   	Mur courant = map.muraille;
-    while(courant!=null){
-   	 afficherMur(courant);
-   	 courant = courant.suivant;
-    }
    	 
-        while(pause==0){
-        	 //StdDraw.clear(StdDraw.BLACK);
-        	 //StdDraw.setPenColor(StdDraw.BLACK);
+   	 
+    
+   	 
+        while(true){
+
         	
         	//gestion du jeux
 	        if(play){
@@ -181,14 +209,18 @@ public class Main {
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
 	        		 
 	                 player.buffer = 0;
+	                 
 	             }
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {
+	            	
 	            	 player.buffer = 1;
 	             }
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)) {
+	            	
 	            	 player.buffer = 2;
 	             }
 	             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
+	            	 
 	            	 player.buffer = 3;
 	             }
 	             
@@ -197,39 +229,27 @@ public class Main {
 	            	 player.dir =  player.buffer;
 	            	 
 	             }
-	             //TODO supprimer les coockies sur la map et les effacer
-	           //Afficher tous les cookies
-	            /* Cookie courantcookie = map.listcookie;
-	             while(courantcookie!=null){
-	            	 
-	            	 affichercookie(courantcookie);
-	            	 
-	            	 courantcookie = courantcookie.suivant;
-	             }*/
-	           //Afficher tous les murs
-	            /*Mur courant = map.muraille;
-	             while(courant!=null){
-	            	 afficherMur(courant);
-	            	 courant = courant.suivant;
-	             }*/
 
+
+	             afficherCookie(map.listcookie);
 	             
 	            
 	             for (Ghost ghost: listGhost){  
 	            	
 	            	 
-	            	 if(random.nextInt(100)==5 &&  ghost.buffer ==  ghost.dir){
+	            	 if(random.nextInt(200)==5 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
 	            		 ghost.dir = ghost.buffer;
+	            		 ghost.buffer = random.nextInt(4);
 		             }
 	            	 ghost.move();
 	            	 
 	            	 if(ghost.checkhitwall(map)){
 	            		 ghost.bounchehitwall(map);
 	            	 }
-	            	 //map.checkhitghost(player, ghost,map);
+	            	 map.checkhitghost(player, ghost,map);
 	            		 
 	            	 
 	            	
@@ -237,41 +257,45 @@ public class Main {
 	            	  
 	             }
 	             
+	             //TODO mettre les coockie dans un tableau mettre fonction delete coockie avec this
 
-
-	             //Perso.move(player);
-	             
-	             //System.out.println("check: "+player.checkhitwall(map, player.buffer)+ " Check reel: "+player.checkhitwall(map)+" dir:"+player.dir+" buf: "+player.buffer);
-	             player.move();
+	               player.move();
+	             player.checkhitcookie(map);
 	             if(!player.checkhitwall(map)){
 	            	 //player.hitwall();
 	            	
 	             }  
 	             
 			        
-
-	            	 
+	             	 
 	             
+	             //TODO combiner les check ?
+	            
 	             
 	             afficherPerso(player);
 	             //Affichage du jeux
+	             
+	             
 	             
 	             StdDraw.show(10000/FPS);
 	             
 	        }
 	        else{
-	        	if (pause>1){
+	        	
+	        	if (pause>1 ){
 	        	pause -= 1;
 	        	}else{
 	        		pause=0;
 	        	}
 	        	
-	        	StdDraw.pause(10);
+	        	StdDraw.pause(100);
 	        	
 	        	
 	        }
 	        
 	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
+	        	//
+	        	//KeyEvent.KEY_RELEASED==KeyEvent.VK_P
 	        	pause = 10;
 	        	play = !play;
 	       	 
