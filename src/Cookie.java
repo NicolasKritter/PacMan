@@ -18,9 +18,11 @@ public class Cookie {
 
 	}
 	public static Cookie addCookie(Cookie liste ,Cookie next) {
+
 		Cookie courant = liste;
 		if(courant==null){
 			courant = next;
+			return courant;
 		}
 		else if (courant.suivant==null){
 			

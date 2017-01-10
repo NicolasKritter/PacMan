@@ -26,14 +26,14 @@ public class Joueur extends Perso{
 				 if (supp!=null){
 				 System.out.println(map.coord[nx][ny] +" "+nx+" "+ny);
 				 map.coord[nx][ny]=0;
-				 
+				 map.nbcookie = map.nbcookie-1;
 					 this.score = this.score+2;
 					 Main.refreshScore();
 					 //TODO dessine cookie si c'est un fantome ?
 					 Main.effaceur(supp.x, supp.y, taille);
 					 
-					 
-					 map.deleteCookie(supp);
+					 //TODo faire une liste qui récupère la nouvelle liste 
+					  map.deleteCookie(supp);
 				 }
 					
 					 
