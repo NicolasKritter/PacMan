@@ -21,6 +21,19 @@ public class Main {
 	    static Map map;
 	    static int taille = 10;
 	    
+	    
+	    public static void menuPrincipal(){
+	    	
+	    }
+	    public static void sauverScore(){
+	    	
+	    }
+	    public static void menuNom(){
+	    	
+	    }
+	    public static void credit(){
+	    	
+	    }
 	    //TODO  Utiliser la fonction Init pour la première partie ?
 	    public  static void init(Map map){
 	    	 StdDraw.clear(StdDraw.BLACK);
