@@ -44,6 +44,8 @@ public class Main {
 	    		StdDraw.setPenColor(StdDraw.WHITE);
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
+	    		init(map);
+
 	    	}
 	    	
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
@@ -55,6 +57,7 @@ public class Main {
            	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
            	
              afficherMur(map.listemur);
+            
              //TODO récupperer les coockies restant et les afficher
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
@@ -170,7 +173,7 @@ public class Main {
 		//TODO Ecran Menu
 		//TODO Bouton Play
 		//TODO Text field nom
-	     
+	     menuPrincipal();
 
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
