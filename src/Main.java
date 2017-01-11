@@ -108,7 +108,7 @@ public class Main {
 	    	
 	    	Mur mur = listemur;
 	        while(mur!=null){
-	        	///TODO changer couleur
+
 	        		StdDraw.setPenColor(StdDraw.BLUE);
 		    	 StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
 		    	 mur = mur.suivant;
@@ -135,7 +135,11 @@ public class Main {
 	    	 
 	    }
 	   
-	    
+	    //TODO mettre des images
+	    //TODO faire menu
+	    //TODO stocker les scores
+	    //TODO afficher pause
+	    //TODO IA
 	public  static void main(String[] args) {
 		//controle
 		 boolean play = true;
