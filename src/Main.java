@@ -20,9 +20,58 @@ public class Main {
 	    static Ghost orange;
 	    static Map map;
 	    static int taille = 10;
-	    
-	    
+	    //TODO condition de fin
+	    //TODO hoover boolean pour tous les éléments (éviter de les redessiner a chaque fois
+	    //TODO classe pour les éléments du menu ?
 	    public static void menuPrincipal(){
+	    	boolean menu = true;
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	 //titre
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "PACMAN");
+	    	 //Bouton play
+
+	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 80, 20);
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
+	    	 //bouton scores
+	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-45, 80, 20);
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-45, "Scores");
+	    	 
+	    	//bouton changer de nom
+	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-90, 80, 20);
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-90, "Changer de nom");
+	    	 
+	    	 //bouton crédit
+	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-135, 80, 20);
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-135, "Crédit");
+	    	 
+	    	 //bouton 2 joueurs ?
+	    	 while(menu){
+	    		 if(StdDraw.mouseX()>WIN_WIDTH/2-40 && StdDraw.mouseX()<WIN_WIDTH/2+40 && StdDraw.mouseY()>WIN_HEIGHT/2-20 && StdDraw.mouseY() <WIN_HEIGHT/2+20){
+	    			 StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
+	    			 //TODO décalage pour rendre plus "joli" ?
+	    			 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 74, 16);
+	    	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    		 }
+	    		 }else{
+	    			 StdDraw.setPenColor(StdDraw.BLACK);
+	    			 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 74, 16);
+	    			 StdDraw.setPenColor(StdDraw.BLUE);
+	    			 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
+	    		 }
+	    	 }
+	    	
+	    }
+	    public static String getScore(boolean all){
+	    	
+	    	if(all){
+	    		return "a";
+	    	}
+	    	else{
+	    		return "a" ;
+	    	}
 	    	
 	    }
 	    public static void sauverScore(){
@@ -32,9 +81,12 @@ public class Main {
 	    	
 	    }
 	    public static void credit(){
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	 StdDraw.setPenColor(StdDraw.WHITE);
 	    	
 	    }
 	    //TODO  Utiliser la fonction Init pour la première partie ?
+	    //TOD0 refaire le ini plus propre
 	    public  static void init(Map map){
 	    	 StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
@@ -43,7 +95,7 @@ public class Main {
 	    		map = new Map();
 	    		StdDraw.setPenColor(StdDraw.WHITE);
 	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
-	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 5 sec \n Nicolas Kritter Eliott Vanacker");
+	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 3 sec \n Nicolas Kritter Eliott Vanacker");
 	    		init(map);
 
 	    	}
@@ -125,9 +177,9 @@ public class Main {
 	    	Mur mur = listemur;
 	        while(mur!=null){
 
-	        		StdDraw.setPenColor(StdDraw.BLUE);
-		    	 StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
-		    	 mur = mur.suivant;
+	        	StdDraw.setPenColor(StdDraw.BLUE);
+		    	StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
+		    	mur = mur.suivant;
 	        }
 	    	
 	    	 
@@ -173,11 +225,13 @@ public class Main {
 		//TODO Ecran Menu
 		//TODO Bouton Play
 		//TODO Text field nom
-	     menuPrincipal();
+	    
 
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
         StdDraw.setYscale(0, WIN_HEIGHT);
+        
+        menuPrincipal();
         
         
 
@@ -269,7 +323,7 @@ public class Main {
 	            	 if(ghost.checkhitwall(map)){
 	            		 ghost.bounchehitwall(map);
 	            	 }
-	            	 map.checkhitghost(player, ghost,map);
+	            	 map.checkhitghost(player, ghost);
 	            		 
 	            	 
 	            	

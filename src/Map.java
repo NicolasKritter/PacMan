@@ -129,11 +129,11 @@ public class Map {
 	 
 
 	//check si le joueur toucche un fantôme
-	 public void checkhitghost(Joueur perso,Ghost ghost,Map map){
+	 public void checkhitghost(Joueur perso,Ghost ghost){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= Main.taille *2){
 			 perso.vie = perso.vie-1;
-			 Main.init(map);		
+			 Main.init(this);		
 			 
 			 
 			 }
