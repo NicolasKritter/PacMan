@@ -20,6 +20,10 @@ public class Main {
 	    static Ghost orange;
 	    static Map map;
 	    static int taille = 10;
+	    static Button btnjouer;
+	    static Button btncredit;
+	    static Button btnscore;
+	    static Button btnChnom;
 	    //TODO condition de fin
 	    //TODO hoover boolean pour tous les éléments (éviter de les redessiner a chaque fois
 	    //TODO classe pour les éléments du menu ?
@@ -31,36 +35,47 @@ public class Main {
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "PACMAN");
 	    	 //Bouton play
 
-	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 80, 20);
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
+	    	 btnjouer.dessiner();
 	    	 //bouton scores
-	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-45, 80, 20);
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-45, "Scores");
+	    	 btnscore.dessiner();
 	    	 
 	    	//bouton changer de nom
-	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-90, 80, 20);
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-90, "Changer de nom");
+	    	 btnChnom.dessiner();
 	    	 
 	    	 //bouton crédit
-	    	 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-135, 80, 20);
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2-135, "Crédit");
+	    	 btncredit.dessiner();
 	    	 
 	    	 //bouton 2 joueurs ?
 	    	 while(menu){
-	    		 if(StdDraw.mouseX()>WIN_WIDTH/2-40 && StdDraw.mouseX()<WIN_WIDTH/2+40 && StdDraw.mouseY()>WIN_HEIGHT/2-20 && StdDraw.mouseY() <WIN_HEIGHT/2+20){
-	    			 StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-	    			 //TODO décalage pour rendre plus "joli" ?
-	    			 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 74, 16);
-	    	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
+	    		 if(btnjouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
 		    		 }
-	    		 }else{
-	    			 StdDraw.setPenColor(StdDraw.BLACK);
-	    			 StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, 74, 16);
-	    			 StdDraw.setPenColor(StdDraw.BLUE);
-	    			 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2, "Play");
 	    		 }
+	    		 
+	    		 if(btnscore.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 menuNom();
+		    		 }
+	    		 }
+	    		 
+	    		 if(btnChnom.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 menuNom();
+		    		 }
+	    		 }
+	    		 
+	    		 if(btncredit.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 credit();
+		    		 }
+	    		 }
+	    	 
+	    	 
+	    	 
 	    	 }
 	    	
 	    }
@@ -78,12 +93,23 @@ public class Main {
 	    	
 	    }
 	    public static void menuNom(){
+	    	boolean menu = true;
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	 //TODO bouton retour
+	    	 while(menu){
+	    		 
+	    	 }
 	    	
 	    }
 	    public static void credit(){
+	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
-	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	
+	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	 //TODO bouton retour
+	    	 while(menu){
+	    		 
+	    	 }
 	    }
 	    //TODO  Utiliser la fonction Init pour la première partie ?
 	    //TOD0 refaire le ini plus propre
@@ -219,6 +245,13 @@ public class Main {
 	     blue = new Ghost(map.xBSpawn, map.yBSpawn, 3,"blue");
 	     pink = new Ghost(map.xPSpawn, map.yPSpawn, 0,"pink");
 	     orange = new Ghost(map.xOSpawn, map.yOSpawn, 2,"orange");
+	     
+	     //Boutons
+	     btnjouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/2,80,20,"Play");
+		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-5,80,20,"Score");
+	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-5,80,20,"Changer de nom");
+	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-5,80,20,"Credits");
+	    
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
  		

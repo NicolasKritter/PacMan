@@ -62,7 +62,7 @@ public class Map {
 		 //TODO possibilité de passer d'un coté à l'autre ?
 		 
 		 //Création des bords
-		 listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -1),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -1));
+		 listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -2),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -2));
 
 		 for(int x = 1;x<lar;x = x+1) {			
 			 coord[x][0] = 2;
