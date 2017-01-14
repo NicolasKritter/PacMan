@@ -24,9 +24,7 @@ public class Main {
 	    static Button btncredit;
 	    static Button btnscore;
 	    static Button btnChnom;
-	    //TODO condition de fin
-	    //TODO hoover boolean pour tous les éléments (éviter de les redessiner a chaque fois
-	    //TODO classe pour les éléments du menu ?
+
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -125,10 +123,11 @@ public class Main {
 	    		init(map);
 
 	    	}
-	    	
+	    	//Affiche  le nombre de vie restante
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
         	 StdDraw.show();
         	 StdDraw.pause(3000);
+        	 //On affiche le bandeau vie et score (du haut)
              StdDraw.clear(StdDraw.BLACK);
              StdDraw.setPenColor(StdDraw.WHITE);
              StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
@@ -137,6 +136,8 @@ public class Main {
              afficherMur(map.listemur);
             
              //TODO récupperer les coockies restant et les afficher
+            
+             //On replace les personnages à leur endroit de spawn
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
 	    	player.buffer = -1;
@@ -155,6 +156,7 @@ public class Main {
 	    public  void creerPerso(Perso perso,String nom){
 	    	perso.name = nom;
 	    }
+	    
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
 	    	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+(player.score-2));
@@ -169,7 +171,7 @@ public class Main {
 	    
 
 	    
-	 // Afficher les perso
+	 // Afficher les perso selon leur coulerus
 	    public static void afficherPerso(Perso perso){
 
 
@@ -193,6 +195,7 @@ public class Main {
 	    	StdDraw.filledCircle(perso.x,perso.y,perso.taille);
 	    	
 	    }
+	    //effacer un personnage ou un cookie
 	    public static void effaceur(double x, double y, double taille){
 	    	StdDraw.setPenColor(StdDraw.BLACK);
 	    	StdDraw.filledCircle(x,y,taille+1);
@@ -201,6 +204,7 @@ public class Main {
 	    public static void afficherMur(Mur listemur){
 	    	
 	    	Mur mur = listemur;
+	    	//parcour la liste chaînée des murs et on les dessines
 	        while(mur!=null){
 
 	        	StdDraw.setPenColor(StdDraw.BLUE);
@@ -215,7 +219,9 @@ public class Main {
 	    	Cookie cookie = listecookie;
 	    	System.out.println("--------------------");
 	    	int k = 0;
+	    	//parcour la liste chaînée des cookies
 	        while(cookie!=null){
+	        	//on les dessines que si ils ont l'attribut visible
 	       	 if(cookie.visible==null){
 		    	 StdDraw.setPenColor(StdDraw.WHITE);
 		    	 StdDraw.filledCircle(cookie.x,cookie.y,cookie.taille);
@@ -255,7 +261,6 @@ public class Main {
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
  		
-		//TODO Ecran Menu
 		//TODO Bouton Play
 		//TODO Text field nom
 	    
@@ -296,14 +301,14 @@ public class Main {
 	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
    	 
    	 
-    
+    //TODO fonction jouer
    	 
-        while(true){
+        while(map.nbcookie>1){
 
         	
         	//gestion du jeux
 	        if(play){
-	        	
+	        	//éviter la répétition lorsque que la touche P est pressée
 	        	if (pause>1){
 		        	pause -= 1;
 		        	}else{
@@ -314,7 +319,7 @@ public class Main {
 	        	 
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
-	        		 
+	        		 //la prochaine direction sera vers le haut
 	                 player.buffer = 0;
 	                 
 	             }
@@ -332,6 +337,7 @@ public class Main {
 	             }
 	             
 	             if(!player.checkhitwall(map,  player.buffer)){
+	            	 //si la prochaine direction est libre, on la prend
 	            	 
 	            	 player.dir =  player.buffer;
 	            	 
@@ -343,17 +349,20 @@ public class Main {
 	            
 	             for (Ghost ghost: listGhost){  
 	            	
-	            	 
+	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(200)==5 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
+	            		 //si sa prochaine direction est libre, le fantome la prend
 	            		 ghost.dir = ghost.buffer;
+	            		 //On change sa prochaine direction
 	            		 ghost.buffer = random.nextInt(4);
 		             }
 	            	 ghost.move();
 	            	 
 	            	 if(ghost.checkhitwall(map)){
+	            		 //si il touche un mur, on le fait rebondir
 	            		 ghost.bounchehitwall(map);
 	            	 }
 	            	 map.checkhitghost(player, ghost);
@@ -372,13 +381,7 @@ public class Main {
 	            	 //player.hitwall();
 	            	
 	             }  
-	             
-			        
-	             	 
-	             
-	             //TODO combiner les check ?
-	            
-	             
+	             //TODO combiner les check ?	            	        
 	             afficherPerso(player);
 	             //Affichage du jeux
 	             
@@ -388,7 +391,8 @@ public class Main {
 	             
 	        }
 	        else{
-	        	
+	        	//Pour éviter la répétition de l'inversion play pause on met un timer avant 
+	        	//de pouvoir réactiver la touche P
 	        	if (pause>1 ){
 	        	pause -= 1;
 	        	}else{
@@ -401,8 +405,7 @@ public class Main {
 	        }
 	        
 	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
-	        	//
-	        	//KeyEvent.KEY_RELEASED==KeyEvent.VK_P
+	        	
 	        	pause = 10;
 	        	play = !play;
 	       	 

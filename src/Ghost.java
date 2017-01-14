@@ -10,6 +10,8 @@ public void bounchehitwall(Map map){
 	 int oldir  =this.dir;
 	 switch(oldir){
 	 case 0:
+		 //Si le fantôme touche un mur en se déplacçant dans une direction
+		 //On définie les nouveles directions possibles
 		newdir = new int[]{1,2,3};
 		 break;
 	 case 1:
@@ -23,7 +25,11 @@ public void bounchehitwall(Map map){
 	 break;
 	 
 	 }
+	 //Le fantôme choisis une nouvelle direction au hasard
+	 // différente de celle qu'il avait en allant vers le mur
 	this.dir = newdir[Main.random.nextInt(2)];
+	//On met cette direction en prochaine direction pour éviter les aller-retour sur place
+	
 	this.buffer = this.dir;
 	 }
 }

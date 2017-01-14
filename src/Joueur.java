@@ -8,12 +8,14 @@ public class Joueur extends Perso{
 		vie = 3;
 		
 	}
-	
+	//TODO a supprimer ?
 	public void hitwall(){
 		this.dir = -1;
 		 }
 	 
+	//On regarde si le joueur est sur la même case qu'un cookie
 	 public void checkhitcookie(Map map){
+		 //On convertit la coordonnée du personnage en coordonnée du tableau de la carte
 		 int nx = (int)(Math.round((this.x/Main.WIN_WIDTH)*map.lar));
 		 int ny = (int)(Math.round((this.y/Main.WIN_WIDTH)*map.lon)); 
 

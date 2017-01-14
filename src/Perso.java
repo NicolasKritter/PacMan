@@ -47,16 +47,18 @@ public class Perso {
 	 }
 
 	 public boolean checkhitwall(Map map){
-
+		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
 		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
 		
 		
-		 
+		 	//On regarde si le perso touche un mur dans la direction dans laquelle
+		 // il se déplace
 				 switch(this.dir){
 				 case 0:
 					 if (map.coord[x][y-taille]==2 || map.coord[x-taille][y-taille]==2 || map.coord[x+taille][y-taille]==2){
+						 //on fait rebondir le perso si il touche un mur
 						 this.y = this.y+Main.STEP;
 						
 						 return true;
@@ -83,24 +85,27 @@ public class Perso {
 				 } 
 				 return false;
 			 //TODO expliquer méthode des cases
-			//TODO optimiser méthode de shannon
 	}
 
 	
 	public boolean checkhitwall(Map map, int direc){
+		
+		//on transcrit la position du perso en case sur le tableau de la carte
+		//Pour savoir dans quel case de la carte il se trouve
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
 		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
+		 //TODO  changer le Math.round ?
 		 int step = (int)(Math.round(1));
 
 		// 0: bas 1: haut 2: gauche 3: droite
-		 //TODO oasser le + en math.round
 		
+		 //On vérifie si la prochaine direction (celle dans le buffer ) est libre
 				 switch(direc){
 				 case 0:
 					 if (map.coord[x-(taille)][y-(taille)-step]==2 || map.coord[x+(taille)][y-(taille)-step]==2 || map.coord[x][y-(taille)-step]==2){//|| map.coord[x-taille][y-taille]==2 || map.coord[x+taille][y-taille]==2){
-						 
+						 // la prochaine direction n'est pas libre
 						 return true;
 					 }
 					 break;

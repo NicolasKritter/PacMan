@@ -25,12 +25,18 @@ public class Map {
 	 int nbcookie;
 	 public Map(){
 		 	//TODO enlever le 2*taille ?
+		 
+		 //échelle de l'écran d'affichage
 		  largeur = Main.WIN_WIDTH;
 		  longeur = Main.WIN_HEIGHT;
+		  
+		  //echelle de la carte
 		   lon = longeur/(2*Main.taille);
 		   lar = largeur/(2*Main.taille);
-		  nbcookies = 1;
-		  
+		   
+		  nbcookies = 0;
+		  //TODO placer un endroit de spawn pour le rouge ou faire un parc commun ?
+		  //placement des endroit d'apparition des personnages
 		  xRSpawn = largeur/2;
 		  yRSpawn = longeur/4;
 		  xOSpawn = largeur -lar;
@@ -43,8 +49,16 @@ public class Map {
 		  yStart = lon;
 		  nbcookie = 0;
 		  
+		  //création de la carte vide
 		  coord = new int[lar+1 ][lon+1 ];
+		  
+		  //carte où se trouvent les cookies 
+		  //(pour savoir lequel est à effacer quand on marche dessus)
 		  coordcookie = new Cookie[lar+1 ][lon+1 ];
+		  
+		  //On initialise la carte avec que des chemins libres 
+		  
+		  //TODO iitialiser avec que des cookies puis mettre des murs ?
 		  for (int k = 0; k<coord.length;k++){
 			  for (int j = 0; j<coord[0].length;j++){
 				  coord[k][j] = 1;
@@ -63,7 +77,7 @@ public class Map {
 		 
 		 //Création des bords
 		 listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -2),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -2));
-
+		 //On met des murs sur les bordures de la carte
 		 for(int x = 1;x<lar;x = x+1) {			
 			 coord[x][0] = 2;
 			 coord[x][lon] = 2;
@@ -76,6 +90,7 @@ public class Map {
 		
 		
 //TODO 	ajouter des mus verticalement ?
+		 //On place des murs sur la carte et on crée la liste des murs à afficher
 		for(int x = 4;x<lar-2;x = x+2) {
 			for(int y = 4;y<lon-2;y = y+4) {
 				if(Main.random.nextInt(10)<8){
@@ -88,6 +103,7 @@ public class Map {
 		
 		 
 	 }
+	 //TODO a placer dans generate wall
 	 public void generatecookie(){
 		 listcookie = null;
 		 for(int x = 2;x<lar-1;x = x+2) {
@@ -128,7 +144,7 @@ public class Map {
 		}
 	 
 
-	//check si le joueur toucche un fantôme
+	//check si le joueur toucche un fantôme en regardant la distance entre les 2
 	 public void checkhitghost(Joueur perso,Ghost ghost){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= Main.taille *2){
