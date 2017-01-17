@@ -1,5 +1,6 @@
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -27,7 +28,9 @@ public class Main {
 	    static Button btnsaveScore;
 	    static Button btnMenujouer;
 	    static Button btnretour;
-
+	    static ScoreSheet fscore;
+	    
+	    
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -81,6 +84,7 @@ public class Main {
 	    	
 	    }
 	    public static String getScore(boolean all){
+	    	//liste de score
 	    	
 	    	if(all){
 	    		return "a";
@@ -263,7 +267,7 @@ public class Main {
 	    }
 	    public static void afficherCookie(Cookie listecookie){
 	    	Cookie cookie = listecookie;
-	    	System.out.println("--------------------");
+	    	//System.out.println("--------------------");
 	    	int k = 0;
 	    	//parcour la liste chaînée des cookies
 	        while(cookie!=null){
@@ -276,7 +280,7 @@ public class Main {
 	      
 	        	cookie = cookie.suivant;
 	        }
-	        System.out.println("-------------------- " +k);
+	        //System.out.println("-------------------- " +k);
 
 	    	 
 	    }
@@ -286,10 +290,14 @@ public class Main {
 	    //TODO stocker les scores
 	    //TODO afficher pause ?
 	    //TODO IA
-	public  static void main(String[] args) {
+	public  static void main(String[] args)  {
 		//controle
 		 boolean play = true;
 	     int pause = 0;
+	     ScoreSheet.init();
+	     fscore = new ScoreSheet();
+	     
+	     
 	    //Jeux
 		  map = new Map();
 	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur");
@@ -387,16 +395,23 @@ public class Main {
 	            
 	                        
 	             for (Ghost ghost: listGhost){  
-	            	
+	            	//TODO chek hit wall fantome: fantome pas choisir trop souvent le retour en arriere ?
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(200)==5 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);
+	            		/* while(Math.abs( ghost.buffer -  ghost.dir)==2){
+	            			 ghost.buffer = random.nextInt(4);
+	            		 }*/
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
 	            		 //si sa prochaine direction est libre, le fantome la prend
 	            		 ghost.dir = ghost.buffer;
 	            		 //On change sa prochaine direction
-	            		 ghost.buffer = random.nextInt(4);
+	            		
+	            		 while(ghost.buffer==ghost.dir ){
+	            			 ghost.buffer = random.nextInt(4);
+	            		 }
+	            		
 		             }
 	            	 ghost.move();
 	            	 
