@@ -18,12 +18,14 @@ public class Main {
 	    static Ghost blue;
 	    static Ghost pink;
 	    static Ghost orange;
-	    static Map map;
+	     static Map map;
 	    static int taille = 10;
 	    static Button btnjouer;
 	    static Button btncredit;
 	    static Button btnscore;
 	    static Button btnChnom;
+	    static Button btnsaveScore;
+	    static Button btnMenujouer;
 
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
@@ -109,20 +111,45 @@ public class Main {
 	    		 
 	    	 }
 	    }
+	    public static void fin(){
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	
+	    	
+	    	StdDraw.setPenColor(StdDraw.WHITE);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
+    		btnsaveScore.dessiner();
+    		btnMenujouer.dessiner();
+    		StdDraw.show();
+    		boolean menu = true;	
+	    	while(menu){
+	    		
+	    		if(btnMenujouer.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;		    	    		
+		    			 map = new Map();
+		    	    		player.vie = 3;
+		    	    		player.score = 0;
+		    	    		init();
+		    		 }
+	    		 }
+	    		
+	    		if(btnsaveScore.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 sauverScore();
+		    		 }
+	    		 }
+	    		
+	    	}
+	    		
+	    	
+	    }
 	    //TODO  Utiliser la fonction Init pour la première partie ?
 	    //TOD0 refaire le ini plus propre
-	    public  static void init(Map map){
+	    public  static void init(){
 	    	 StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	if (player.vie<1){
-	    		player.vie = 3;
-	    		map = new Map();
-	    		StdDraw.setPenColor(StdDraw.WHITE);
-	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
-	    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3,"PACMAN 2.0 \n Début dans 3 sec \n Nicolas Kritter Eliott Vanacker");
-	    		init(map);
-
-	    	}
+	    	
 	    	//Affiche  le nombre de vie restante
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
         	 StdDraw.show();
@@ -134,7 +161,6 @@ public class Main {
            	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
            	
              afficherMur(map.listemur);
-            
              //TODO récupperer les coockies restant et les afficher
             
              //On replace les personnages à leur endroit de spawn
@@ -150,6 +176,7 @@ public class Main {
 	    	pink.y = map.yPSpawn;
 	    	orange.x = map.xOSpawn;
 	    	orange.y = map.yOSpawn;
+	    	
 	    	
 	    }
 	    // Nommer le perso
@@ -238,14 +265,14 @@ public class Main {
 	    //TODO mettre des images
 	    //TODO faire menu
 	    //TODO stocker les scores
-	    //TODO afficher pause
+	    //TODO afficher pause ?
 	    //TODO IA
 	public  static void main(String[] args) {
 		//controle
 		 boolean play = true;
 	     int pause = 0;
 	    //Jeux
-		 Map map = new Map();
+		  map = new Map();
 	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur");
 	     red = new Ghost(map.xRSpawn, map.yRSpawn, 1,"red");
 	     blue = new Ghost(map.xBSpawn, map.yBSpawn, 3,"blue");
@@ -257,7 +284,9 @@ public class Main {
 		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-5,80,20,"Score");
 	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-5,80,20,"Changer de nom");
 	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-5,80,20,"Credits");
-	    
+ 		 btnsaveScore = new Button(WIN_WIDTH/2,WIN_HEIGHT/3,80,20,"Sauver le Score");
+ 		 btnMenujouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/4,80,20,"Re jouer");
+ 		
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
  		
@@ -303,11 +332,13 @@ public class Main {
    	 
     //TODO fonction jouer
    	 
-        while(map.nbcookie>1){
-
+        while(true){
+        	
         	
         	//gestion du jeux
 	        if(play){
+	        	//affiche les cookies
+	        	afficherCookie(map.listcookie);
 	        	//éviter la répétition lorsque que la touche P est pressée
 	        	if (pause>1){
 		        	pause -= 1;
@@ -342,11 +373,8 @@ public class Main {
 	            	 player.dir =  player.buffer;
 	            	 
 	             }
-
-
-	             afficherCookie(map.listcookie);
-	             
 	            
+	                        
 	             for (Ghost ghost: listGhost){  
 	            	
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200

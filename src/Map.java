@@ -71,6 +71,7 @@ public class Map {
 		 
 	 }
 	 //TODO fantome tracking si pas de mur entre
+
 	 
 	 public void generateWall(){
 		 //TODO possibilité de passer d'un coté à l'autre ?
@@ -149,7 +150,11 @@ public class Map {
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= Main.taille *2){
 			 perso.vie = perso.vie-1;
-			 Main.init(this);		
+			 if(perso.vie>0){
+			 Main.init();
+			 }else{
+				 Main.fin();
+			 }
 			 
 			 
 			 }

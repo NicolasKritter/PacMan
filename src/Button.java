@@ -25,6 +25,7 @@ public class Button {
 		StdDraw.rectangle(x, y, width, height);
 		StdDraw.text(x, y, text);
 		hoovered = false;
+		StdDraw.show();
 	}
 	public void hooverDraw(){
 		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
@@ -32,6 +33,7 @@ public class Button {
 		hoovered = true;
 		StdDraw.rectangle(x, y, width-6, height-4);
 		StdDraw.text(x, y, text);
+		StdDraw.show();
 		
 	}
 	public boolean hoover(){
