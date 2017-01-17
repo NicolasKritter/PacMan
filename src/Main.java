@@ -18,7 +18,7 @@ public class Main {
 	    static Ghost blue;
 	    static Ghost pink;
 	    static Ghost orange;
-	     static Map map;
+	    static Map map;
 	    static int taille = 10;
 	    static Button btnjouer;
 	    static Button btncredit;
@@ -26,6 +26,7 @@ public class Main {
 	    static Button btnChnom;
 	    static Button btnsaveScore;
 	    static Button btnMenujouer;
+	    static Button btnretour;
 
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
@@ -96,8 +97,14 @@ public class Main {
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.BLUE);
-	    	 //TODO bouton retour
+	    	 btnretour.dessiner();
 	    	 while(menu){
+	    		 if(btnretour.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;	
+		    			 menuPrincipal();
+	    			 }
+	    		 }
 	    		 
 	    	 }
 	    	
@@ -106,8 +113,14 @@ public class Main {
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.BLUE);
-	    	 //TODO bouton retour
+	    	 btnretour.dessiner();
 	    	 while(menu){
+	    		 if(btnretour.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;	
+		    			 menuPrincipal();
+	    			 }
+	    		 }
 	    		 
 	    	 }
 	    }
@@ -119,7 +132,7 @@ public class Main {
     		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
-    		StdDraw.show();
+    		btnretour.dessiner();
     		boolean menu = true;	
 	    	while(menu){
 	    		
@@ -138,6 +151,12 @@ public class Main {
 		    			 menu = false;
 		    			 sauverScore();
 		    		 }
+	    		 }
+	    		 if(btnretour.hoovered){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;	
+		    			 menuPrincipal();
+	    			 }
 	    		 }
 	    		
 	    	}
@@ -159,7 +178,7 @@ public class Main {
              StdDraw.setPenColor(StdDraw.WHITE);
              StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
            	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
-           	
+           	//Réaffiche les murs
              afficherMur(map.listemur);
              //TODO récupperer les coockies restant et les afficher
             
@@ -281,16 +300,18 @@ public class Main {
 	     
 	     //Boutons
 	     btnjouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/2,80,20,"Play");
-		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-5,80,20,"Score");
-	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-5,80,20,"Changer de nom");
-	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-5,80,20,"Credits");
+		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-30,80,20,"Score");
+	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-30,80,20,"Changer de nom");
+	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"Credits");
+	     
+	     
  		 btnsaveScore = new Button(WIN_WIDTH/2,WIN_HEIGHT/3,80,20,"Sauver le Score");
  		 btnMenujouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/4,80,20,"Re jouer");
+ 		 btnretour = new Button(100,50,80,20,"retour");
  		
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
  		
-		//TODO Bouton Play
 		//TODO Text field nom
 	    
 
@@ -299,17 +320,7 @@ public class Main {
         StdDraw.setYscale(0, WIN_HEIGHT);
         
         menuPrincipal();
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
+      
         /*
          * 
          * 

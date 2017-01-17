@@ -25,6 +25,7 @@ public class Joueur extends Perso{
 			 if (map.coord[nx][ny]==1){
 				 Cookie supp = map.coordcookie[nx][ny];
 				 if (supp!=null){
+					 
 				 map.coord[nx][ny]=0;
 				 map.nbcookie = map.nbcookie-1;
 					 this.score = this.score+2;
@@ -34,6 +35,9 @@ public class Joueur extends Perso{
 					 
 					 //TODo faire une liste qui récupère la nouvelle liste 
 					  map.deleteCookie(supp);
+					  if(map.nbcookie<1){
+						  Main.fin();
+					  }
 				 }
 					
 					 

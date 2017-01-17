@@ -35,16 +35,25 @@ public class Map {
 		   lar = largeur/(2*Main.taille);
 		   
 		  nbcookies = 0;
-		  //TODO placer un endroit de spawn pour le rouge ou faire un parc commun ?
+		  //TODO placer un endroit de spawn commun au milieu?
 		  //placement des endroit d'apparition des personnages
+		  
 		  xRSpawn = largeur/2;
+		  yRSpawn = longeur/2+lar;
+		  xOSpawn =  largeur/2 +4*lon;
+		  yOSpawn = longeur/2+lar;
+		  xBSpawn =  largeur/2 ;
+		  yBSpawn =  longeur/2 -4*lar;
+		  xPSpawn =  largeur/2;
+		  yPSpawn = longeur/2 +4*lar;
+		  /*xRSpawn = largeur/2;
 		  yRSpawn = longeur/4;
 		  xOSpawn = largeur -lar;
 		  yOSpawn = longeur-lon;
 		  xBSpawn = lon;
 		  yBSpawn = longeur-lon;
 		  xPSpawn = lar;
-		  yPSpawn = lon;
+		  yPSpawn = lon;*/
 		  xStart = largeur -lar;
 		  yStart = lon;
 		  nbcookie = 0;
@@ -122,24 +131,23 @@ public class Map {
 		 }
 		
 	 }
+	 //TODO faire changement de mouvent & pos uand x ou y en milieu de case ?(modulo)
 		public  void  deleteCookie(Cookie Cookie){
 			
 
-			Cookie courant = this.listcookie;
-					
-			while(!courant.equals(Cookie) && courant.suivant != null){
+			Cookie courant = listcookie;
+			while(!courant.equals(Cookie) && courant != null){
+				
 				courant = courant.suivant;
 			
 				
 			}
 			
-			if(courant!=null){
+			if( courant.suivant !=null){
 				Cookie reste = courant.suivant;
-			courant.visible = "non";
-				System.out.println(courant);
-			courant = reste;
-			
-			
+				//TODO changer boolean
+				courant.visible = "non";
+			courant = reste;			
 			}
 			
 		}

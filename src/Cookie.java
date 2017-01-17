@@ -2,8 +2,7 @@
 public class Cookie {
 	double x;
 	double y;
-	int x2;//TODO ça ou id ?
-	int y2;
+
 	int taille;
 	Cookie suivant;
 	int tabx;
