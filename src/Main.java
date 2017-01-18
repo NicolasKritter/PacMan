@@ -30,7 +30,7 @@ public class Main {
 	    static Button btnretour;
 	    static ScoreSheet fscore;
 	    
-	    
+	    //TODO class menu ?
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -209,9 +209,8 @@ public class Main {
 	    
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
-	   //TODO dessiner un rectangle ?
-	    	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+(player.score-2));
-	    	 StdDraw.rectangle(WIN_WIDTH/(1.5), -25, Main.taille/2, Main.taille/2);
+	    	 
+	    	 StdDraw.filledRectangle(WIN_WIDTH/(1.5), -25, 80, 20);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
 	    	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
 	    	 
@@ -285,7 +284,8 @@ public class Main {
 
 	    	 
 	    }
-	   
+	    //TODO changer fantome buffer quand hit wall et retour en arrière
+	    //TODO changer police et taille
 	    //TODO mettre des images
 	    //TODO faire menu
 	    //TODO stocker les scores

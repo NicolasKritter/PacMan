@@ -142,7 +142,7 @@ public class Map {
 			
 				
 			}
-			
+			//TODO A CHANGER
 			if( courant.suivant !=null){
 				Cookie reste = courant.suivant;
 				//TODO changer boolean
