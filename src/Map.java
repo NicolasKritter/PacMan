@@ -146,10 +146,11 @@ public class Map {
 			if( courant.suivant !=null){
 				Cookie reste = courant.suivant;
 				//TODO changer boolean
-				
+				courant.visible = "non";
 			courant = reste;			
+			}else if (courant!=null){
+				courant.visible = "non";
 			}
-			courant.visible = "non";
 			
 		}
 	 
