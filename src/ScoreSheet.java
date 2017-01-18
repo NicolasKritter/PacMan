@@ -11,7 +11,7 @@ import java.util.List;
 public class ScoreSheet {
 	
 	//créé l'objet document
-	static File scoreSheet = new File("src/scoreSheet.csv");
+	static File scoreSheet = new File("src/data/scoreSheet.csv");
 	//créé le tableau de score
 	static List<String[]> scorestable;
 	//ligne des scores pour affichage top 10

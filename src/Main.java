@@ -167,7 +167,7 @@ public class Main {
 	    		
 	    	
 	    }
-	    //TODO  Utiliser la fonction Init pour la première partie ?
+
 	    //TOD0 refaire le ini plus propre
 	    public  static void init(){
 	    	 StdDraw.clear(StdDraw.BLACK);
@@ -180,8 +180,8 @@ public class Main {
         	 //On affiche le bandeau vie et score (du haut)
              StdDraw.clear(StdDraw.BLACK);
              StdDraw.setPenColor(StdDraw.WHITE);
-             StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
-           	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
+             StdDraw.text(WIN_WIDTH/3, -25,"Vie(s): "+player.vie);
+        	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
            	//Réaffiche les murs
              afficherMur(map.listemur);
              //TODO récupperer les coockies restant et les afficher
@@ -209,10 +209,11 @@ public class Main {
 	    
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
-	    	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+(player.score-2));
-	    	 StdDraw.rectangle(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille, Main.taille/2, Main.taille/2);
+	   //TODO dessiner un rectangle ?
+	    	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+(player.score-2));
+	    	 StdDraw.rectangle(WIN_WIDTH/(1.5), -25, Main.taille/2, Main.taille/2);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+(player.score));
+	    	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
 	    	 
 	    	 
 	    	
@@ -248,7 +249,7 @@ public class Main {
 	    //effacer un personnage ou un cookie
 	    public static void effaceur(double x, double y, double taille){
 	    	StdDraw.setPenColor(StdDraw.BLACK);
-	    	StdDraw.filledCircle(x,y,taille+1);
+	    	StdDraw.filledCircle(x,y,taille+1.4);
 	    }
 	  // afficher murs
 	    public static void afficherMur(Mur listemur){
@@ -325,7 +326,7 @@ public class Main {
 
 		//Génère la grille de la  fenètre
 		StdDraw.setXscale(0, WIN_WIDTH);
-        StdDraw.setYscale(0, WIN_HEIGHT);
+        StdDraw.setYscale(-50, WIN_HEIGHT);
         
         menuPrincipal();
       
@@ -345,8 +346,8 @@ public class Main {
    	 //Afficher tous les coockies
    	 afficherCookie(map.listcookie);
    	 StdDraw.setPenColor(StdDraw.WHITE);
-   	 StdDraw.text(WIN_WIDTH/3, WIN_HEIGHT-Main.taille,"Vie(s): "+player.vie);
-	 StdDraw.text(WIN_WIDTH/(1.5), WIN_HEIGHT-Main.taille,"Score: "+player.score);
+   	 StdDraw.text(WIN_WIDTH/3, -25,"Vie(s): "+player.vie);
+	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
    	 
    	 
     //TODO fonction jouer
@@ -445,6 +446,7 @@ public class Main {
 	             
 	        }
 	        else{
+	        	
 	        	//Pour éviter la répétition de l'inversion play pause on met un timer avant 
 	        	//de pouvoir réactiver la touche P
 	        	if (pause>1 ){
@@ -459,7 +461,7 @@ public class Main {
 	        }
 	        
 	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
-	        	
+	        	//TODO afficher pause avec txt en bas ?
 	        	pause = 10;
 	        	play = !play;
 	       	 
