@@ -33,7 +33,8 @@ public class Map {
 		  //echelle de la carte
 		   lon = longeur/(2*Main.taille);
 		   lar = largeur/(2*Main.taille);
-		   
+		   System.out.println(lon);
+		   System.out.println(lar);
 		  nbcookies = 0;
 		  //TODO placer un endroit de spawn commun au milieu?
 		  //placement des endroit d'apparition des personnages
@@ -99,7 +100,7 @@ public class Map {
 			}
 		
 		
-//TODO 	ajouter des mus verticalement ?
+//TODO empêcher la création de mur aux endroits de spawn
 		 //On place des murs sur la carte et on crée la liste des murs à afficher
 		for(int x = 4;x<lar-2;x = x+2) {
 			for(int y = 4;y<lon-2;y = y+4) {
@@ -110,7 +111,15 @@ public class Map {
 				  	}
 			}
 		}
-		
+		for(int x = 4;x<lar-2;x = x+4) {
+			for(int y = 4;y<lon-2;y = y+2) {
+				if(Main.random.nextInt(lon)<1){
+					 Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
+					 
+					 coord[x][y] = 2;
+				  	}
+			}
+		}
 		 
 	 }
 	 //TODO a placer dans generate wall

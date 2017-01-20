@@ -4,7 +4,8 @@ public Ghost(int x0, int y0, int dir0, String nom) {
 	super(x0, y0, dir0, nom);
 	
 }
-// teste si un fantôme touche un mur
+//0: bas 1: haut 2: gauche 3: droite
+// fait "rebondir " un  fantôme touche un qui mur
 public void bounchehitwall(Map map){
 	int[] newdir = new int[3];
 	 int oldir  =this.dir;
@@ -12,10 +13,11 @@ public void bounchehitwall(Map map){
 	 case 0:
 		 //Si le fantôme touche un mur en se déplacçant dans une direction
 		 //On définie les nouveles directions possibles
-		newdir = new int[]{1,2,3};
+		
+		newdir = new int[]{2,3,1};
 		 break;
 	 case 1:
-		 newdir = new int[]{0,2,3};
+		 newdir = new int[]{2,3,0};
 		 break;
 	 case 2:
 		 newdir = new int[]{1,0,3};
@@ -26,10 +28,23 @@ public void bounchehitwall(Map map){
 	 
 	 }
 	 //Le fantôme choisis une nouvelle direction au hasard
-	 // différente de celle qu'il avait en allant vers le mur
-	this.dir = newdir[Main.random.nextInt(2)];
+	 //ordre: en arrière au dernier recours
+	 int k = 0;
+	 while(this.checkhitwall(map, newdir[k]) && k<3){
+		 k = k+1;
+	 }
+	 this.dir = newdir[k];
+	 //évite de prendre comme prochaine direction un retour en arrière
+	 while(Math.abs(this.buffer-this.dir)==1){
+	 this.buffer = newdir[Main.random.nextInt(3)];
+	 }
+/*
+	if(!this.checkhitwall(map, this.dir)){
+		this.buffer = newdir[Main.random.nextInt(2)];
+	}*/
+
 	//On met cette direction en prochaine direction pour éviter les aller-retour sur place
 	
-	this.buffer = this.dir;
+	
 	 }
 }

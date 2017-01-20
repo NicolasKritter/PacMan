@@ -1,6 +1,6 @@
 
+import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -10,10 +10,11 @@ public class Main {
 		
 	
 		//Display
+		//640
 	 	static int WIN_WIDTH= 640;
 	    static int WIN_HEIGHT= 640;
 	    static int FPS= 1000;
-	    static double STEP= 1.5;
+	    static double STEP= 1.6;
 	    static Joueur player;
 	    static Ghost red;
 	    static Ghost blue;
@@ -29,14 +30,18 @@ public class Main {
 	    static Button btnMenujouer;
 	    static Button btnretour;
 	    static ScoreSheet fscore;
+	    static Font font = new Font("Georgia", Font.BOLD, 60);
 	    
 	    //TODO class menu ?
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
-	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	 StdDraw.setPenColor(StdDraw.YELLOW);
 	    	 //titre
+	    	 StdDraw.setFont(font);
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "PACMAN");
+	    	 StdDraw.setFont();
+	    	 
 	    	 //Bouton play
 
 	    	 btnjouer.dessiner();
@@ -154,6 +159,7 @@ public class Main {
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
 		    			 sauverScore();
+		    			 menuPrincipal();
 		    		 }
 	    		 }
 	    		 if(btnretour.hoovered){
@@ -164,7 +170,7 @@ public class Main {
 	    		 }
 	    		
 	    	}
-	    		
+	    		//TODO changer la vitesse du jeux ?
 	    	
 	    }
 
@@ -248,7 +254,7 @@ public class Main {
 	    //effacer un personnage ou un cookie
 	    public static void effaceur(double x, double y, double taille){
 	    	StdDraw.setPenColor(StdDraw.BLACK);
-	    	StdDraw.filledCircle(x,y,taille+1.4);
+	    	StdDraw.filledCircle(x,y,taille+1);
 	    }
 	  // afficher murs
 	    public static void afficherMur(Mur listemur){
@@ -398,20 +404,16 @@ public class Main {
 	             for (Ghost ghost: listGhost){  
 	            	//TODO chek hit wall fantome: fantome pas choisir trop souvent le retour en arriere ?
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
-	            	 if(random.nextInt(200)==5 &&  ghost.buffer ==  ghost.dir){
+	            	 if(random.nextInt(100)<15 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);
-	            		/* while(Math.abs( ghost.buffer -  ghost.dir)==2){
+	            		 while(Math.abs( ghost.buffer -  ghost.dir)==1){
 	            			 ghost.buffer = random.nextInt(4);
-	            		 }*/
+	            		 }
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
 	            		 //si sa prochaine direction est libre, le fantome la prend
 	            		 ghost.dir = ghost.buffer;
-	            		 //On change sa prochaine direction
 	            		
-	            		 while(ghost.buffer==ghost.dir ){
-	            			 ghost.buffer = random.nextInt(4);
-	            		 }
 	            		
 		             }
 	            	 ghost.move();

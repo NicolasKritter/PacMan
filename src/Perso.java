@@ -96,8 +96,8 @@ public class Perso {
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
 		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
-		 //TODO  changer le Math.round ?
-		 int step = (int)(Math.round(1));
+
+		 int step = 1;
 
 		// 0: bas 1: haut 2: gauche 3: droite
 		
