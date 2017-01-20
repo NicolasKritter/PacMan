@@ -1,6 +1,7 @@
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -88,18 +89,39 @@ public class Main {
 	    	 }
 	    	
 	    }
-	    public static String getScore(boolean all){
+	    public static void AfficherScore(List<String> scorelist){
 	    	//liste de score
-	    	
-	    	if(all){
-	    		return "a";
-	    	}
-	    	else{
-	    		return "a" ;
+	    	int y = WIN_WIDTH-50;
+	    	int x = WIN_HEIGHT/2;
+	    	int k = 0;
+	    	StdDraw.setPenColor(StdDraw.WHITE);
+	    	if (scorelist!=null){
+		    	for (String txt: scorelist){
+		    		StdDraw.text(x, y+k, txt);
+		    		k = k+15;
+		    		
+		    	}
 	    	}
 	    	
 	    }
-	    public static void sauverScore(){
+
+	    //TODO score: prendre en compte le nombre max de cooie dispo
+	    public static void menuScore(){
+	    	boolean menu = true;
+	    	
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	StdDraw.setPenColor(StdDraw.BLUE);
+	    	AfficherScore(ScoreSheet.scoresligne);
+	    	btnretour.dessiner();
+	    	 while(menu){
+	    		 if(btnretour.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;	
+		    			 menuPrincipal();
+	    			 }
+	    		 }
+	    		 
+	    	 }
 	    	
 	    }
 	    public static void menuNom(){
@@ -138,10 +160,11 @@ public class Main {
 	    	
 	    	
 	    	StdDraw.setPenColor(StdDraw.WHITE);
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/4,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
+	    	AfficherScore(ScoreSheet.scoresligne);
     		boolean menu = true;	
 	    	while(menu){
 	    		
@@ -158,7 +181,9 @@ public class Main {
 	    		if(btnsaveScore.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
-		    			 sauverScore();
+		    			 ScoreSheet.writeScore(player.name,player.score);
+		    			 StdDraw.text(WIN_WIDTH-50, 0, "Fait");
+		    			 StdDraw.pause(1000);
 		    			 menuPrincipal();
 		    		 }
 	    		 }
@@ -320,9 +345,9 @@ public class Main {
 	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"Credits");
 	     
 	     
- 		 btnsaveScore = new Button(WIN_WIDTH/2,WIN_HEIGHT/3,80,20,"Sauver le Score");
- 		 btnMenujouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/4,80,20,"Re jouer");
- 		 btnretour = new Button(100,50,80,20,"retour");
+ 		 btnsaveScore = new Button(WIN_WIDTH/2,60,80,20,"Sauver le Score");
+ 		 btnMenujouer = new Button(WIN_WIDTH/2,20,80,20,"Jouer");
+ 		 btnretour = new Button(100,-20,80,20,"retour");
  		
 	     Ghost[] listGhost= {red,blue,pink,orange};
 

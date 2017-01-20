@@ -13,10 +13,11 @@ public class ScoreSheet {
 	//créé l'objet document
 	static File scoreSheet = new File("src/scoreSheet.csv");
 	//créé le tableau de score
-	static List<String[]> scorestable;
+	static ArrayList<String[]> scorestable;
 	//ligne des scores pour affichage top 10
 	static List<String> scoresligne;
 	static String separateur = ":";
+	static String newline="\n";
 	
 	public ScoreSheet(){
 		
@@ -64,7 +65,7 @@ public class ScoreSheet {
 			
 			//On sépare les colonnes
 			//tableau de string de la taille de temp
-			List<String[]> data  = new ArrayList<String[] >(temp.size());
+			ArrayList<String[]> data  = new ArrayList<String[] >(temp.size());
 			 for (String line : temp) {
 		            String[] oneData = line.split(separateur);
 		            data.add(oneData);
@@ -74,27 +75,63 @@ public class ScoreSheet {
 			scorestable = data;
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 			
 		
 	}
 	
-	public static String getScore(boolean all){
-		 
+	public static void writeScore(String nom, int score){
+		int k = 0;
+		String res = nom+" : "+score;
+		if(scoresligne!=null){
+			while(Integer.parseInt(scoresligne.get(k)) >score && k<scoresligne.size()){
+					k = k+1;
+			}
 		
+			if(k<11){
+				
+				
+				scoresligne.add(k, res);
+				if(scoresligne.size()>10){
+				scoresligne.set(11,null);
+				}
+			}
+		}else{
+			scoresligne = new ArrayList<String>();
+			scoresligne.add(k, res);
+		}
+			try {
+				FileWriter fileWriter = new FileWriter(scoreSheet);
+				 for (String line:scoresligne){
+					 //Ajoute chaque lignes du fichier et le délimiteur pour une nouvelle ligne
+					 fileWriter.append(line);
+					 fileWriter.append(newline);
+				 }
+				 fileWriter.flush();
+				 fileWriter.close();
+
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+	       
+	        
+	}
+		
+		
+	
+	
+	public static String getHighScore(){	
     	
-    	
-    	if(all){
-    		return "a";
-    	}
-    	else{
-    		return "a" ;
-    	}
+    		if (scoresligne!=null){
+    		return scoresligne.get(0) ;
+    		}else{
+    			return " ";
+    		}
     	
     }
 	
