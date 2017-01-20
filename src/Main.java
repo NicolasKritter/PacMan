@@ -1,6 +1,7 @@
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.introcs.StdDraw;
@@ -31,7 +32,9 @@ public class Main {
 	    static Button btnMenujouer;
 	    static Button btnretour;
 	    static ScoreSheet fscore;
-	    static Font font = new Font("Georgia", Font.BOLD, 60);
+	    static String cheminFeuilleDeScore = "src/Score/scoreSheet.csv";
+	    static Font fontTitrePrncipal = new Font("Georgia", Font.BOLD, 60);
+	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
 	    //TODO class menu ?
 	    public static void menuPrincipal(){
@@ -39,7 +42,7 @@ public class Main {
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.YELLOW);
 	    	 //titre
-	    	 StdDraw.setFont(font);
+	    	 StdDraw.setFont(fontTitrePrncipal);
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "PACMAN");
 	    	 StdDraw.setFont();
 	    	 
@@ -60,13 +63,14 @@ public class Main {
 	    		 if(btnjouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
+		    			 
 		    		 }
 	    		 }
 	    		 
 	    		 if(btnscore.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
-		    			 menuNom();
+		    			 menuScore();
 		    		 }
 	    		 }
 	    		 
@@ -90,18 +94,25 @@ public class Main {
 	    	
 	    }
 	    public static void AfficherScore(List<String> scorelist){
-	    	//liste de score
-	    	int y = WIN_WIDTH-50;
+	    	//Position de départ d'affichage
+	    	int y = WIN_WIDTH-200;
 	    	int x = WIN_HEIGHT/2;
 	    	int k = 0;
+	    	
 	    	StdDraw.setPenColor(StdDraw.WHITE);
 	    	if (scorelist!=null){
+	    		//parcoure la liste des scores ligne par ligne
 		    	for (String txt: scorelist){
 		    		StdDraw.text(x, y+k, txt);
-		    		k = k+15;
+		    		//crée l'écart entre les lignes
+		    		k = k+30;
 		    		
 		    	}
 	    	}
+	    	//Ajout d'un cadre
+	    	StdDraw.setPenColor(StdDraw.BLUE);
+	    	StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2-40, 100, 200);
+	    	StdDraw.show();
 	    	
 	    }
 
@@ -110,9 +121,15 @@ public class Main {
 	    	boolean menu = true;
 	    	
 	    	StdDraw.clear(StdDraw.BLACK);
-	    	StdDraw.setPenColor(StdDraw.BLUE);
-	    	AfficherScore(ScoreSheet.scoresligne);
+	    	StdDraw.setPenColor(StdDraw.YELLOW);
+	    	//change la police
+	    	StdDraw.setFont(fontTitre);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-70, "Scores enregistrés:");
+	    	StdDraw.setFont();
+	    	
+	    	AfficherScore(fscore.scoresligne);
 	    	btnretour.dessiner();
+
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
@@ -164,7 +181,7 @@ public class Main {
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
-	    	AfficherScore(ScoreSheet.scoresligne);
+	    	AfficherScore(fscore.scoresligne);
     		boolean menu = true;	
 	    	while(menu){
 	    		
@@ -172,8 +189,7 @@ public class Main {
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;		    	    		
 		    			 map = new Map();
-		    	    		player.vie = 3;
-		    	    		player.score = 0;
+		    	    		
 		    	    		init();
 		    		 }
 	    		 }
@@ -181,14 +197,19 @@ public class Main {
 	    		if(btnsaveScore.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
-		    			 ScoreSheet.writeScore(player.name,player.score);
+		    			 fscore.writeScore(player.name,player.score);
 		    			 StdDraw.text(WIN_WIDTH-50, 0, "Fait");
+		    			 StdDraw.show();
 		    			 StdDraw.pause(1000);
+		    			 //TODO a enlever ?
+		    			 //fscore.readFile();
 		    			 menuPrincipal();
 		    		 }
 	    		 }
 	    		 if(btnretour.hoovered){
 	    			 if(StdDraw.mousePressed()){
+	    				 player.vie = 3;
+		    	    	 player.score = 0;
 		    			 menu = false;	
 		    			 menuPrincipal();
 	    			 }
@@ -203,7 +224,10 @@ public class Main {
 	    public  static void init(){
 	    	 StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	
+	    	if (player.vie<1){
+	    		player.vie = 3;
+	    		player.score = 0;
+	    	}
 	    	//Affiche  le nombre de vie restante
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
         	 StdDraw.show();
@@ -215,7 +239,7 @@ public class Main {
         	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
            	//Réaffiche les murs
              afficherMur(map.listemur);
-             //TODO récupperer les coockies restant et les afficher
+             //TODO récupperer les cookies restant et les afficher
             
              //On replace les personnages à leur endroit de spawn
 	    	player.x = map.xStart;
@@ -252,7 +276,7 @@ public class Main {
 	    
 
 	    
-	 // Afficher les perso selon leur coulerus
+	 // Afficher les perso selon leur couleurs
 	    public static void afficherPerso(Perso perso){
 
 
@@ -315,20 +339,21 @@ public class Main {
 
 	    	 
 	    }
-	    //TODO changer fantome buffer quand hit wall et retour en arrière
-	    //TODO changer police et taille
-	    //TODO mettre des images
-	    //TODO faire menu
-	    //TODO stocker les scores
+	    
+
+	    //TODO mettre des images ?
+	    //TODO menu credit
+	    //TODO Channger de nom
+
 	    //TODO afficher pause ?
 	    //TODO IA
 	public  static void main(String[] args)  {
 		//controle
 		 boolean play = true;
 	     int pause = 0;
-	     ScoreSheet.init();
-	     fscore = new ScoreSheet();
-	     
+	     fscore = new ScoreSheet(cheminFeuilleDeScore);
+	     fscore.init();
+	     fscore.readFile();
 	     
 	    //Jeux
 		  map = new Map();
@@ -379,6 +404,7 @@ public class Main {
    	 StdDraw.setPenColor(StdDraw.WHITE);
    	 StdDraw.text(WIN_WIDTH/3, -25,"Vie(s): "+player.vie);
 	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
+	 StdDraw.text(100, -20, fscore.getHighScore());
    	 
    	 
     //TODO fonction jouer
@@ -427,7 +453,6 @@ public class Main {
 	            
 	                        
 	             for (Ghost ghost: listGhost){  
-	            	//TODO chek hit wall fantome: fantome pas choisir trop souvent le retour en arriere ?
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(100)<15 &&  ghost.buffer ==  ghost.dir){
 	            		 ghost.buffer = random.nextInt(4);

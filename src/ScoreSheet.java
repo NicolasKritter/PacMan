@@ -11,27 +11,28 @@ import java.util.List;
 public class ScoreSheet {
 	
 	//créé l'objet document
-	static File scoreSheet = new File("src/scoreSheet.csv");
+	 File scoreSheet;
 	//créé le tableau de score
-	static ArrayList<String[]> scorestable;
 	//ligne des scores pour affichage top 10
-	static List<String> scoresligne;
-	static String separateur = ":";
+	List<String> scoresligne;
+	static String separateur = " : ";
 	static String newline="\n";
 	
-	public ScoreSheet(){
-		
+	public ScoreSheet(String nomfichier){
+		scoreSheet = new File(nomfichier);
 	}
 	
-	public static void init(){
+	public void init(){
 		 //détecte si le fichier est déjà créé
 	     if (!scoreSheet.isFile()){
 	    	 //Crée le fichier vide le cas échéant
 	    	 try {
-	    	 FileWriter fileWriter = new FileWriter(scoreSheet,true);
+	    		 scoreSheet.getParentFile().mkdirs(); 
+	    		 scoreSheet.createNewFile();
+	    	 /*FileWriter fileWriter = new FileWriter(scoreSheet,true);
 	    	 fileWriter.append("");
 	    	
-				fileWriter.close();
+				fileWriter.close();*/
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -41,7 +42,7 @@ public class ScoreSheet {
 	     }
 	}
 	//Lire le fichier csv et en sortir le tableau
-	public static  void readFile(File file) {
+	public   void readFile() {
 		//liste tempon
 		List<String> temp = new ArrayList<String>();
 		
@@ -63,16 +64,7 @@ public class ScoreSheet {
 			//on garede le score en mode ligne par ligne
 			scoresligne = temp;
 			
-			//On sépare les colonnes
-			//tableau de string de la taille de temp
-			ArrayList<String[]> data  = new ArrayList<String[] >(temp.size());
-			 for (String line : temp) {
-		            String[] oneData = line.split(separateur);
-		            data.add(oneData);
-		        }
-			
-			//On met a jour la liste des scores
-			scorestable = data;
+
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -84,33 +76,38 @@ public class ScoreSheet {
 		
 	}
 	
-	public static void writeScore(String nom, int score){
+	public  void writeScore(String nom, int score){
 		int k = 0;
 		String res = nom+" : "+score;
-		if(scoresligne!=null){
-			while(Integer.parseInt(scoresligne.get(k)) >score && k<scoresligne.size()){
+		//Si il y a déjà des scores
+		if(scoresligne!=null && scoresligne.size()>0){
+			//tant que le score est inféreur aux scores enrgistrés, on avance
+			while(Integer.parseInt(scoresligne.get(k).split(separateur)[1]) >score && k<scoresligne.size()-1){// Split avec le séparateur pour isoler le score du nom
+				//ligne nom : score -> On récupère {nom,score} après le split, et on transforme en Int
 					k = k+1;
 			}
-		
-			if(k<11){
-				
-				
+		//On garde que les 10 meilleurs scores
+			if(k<10){
+				//Ajout du score dans la liste à la bonne place
 				scoresligne.add(k, res);
+				
 				if(scoresligne.size()>10){
 				scoresligne.set(11,null);
 				}
 			}
-		}else{
+		}else{//si la liste des score est vide, on l'initialise
 			scoresligne = new ArrayList<String>();
 			scoresligne.add(k, res);
 		}
 			try {
+				//créé l'objet qui va écrire dans le fichier
 				FileWriter fileWriter = new FileWriter(scoreSheet);
 				 for (String line:scoresligne){
 					 //Ajoute chaque lignes du fichier et le délimiteur pour une nouvelle ligne
 					 fileWriter.append(line);
 					 fileWriter.append(newline);
 				 }
+				 //lance l'écriture et ferme le writer
 				 fileWriter.flush();
 				 fileWriter.close();
 
@@ -125,9 +122,9 @@ public class ScoreSheet {
 		
 	
 	
-	public static String getHighScore(){	
+	public  String getHighScore(){	
     	
-    		if (scoresligne!=null){
+    		if (scoresligne!=null && scoresligne.size()>0){
     		return scoresligne.get(0) ;
     		}else{
     			return " ";

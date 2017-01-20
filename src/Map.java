@@ -24,7 +24,6 @@ public class Map {
 	 Cookie[][] coordcookie;
 	 int nbcookie;
 	 public Map(){
-		 	//TODO enlever le 2*taille ?
 		 
 		 //échelle de l'écran d'affichage
 		  largeur = Main.WIN_WIDTH;
@@ -33,8 +32,7 @@ public class Map {
 		  //echelle de la carte
 		   lon = longeur/(2*Main.taille);
 		   lar = largeur/(2*Main.taille);
-		   System.out.println(lon);
-		   System.out.println(lar);
+
 		  nbcookies = 0;
 		  //TODO placer un endroit de spawn commun au milieu?
 		  //placement des endroit d'apparition des personnages
