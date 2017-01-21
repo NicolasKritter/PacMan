@@ -1,7 +1,6 @@
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.introcs.StdDraw;
@@ -177,7 +176,7 @@ public class Main {
 	    	
 	    	
 	    	StdDraw.setPenColor(StdDraw.WHITE);
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/4,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();

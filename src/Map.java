@@ -37,24 +37,16 @@ public class Map {
 		  //TODO placer un endroit de spawn commun au milieu?
 		  //placement des endroit d'apparition des personnages
 		  
-		  xRSpawn = largeur/2;
-		  yRSpawn = longeur/2+lar;
-		  xOSpawn =  largeur/2 +4*lon;
-		  yOSpawn = longeur/2+lar;
-		  xBSpawn =  largeur/2 ;
-		  yBSpawn =  longeur/2 -4*lar;
-		  xPSpawn =  largeur/2;
-		  yPSpawn = longeur/2 +4*lar;
-		  /*xRSpawn = largeur/2;
-		  yRSpawn = longeur/4;
-		  xOSpawn = largeur -lar;
-		  yOSpawn = longeur-lon;
-		  xBSpawn = lon;
-		  yBSpawn = longeur-lon;
-		  xPSpawn = lar;
-		  yPSpawn = lon;*/
-		  xStart = largeur -lar;
-		  yStart = lon;
+		  xRSpawn = largeur/2 +10;
+		  yRSpawn = longeur/2+lar +10;
+		  xOSpawn =  largeur/2 +4*lon +10;
+		  yOSpawn = longeur/2+lar +10;
+		  xBSpawn =  largeur/2  ;
+		  yBSpawn =  longeur/2 -4*lar+10;
+		  xPSpawn =  largeur/2 +10;
+		  yPSpawn = longeur/2 +4*lar -10;
+		  xStart = largeur -lar-10;
+		  yStart = lon+10;
 		  nbcookie = 0;
 		  
 		  //création de la carte vide
@@ -109,16 +101,18 @@ public class Map {
 				  	}
 			}
 		}
-		for(int x = 4;x<lar-2;x = x+4) {
-			for(int y = 4;y<lon-2;y = y+2) {
-				if(Main.random.nextInt(lon)<1){
+
+		for(int y = 6;y<lon-2;y = y+4) {
+			
+				if(Main.random.nextInt(10)<8){
+					//On ajoute un mur par ligne sur la ligne de passage à un endroit aléatoire
+					int x = 2*Main.random.nextInt(lar/2 -4)+4;
 					 Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 
 					 coord[x][y] = 2;
 				  	}
-			}
+			
 		}
-		 
 	 }
 	 //TODO a placer dans generate wall
 	 public void generatecookie(){

@@ -29,7 +29,6 @@ public class Button {
 	}
 	public void hooverDraw(){
 		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-		 //TODO décalage pour rendre plus "joli" ?
 		hoovered = true;
 		StdDraw.rectangle(x, y, width-6, height-4);
 		StdDraw.text(x, y, text);
