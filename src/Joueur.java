@@ -2,57 +2,59 @@
 public class Joueur extends Perso{
 	int score;
 	int vie;
-	public Joueur(int x0, int y0, int dir0, String nom) {
-		super(x0, y0, dir0, nom);
+	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
+		super(x0, y0, dir0, nom,pic);
 		score = 0;
 		vie = 3;
 		
 	}
-	
-	 public void checkhitwall(Map map){
-		 int x = (int)(this.x);
-		 int y = (int)(this.y);
-		 int taille = (int)(Main.taille);
-		
-			 
-		 
-		//TODO Ne pas prendre en compte la direction
-				 switch(this.dir){
-				 case 0:
-					 if (map.coord[x][y-taille]==2){
-						 this.y = this.y+Main.STEP;
-						 this.dir =-1;
-					 }
-					 break;
-				 case 1:
-					 if (map.coord[x][y+taille]==2){
-						 this.y = this.y-Main.STEP;
-						 this.dir =-1;
-					 }
-					 break;
-				 case 2:
-					 if (map.coord[x-taille][y]==2){
-						 this.x = this.x+Main.STEP;
-						 this.dir =-1;
-					 }
-					 break;
-				 case 3:
-					 if (map.coord[x+taille][y]==2){
-						 this.x = this.x-Main.STEP;
-						 this.dir =-1;
-					 }
-					 break;
-				 } 
-			 
-	}
-	 
-	 public void checkhitcookie(Map map){
-		 //TODO trouver le cookie touché et le retirer
-		 //TODO etendre la zone de recherche
-		 if(map.coord[(int) this.x][(int) this.y]==1){
-			 this.score = this.score+2;
-			 map.coord[(int) this.x][(int) this.y]=0;
+	//TODO a supprimer ?
+	public void hitwall(){
+		this.dir = -1;
 		 }
-	 }
+	 
+	//On regarde si le joueur est sur la même case qu'un cookie
+	 public void checkhitcookie(Map map){
+		 //On convertit la coordonnée du personnage en coordonnée du tableau de la carte
+		 int nx = (int)(Math.round((this.x/Main.WIN_WIDTH)*map.lar));
+		 int ny = (int)(Math.round((this.y/Main.WIN_WIDTH)*map.lon)); 
+
+		
+			 if (map.coord[nx][ny]==1){
+				 
+				 //identifie le cookie touché
+				 Cookie supp = map.coordcookie[nx][ny];
+				 
+				 if (supp!=null){
+					 
+					//retire le cookie de la map
+					 map.coord[nx][ny]=0;
+					 
+					 //décompte du nombre de cookie
+					 map.nbcookie = map.nbcookie-1;
+					 
+					 //augmente le score
+					 this.score = this.score+2;
+					 
+					 //rafraichit l'affichage du score
+					 Main.refreshScore();
+					 
+					 //efface le cookie de l'affichage
+					 supp.effacer();
+					 
+					 //efface le cookie dans la liste chaînée					 
+					 map.deleteCookie(supp);
+					 
+					 //si il ne reste plus de cookie, on termine la partie
+					 if(map.nbcookie<1){
+							  Main.fin();
+					  }
+				 }
+					
+					 
+			 }
+		 } 
+
+	 
 
 }

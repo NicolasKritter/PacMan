@@ -8,8 +8,8 @@ public class Mur {
 	public Mur(int x0,int y0,int la,int lo){
 		 x= x0;
 		 y = y0;
-		 large = la;
-		 longe = lo;
+		 large = la-1;
+		 longe = lo-1;
 		 suivant = null;
 	}
 
