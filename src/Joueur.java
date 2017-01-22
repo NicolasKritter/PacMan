@@ -2,8 +2,8 @@
 public class Joueur extends Perso{
 	int score;
 	int vie;
-	public Joueur(int x0, int y0, int dir0, String nom) {
-		super(x0, y0, dir0, nom);
+	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
+		super(x0, y0, dir0, nom,pic);
 		score = 0;
 		vie = 3;
 		
@@ -31,7 +31,7 @@ public class Joueur extends Perso{
 					 this.score = this.score+2;
 					 Main.refreshScore();
 					
-					 Main.effaceur(supp.x, supp.y, taille+1.4);
+					 Main.effaceur(supp.x, supp.y, taille);
 					  
 					  map.deleteCookie(supp);
 					  if(map.nbcookie<1){

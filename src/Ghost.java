@@ -1,7 +1,7 @@
 public class Ghost extends Perso{
 
-public Ghost(int x0, int y0, int dir0, String nom) {
-	super(x0, y0, dir0, nom);
+public Ghost(int x0, int y0, int dir0, String nom,String pic) {
+	super(x0, y0, dir0, nom,pic);
 	
 }
 //0: bas 1: haut 2: gauche 3: droite

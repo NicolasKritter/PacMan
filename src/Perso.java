@@ -1,3 +1,5 @@
+import edu.princeton.cs.introcs.StdDraw;
+
 public class Perso {
 	double x;
 	double y;
@@ -5,14 +7,17 @@ public class Perso {
 	int dir;
 	int buffer;
 	String name;
+	String image;
 	double taille;
-	public Perso (int x0, int y0,int dir0, String nom){
+	boolean imgdir;
+	public Perso (int x0, int y0,int dir0, String nom, String pic){
 		x = x0;
 		y = y0;
 		name = nom;
 		dir = dir0;
 		buffer = dir0;
 		taille = Main.taille;
+		image = pic;
 	}
 	// 0: bas 1: haut 2: gauche 3: droite
 	 public  void move (){
@@ -32,12 +37,12 @@ public class Perso {
 			 
 			 break;
 		 case 2:
-			
+			 imgdir = false;
 			 this.x = this.x-Main.STEP;
 			
 			 break;
 		 case 3:
-			
+			 imgdir = true;
 			 this.x = this.x+Main.STEP; 
 			 break;
 		default:
@@ -50,7 +55,7 @@ public class Perso {
 		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
-		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
+		 int taille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
 		
 		
 		 	//On regarde si le perso touche un mur dans la direction dans laquelle
@@ -94,7 +99,7 @@ public class Perso {
 		//Pour savoir dans quel case de la carte il se trouve
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
-		 int taille = (int)(Math.round(((this.taille/Main.WIN_WIDTH)*map.lon)));
+		 int taille = (int)(Math.round((((this.taille*2.5)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 
 		 int step = 1;
@@ -131,5 +136,14 @@ public class Perso {
 				 return false;
 	}
 	 
+	public void afficher(){		
+		if (this.imgdir){
+			//dessine l'image du fantome avec la bonne direction
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"d"+".png",this.taille*2,this.taille*2);
+		}else{
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"l"+".png",this.taille*2,this.taille*2);
+		}
+		
+	}
 	 
 }

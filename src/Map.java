@@ -1,4 +1,3 @@
-import java.util.List;
 
 // case: 1 cookie, 2 mur, 0 vide
 public class Map {
@@ -127,18 +126,24 @@ public class Map {
 	 //TODO faire changement de mouvent & pos uand x ou y en milieu de case ?(modulo)
 		public  void  deleteCookie(Cookie cookie){
 			
-
-			Cookie courant = listcookie;
 			
-			while(courant.suivant !=null){
-				if (courant.suivant.equals(cookie)){
-					courant.suivant = courant.suivant.suivant;
-					break;
-				}else{
-					courant = courant.suivant;
-				}
+			Cookie courant = listcookie;
+			//règle le problème de si le cookie est au début de la liste
+			if (courant.equals(cookie)){
+				listcookie = listcookie.suivant;
 				
+			}else{
+				while(courant.suivant !=null){
+					if (courant.suivant.equals(cookie)){
+						courant.suivant = courant.suivant.suivant;
+						break;
+					}else{
+						courant = courant.suivant;
+					}
+					
+				}
 			}
+
 			
 			
 		}

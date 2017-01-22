@@ -33,7 +33,8 @@ public class Main {
 	    static Button btnrename;
 	    static EditText editnom;
 	    static ScoreSheet fscore;
-	    static String cheminFeuilleDeScore = "Score/scoreSheet.csv";
+	    static String cheminFeuilleDeScore = "GameData/Score/scoreSheet.csv";
+	    static String dossierImage = "GameData/Images/";
 	    static Font fontTitrePrncipal = new Font("Georgia", Font.BOLD, 60);
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
@@ -315,35 +316,13 @@ public class Main {
 
 	    
 
-	    
-	 // Afficher les perso selon leur couleurs
-	    public static void afficherPerso(Perso perso){
-
-
-	    	switch (perso.name){
-	    	case "blue":
-	    		 StdDraw.setPenColor(StdDraw.BLUE);
-	    		 break;
-	    	case "red":
-	    		 StdDraw.setPenColor(StdDraw.RED);
-	    		 break;
-	    	case "pink":
-	    		 StdDraw.setPenColor(StdDraw.PINK);
-	    		 break;
-	    	case "orange":
-	    		 StdDraw.setPenColor(StdDraw.ORANGE);
-	    		 break;
-	    	default:
-	    		 StdDraw.setPenColor(StdDraw.YELLOW);
-	    		 break;
-	    	}
-	    	StdDraw.filledCircle(perso.x,perso.y,perso.taille);
-	    	
-	    }
+	    //TODO passer en class ?
 	    //effacer un personnage ou un cookie
 	    public static void effaceur(double x, double y, double taille){
+
+	    	
 	    	StdDraw.setPenColor(StdDraw.BLACK);
-	    	StdDraw.filledCircle(x,y,taille+1);
+	    	StdDraw.filledSquare(x,y,taille+1);
 	    }
 	  // afficher murs
 	    public static void afficherMur(Mur listemur){
@@ -394,13 +373,14 @@ public class Main {
 	     fscore.init();
 	     fscore.readFile();
 	     
+	     //TODO chack if image exists ?
 	    //Jeux
 		  map = new Map();
-	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur");
-	     red = new Ghost(map.xRSpawn, map.yRSpawn, 1,"red");
-	     blue = new Ghost(map.xBSpawn, map.yBSpawn, 3,"blue");
-	     pink = new Ghost(map.xPSpawn, map.yPSpawn, 0,"pink");
-	     orange = new Ghost(map.xOSpawn, map.yOSpawn, 2,"orange");
+	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur","pac");
+	     red = new Ghost(map.xRSpawn, map.yRSpawn, 1,"red","red");
+	     blue = new Ghost(map.xBSpawn, map.yBSpawn, 3,"blue","blue");
+	     pink = new Ghost(map.xPSpawn, map.yPSpawn, 0,"pink","pink");
+	     orange = new Ghost(map.xOSpawn, map.yOSpawn, 2,"orange","orange");
 	     
 	     //Boutons
 	     btnjouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/2,80,20,"Play");
@@ -512,7 +492,7 @@ public class Main {
 	            		 
 	            	 
 	            	
-	            	 afficherPerso(ghost);
+	            	 ghost.afficher();;
 	            	  
 	             }
 	                          
@@ -524,7 +504,7 @@ public class Main {
 	            	
 	             }  
 	             //TODO combiner les check ?	            	        
-	             afficherPerso(player);
+	             player.afficher();
 	             //Affichage du jeux
 	             
 	             
