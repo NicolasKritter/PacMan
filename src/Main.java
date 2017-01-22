@@ -33,9 +33,13 @@ public class Main {
 	    static Button btnrename;
 	    static EditText editnom;
 	    static ScoreSheet fscore;
+	    //chemin du dossieur feuille de score
 	    static String cheminFeuilleDeScore = "GameData/Score/scoreSheet.csv";
+	    //chemin du dossier image
 	    static String dossierImage = "GameData/Images/";
-	    static Font fontTitrePrncipal = new Font("Georgia", Font.BOLD, 60);
+	    
+	    //font pour les titres et titre principal
+	    static Font fontTitrePrincipal = new Font("Georgia", Font.BOLD, 60);
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
 	    //TODO class menu ?
@@ -44,8 +48,8 @@ public class Main {
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.YELLOW);
 	    	 //titre
-	    	 StdDraw.setFont(fontTitrePrncipal);
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "PACMAN");
+	    	 StdDraw.setFont(fontTitrePrincipal);
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/(1.3), "Pacman");
 	    	 StdDraw.setFont();
 	    	 
 	    	 //Bouton play
@@ -126,7 +130,7 @@ public class Main {
 	    	StdDraw.setPenColor(StdDraw.YELLOW);
 	    	//change la police
 	    	StdDraw.setFont(fontTitre);
-	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-70, "Scores enregistrés:");
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-70, "TOP 10 scores:");
 	    	StdDraw.setFont();
 	    	
 	    	AfficherScore(fscore.scoresligne);
@@ -175,6 +179,7 @@ public class Main {
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;	
 		    			 menuPrincipal();
+		    			 //change le nom du perso
 		    			 player.name = editnom.text;
 	    			 }
 	    		 }
@@ -189,6 +194,13 @@ public class Main {
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	 StdDraw.setFont(fontTitre);
+			 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-70, "Crédits");
+			 StdDraw.setFont();
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/1.2, "Images: https://pixabay.com/");
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2.2, "KRITTER Nicolas G6C ISEP");
+	    	 //TODO a changer
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3.2, "VANACKER Eliott G7Gay ISEP");
 	    	 btnretour.dessiner();
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
@@ -298,10 +310,6 @@ public class Main {
 	    	
 	    	
 	    }
-	    // Nommer le perso
-	    public  void creerPerso(Perso perso,String nom){
-	    	perso.name = nom;
-	    }
 	    
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
@@ -313,17 +321,7 @@ public class Main {
 	    	 
 	    	
 	    }
-
 	    
-
-	    //TODO passer en class ?
-	    //effacer un personnage ou un cookie
-	    public static void effaceur(double x, double y, double taille){
-
-	    	
-	    	StdDraw.setPenColor(StdDraw.BLACK);
-	    	StdDraw.filledSquare(x,y,taille+1);
-	    }
 	  // afficher murs
 	    public static void afficherMur(Mur listemur){
 	    	
@@ -341,20 +339,17 @@ public class Main {
 	    }
 	    public static void afficherCookie(Cookie listecookie){
 	    	Cookie cookie = listecookie;
-	    	//System.out.println("--------------------");
-	    	int k = 0;
-	    	//parcour la liste chaînée des cookies
+	    	//parcour la liste chaînée des cookies et dessine les cookies
 	        while(cookie!=null){
-	        	//on les dessines que si ils ont l'attribut visible
-	       	 if(cookie.visible==null){
+	        	
 		    	 StdDraw.setPenColor(StdDraw.WHITE);
-		    	 StdDraw.filledCircle(cookie.x,cookie.y,cookie.taille);
-	       	 }
-	       	 k = k+1;
+		    	 StdDraw.picture(cookie.x, cookie.y, Main.dossierImage+"cookie"+".png",cookie.taille,cookie.taille);
+	       	 
+
 	      
 	        	cookie = cookie.suivant;
 	        }
-	        //System.out.println("-------------------- " +k);
+
 
 	    	 
 	    }
@@ -373,7 +368,7 @@ public class Main {
 	     fscore.init();
 	     fscore.readFile();
 	     
-	     //TODO chack if image exists ?
+
 	    //Jeux
 		  map = new Map();
 	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur","pac");
@@ -499,10 +494,7 @@ public class Main {
 
 	               player.move();
 	             player.checkhitcookie(map);
-	             if(!player.checkhitwall(map)){
-	            	 //player.hitwall();
-	            	
-	             }  
+	             player.checkhitwall(map);
 	             //TODO combiner les check ?	            	        
 	             player.afficher();
 	             //Affichage du jeux

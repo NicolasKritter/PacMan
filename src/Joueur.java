@@ -19,23 +19,35 @@ public class Joueur extends Perso{
 		 int nx = (int)(Math.round((this.x/Main.WIN_WIDTH)*map.lar));
 		 int ny = (int)(Math.round((this.y/Main.WIN_WIDTH)*map.lon)); 
 
-		 int taille = (int)(Math.round(Main.taille/2));
 		
-		 //TODO add coockie number to delete
 			 if (map.coord[nx][ny]==1){
+				 
+				 //identifie le cookie touché
 				 Cookie supp = map.coordcookie[nx][ny];
+				 
 				 if (supp!=null){
 					 
-				 map.coord[nx][ny]=0;
-				 map.nbcookie = map.nbcookie-1;
+					//retire le cookie de la map
+					 map.coord[nx][ny]=0;
+					 
+					 //décompte du nombre de cookie
+					 map.nbcookie = map.nbcookie-1;
+					 
+					 //augmente le score
 					 this.score = this.score+2;
+					 
+					 //rafraichit l'affichage du score
 					 Main.refreshScore();
-					
-					 Main.effaceur(supp.x, supp.y, taille);
-					  
-					  map.deleteCookie(supp);
-					  if(map.nbcookie<1){
-						  Main.fin();
+					 
+					 //efface le cookie de l'affichage
+					 supp.effacer();
+					 
+					 //efface le cookie dans la liste chaînée					 
+					 map.deleteCookie(supp);
+					 
+					 //si il ne reste plus de cookie, on termine la partie
+					 if(map.nbcookie<1){
+							  Main.fin();
 					  }
 				 }
 					

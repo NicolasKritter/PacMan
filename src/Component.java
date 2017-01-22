@@ -27,23 +27,6 @@ public class Component {
 		hoovered = false;
 		StdDraw.show();
 	}
-	public void hooverDraw(){
-		StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-		hoovered = true;
-		StdDraw.rectangle(x, y, width-6, height-4);
-		StdDraw.text(x, y, text);
-		StdDraw.show();
-		
-	}
-	public boolean hoover(){
-		 if(StdDraw.mouseX()>x-width && StdDraw.mouseX()<x+width && StdDraw.mouseY()>y-height && StdDraw.mouseY() <y+height){
-		
-			 hooverDraw();
-			 return true;
-		 }else if(hoovered){
-			 dessiner();
-		 }
-		 return false;
-	}
+	
 
 }

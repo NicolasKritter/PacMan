@@ -1,3 +1,4 @@
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Cookie {
 	double x;
@@ -7,13 +8,12 @@ public class Cookie {
 	Cookie suivant;
 	int tabx;
 	int taby;
-	String visible;
 	public Cookie(int x0, int y0, int tx, int ty){
 		x = x0;
 		y = y0;
 		tabx = tx;
 		taby = ty;
-		taille = Main.taille/2;
+		taille = Main.taille*2;
 
 	}
 	public static Cookie addCookie(Cookie liste ,Cookie next) {
@@ -38,7 +38,10 @@ public class Cookie {
 	}
 	//TODO a faire en réccursif ?
 
-	//TODO mettre le Cookie a la fin et le mettre null?
+	public void effacer(){
+		StdDraw.setPenColor(StdDraw.BLACK);
+    	StdDraw.filledSquare(x,y,taille+1);
+	}
 
 
 }
