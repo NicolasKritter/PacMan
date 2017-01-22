@@ -1,5 +1,4 @@
-
-
+import java.util.List;
 
 // case: 1 cookie, 2 mur, 0 vide
 public class Map {
@@ -56,14 +55,6 @@ public class Map {
 		  //(pour savoir lequel est à effacer quand on marche dessus)
 		  coordcookie = new Cookie[lar+1 ][lon+1 ];
 		  
-		  //On initialise la carte avec que des chemins libres 
-		  
-		  //TODO iitialiser avec que des cookies puis mettre des murs ?
-		  for (int k = 0; k<coord.length;k++){
-			  for (int j = 0; j<coord[0].length;j++){
-				  coord[k][j] = 1;
-			  }
-		  }
 
 		 generateWall();
 		  
@@ -123,6 +114,7 @@ public class Map {
 					  		
 					  		Cookie nouveau =new Cookie(x*(largeur/lar),y*(longeur/lon),x,y);
 					  		nbcookie=  nbcookie+1;
+					  		
 					  		listcookie = Cookie.addCookie(listcookie, nouveau);
 					  		this.coord[x][y] = 1;
 					  		this.coordcookie[x][y] = nouveau; 
@@ -133,25 +125,21 @@ public class Map {
 		
 	 }
 	 //TODO faire changement de mouvent & pos uand x ou y en milieu de case ?(modulo)
-		public  void  deleteCookie(Cookie Cookie){
+		public  void  deleteCookie(Cookie cookie){
 			
 
 			Cookie courant = listcookie;
-			while(!courant.equals(Cookie) && courant != null){
-				
-				courant = courant.suivant;
 			
+			while(courant.suivant !=null){
+				if (courant.suivant.equals(cookie)){
+					courant.suivant = courant.suivant.suivant;
+					break;
+				}else{
+					courant = courant.suivant;
+				}
 				
 			}
-			//TODO A CHANGER
-			if( courant.suivant !=null){
-				Cookie reste = courant.suivant;
-				//TODO changer boolean
-				courant.visible = "non";
-			courant = reste;			
-			}else if (courant!=null){
-				courant.visible = "non";
-			}
+			
 			
 		}
 	 

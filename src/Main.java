@@ -8,7 +8,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Main {
 		static Random random = new Random(System.currentTimeMillis());
-		
+		//TODO faire des list pour listcookie
 	
 		//Display
 		//640
@@ -30,8 +30,10 @@ public class Main {
 	    static Button btnsaveScore;
 	    static Button btnMenujouer;
 	    static Button btnretour;
+	    static Button btnrename;
+	    static EditText editnom;
 	    static ScoreSheet fscore;
-	    static String cheminFeuilleDeScore = "src/Score/scoreSheet.csv";
+	    static String cheminFeuilleDeScore = "Score/scoreSheet.csv";
 	    static Font fontTitrePrncipal = new Font("Georgia", Font.BOLD, 60);
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
@@ -128,8 +130,15 @@ public class Main {
 	    	
 	    	AfficherScore(fscore.scoresligne);
 	    	btnretour.dessiner();
+	    	btnMenujouer.dessiner();
 
 	    	 while(menu){
+	    		 if(btnMenujouer.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 
+		    		 }
+	    		 }
 	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;	
@@ -142,8 +151,17 @@ public class Main {
 	    }
 	    public static void menuNom(){
 	    	boolean menu = true;
+	    	//TODO dessiner les vies
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	//change la police
+		    StdDraw.setFont(fontTitre);
+		    StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-70, "Nouveau Nom:");
+		    StdDraw.setFont();
+		    StdDraw.setPenColor(StdDraw.YELLOW);
+		    editnom.dessiner();
+
+	    	 btnrename.dessiner();
 	    	 btnretour.dessiner();
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
@@ -151,7 +169,17 @@ public class Main {
 		    			 menu = false;	
 		    			 menuPrincipal();
 	    			 }
+	    		 }else
+	    		 if(btnrename.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;	
+		    			 menuPrincipal();
+		    			 player.name = editnom.text;
+	    			 }
 	    		 }
+	    		//lance le mode edition
+	    		 editnom.writing();
+	    		
 	    		 
 	    	 }
 	    	
@@ -200,9 +228,7 @@ public class Main {
 		    			 StdDraw.text(WIN_WIDTH-50, 0, "Fait");
 		    			 StdDraw.show();
 		    			 StdDraw.pause(1000);
-		    			 //TODO a enlever ?
-		    			 //fscore.readFile();
-		    			 menuPrincipal();
+		    			 menuScore();
 		    		 }
 	    		 }
 	    		 if(btnretour.hoovered){
@@ -218,28 +244,41 @@ public class Main {
 	    		//TODO changer la vitesse du jeux ?
 	    	
 	    }
-
+	    public static void panelJeux(){
+	     StdDraw.clear(StdDraw.BLACK);
+	   	 //Afficher tous les murs
+	   	 afficherMur(map.listemur);
+	     //Afficher tous les coockies
+	     afficherCookie(map.listcookie);
+	     StdDraw.setPenColor(StdDraw.WHITE);
+	     StdDraw.text(320, -4,player.name+":");
+	     StdDraw.text(220, -30,"Vie(s): "+player.vie);
+	   	 StdDraw.text(320 , -30,"Score: "+player.score);
+	   	 StdDraw.text(500, -30,"High Score: "+ fscore.getHighScore());
+	   	 btnretour.dessiner();
+	   		
+	    }
 	    //TOD0 refaire le ini plus propre
 	    public  static void init(){
-	    	 StdDraw.clear(StdDraw.BLACK);
-	    	 StdDraw.setPenColor(StdDraw.WHITE);
+	    	
 	    	if (player.vie<1){
 	    		player.vie = 3;
 	    		player.score = 0;
 	    	}
 	    	//Affiche  le nombre de vie restante
+	    	 StdDraw.clear(StdDraw.BLACK);
+	    	 StdDraw.setPenColor(StdDraw.WHITE);
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
-        	 StdDraw.show();
-        	 StdDraw.pause(3000);
-        	 //On affiche le bandeau vie et score (du haut)
-             StdDraw.clear(StdDraw.BLACK);
-             StdDraw.setPenColor(StdDraw.WHITE);
-             StdDraw.text(WIN_WIDTH/3, -25,"Vie(s): "+player.vie);
-        	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
-           	//Réaffiche les murs
-             afficherMur(map.listemur);
-             //TODO récupperer les cookies restant et les afficher
-            
+	    	 
+	    	 //affiche et pause pendant 3 secondes
+	    	 StdDraw.show(3000);
+	    	 //nécessaire pour ne pas passer à l'affichage suivant 
+	    	 //avant la fin de la pause
+	    	 StdDraw.pause(0);
+        	
+	    	 //réaffiche le panel pour le jeu
+	    	 panelJeux();
+           
              //On replace les personnages à leur endroit de spawn
 	    	player.x = map.xStart;
 	    	player.y = map.yStart;
@@ -253,6 +292,8 @@ public class Main {
 	    	pink.y = map.yPSpawn;
 	    	orange.x = map.xOSpawn;
 	    	orange.y = map.yOSpawn;
+	    	 
+	    	
 	    	
 	    	
 	    }
@@ -264,9 +305,9 @@ public class Main {
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
 	    	 
-	    	 StdDraw.filledRectangle(WIN_WIDTH/(1.5), -25, 80, 20);
+	    	 StdDraw.filledRectangle(320 , -30, 50, 15);
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
-	    	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
+	    	 StdDraw.text(320 , -30,"Score: "+player.score);
 	    	 
 	    	 
 	    	
@@ -342,7 +383,6 @@ public class Main {
 
 	    //TODO mettre des images ?
 	    //TODO menu credit
-	    //TODO Channger de nom
 
 	    //TODO afficher pause ?
 	    //TODO IA
@@ -366,17 +406,15 @@ public class Main {
 	     btnjouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/2,80,20,"Play");
 		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-30,80,20,"Score");
 	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-30,80,20,"Changer de nom");
-	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"Credits");
-	     
-	     
+	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"Credits");	     
  		 btnsaveScore = new Button(WIN_WIDTH/2,60,80,20,"Sauver le Score");
  		 btnMenujouer = new Button(WIN_WIDTH/2,20,80,20,"Jouer");
- 		 btnretour = new Button(100,-20,80,20,"retour");
+ 		 btnretour = new Button(90,-20,80,20,"retour");
+ 		 btnrename = new Button(WIN_WIDTH/2,20,80,20,"Accepter");
+ 		editnom = new EditText(WIN_WIDTH/2,WIN_HEIGHT/2);
  		
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
- 		
-		//TODO Text field nom
 	    
 
 		//Génère la grille de la  fenètre
@@ -395,21 +433,20 @@ public class Main {
      
     
 	 
-	 
-	 //Afficher tous les murs
-	 afficherMur(map.listemur);
-   	 //Afficher tous les coockies
-   	 afficherCookie(map.listcookie);
-   	 StdDraw.setPenColor(StdDraw.WHITE);
-   	 StdDraw.text(WIN_WIDTH/3, -25,"Vie(s): "+player.vie);
-	 StdDraw.text(WIN_WIDTH/(1.5), -25,"Score: "+player.score);
-	 StdDraw.text(100, -20, fscore.getHighScore());
+	 //affiche le panel du jeux
+     panelJeux();
    	 
    	 
     //TODO fonction jouer
    	 
         while(true){
         	
+        	//bouton retour au menu
+        	if(btnretour.hoover()){
+	   			if(StdDraw.mousePressed()){		    		
+		    		 menuPrincipal();
+	   			 }
+        	}
         	
         	//gestion du jeux
 	        if(play){
@@ -478,8 +515,7 @@ public class Main {
 	            	 afficherPerso(ghost);
 	            	  
 	             }
-	             
-	             //TODO mettre les coockie dans un tableau mettre fonction delete coockie avec this
+	                          
 
 	               player.move();
 	             player.checkhitcookie(map);
@@ -512,7 +548,6 @@ public class Main {
 	        }
 	        
 	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
-	        	//TODO afficher pause avec txt en bas ?
 	        	pause = 10;
 	        	play = !play;
 	       	 

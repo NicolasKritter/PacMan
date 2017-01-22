@@ -30,10 +30,9 @@ public class Joueur extends Perso{
 				 map.nbcookie = map.nbcookie-1;
 					 this.score = this.score+2;
 					 Main.refreshScore();
-					 //TODO dessine cookie si c'est un fantome ?
+					
 					 Main.effaceur(supp.x, supp.y, taille+1.4);
-					 
-					 //TODo faire une liste qui récupère la nouvelle liste 
+					  
 					  map.deleteCookie(supp);
 					  if(map.nbcookie<1){
 						  Main.fin();
