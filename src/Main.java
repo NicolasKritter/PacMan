@@ -458,7 +458,7 @@ public class Main {
 	            	 player.buffer = 3;
 	             }
 	             
-	             System.out.println((player.x - (int)player.x )+ " "+ (player.y - (int)player.y));
+	             //System.out.println((player.x - (int)player.x )+ " "+ (player.y - (int)player.y));
 	             
  	             if(!player.checkhitwall(map,  player.buffer) ){
 
