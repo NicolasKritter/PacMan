@@ -8,7 +8,12 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Main {
 		static Random random = new Random(System.currentTimeMillis());
-	
+		//TODO Score
+		//TODO multi
+		//TODO centrage
+		//TODO uml
+		//TODO livrable
+		//TODO animation ?
 		//Display
 	 	static int WIN_WIDTH= 640;
 	    static int WIN_HEIGHT= 640;
@@ -40,7 +45,7 @@ public class Main {
 	    static Font fontTitrePrincipal = new Font("Georgia", Font.BOLD, 60);
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
-	    //TODO class menu ?
+
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -120,7 +125,7 @@ public class Main {
 	    	
 	    }
 
-	    //TODO score: prendre en compte le nombre max de cooie dispo
+
 	    public static void menuScore(){
 	    	boolean menu = true;
 	    	
@@ -197,8 +202,7 @@ public class Main {
 			 StdDraw.setFont();
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/1.2, "Images: https://pixabay.com/");
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2.2, "KRITTER Nicolas G6C ISEP");
-	    	 //TODO a changer
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3.2, "VANACKER Eliott G7 ISEP");
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3.2, "VANACKER Eliott G7B ISEP");
 	    	 btnretour.dessiner();
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
@@ -252,7 +256,7 @@ public class Main {
 	    		 }
 	    		
 	    	}
-	    		//TODO changer la vitesse du jeux ?
+
 	    	
 	    }
 	    public static void panelJeux(){
@@ -359,9 +363,7 @@ public class Main {
 	    }
 	    
 
-	    //TODO mettre des images ?
 
-	    //TODO afficher pause ?
 
 	public  static void main(String[] args)  {
 		//controle
@@ -415,7 +417,7 @@ public class Main {
      panelJeux();
    	 
    	 
-    //TODO fonction jouer
+
    	 
         while(true){
         	
@@ -438,7 +440,7 @@ public class Main {
 		        	}
 	        	
 	        	
-	        	 
+	        	 //TODO bonus
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
 	        		 //la prochaine direction sera vers le haut
