@@ -12,11 +12,13 @@ public class ScoreSheet {
 	
 	//créé l'objet document
 	 File scoreSheet;
-	//créé le tableau de score
-	//ligne des scores pour affichage top 10
+//liste qui recevera tous les scores
 	List<String> scoresligne;
+	//séparateurs pour différencer les lignes et les colonnes
 	static String separateur = " : ";
 	static String newline="\n";
+	
+	StringBuilder str  = new StringBuilder();
 	
 	public ScoreSheet(String nomfichier){
 		scoreSheet = new File(nomfichier);
@@ -26,15 +28,14 @@ public class ScoreSheet {
 		 //détecte si le fichier est déjà créé
 	     if (!scoreSheet.isFile()){
 	    	 //Crée le fichier vide le cas échéant
-	    	 try {
+	    	 try {//essaye de le faire si possible
+	    		 //créé le dossier
 	    		 scoreSheet.getParentFile().mkdirs(); 
+	    		 //créé le fichier
 	    		 scoreSheet.createNewFile();
-	    	 /*FileWriter fileWriter = new FileWriter(scoreSheet,true);
-	    	 fileWriter.append("");
-	    	
-				fileWriter.close();*/
+
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
@@ -58,6 +59,7 @@ public class ScoreSheet {
 				//on rajoute chaque ligne dans le tableau
 	    		temp.add(line);
 	        }
+			//close les readers
 			reader.close();
 			buffreader.close();
 			//TODO garder seulement les ligne pour gagner de la mémoire
@@ -78,7 +80,14 @@ public class ScoreSheet {
 	
 	public  void writeScore(String nom, int score){
 		int k = 0;
-		String res = nom+" : "+score;
+		// réinitialise les stringbuilder
+		str.setLength(0);
+		//construit la nouvelle lignes (utilisation de string builder améliore les performances
+		str.append(nom);
+		str.append(separateur);
+		str.append(score);
+		
+		//String res = nom+" : "+score;
 		//Si il y a déjà des scores
 		if(scoresligne!=null && scoresligne.size()>0){
 			//tant que le score est inféreur aux scores enrgistrés, on avance
@@ -89,7 +98,7 @@ public class ScoreSheet {
 		//On garde que les 10 meilleurs scores
 			if(k<10){
 				//Ajout du score dans la liste à la bonne place
-				scoresligne.add(k, res);
+				scoresligne.add(k, str.toString());
 				
 				if(scoresligne.size()>10){
 				scoresligne.set(11,null);
@@ -97,7 +106,7 @@ public class ScoreSheet {
 			}
 		}else{//si la liste des score est vide, on l'initialise
 			scoresligne = new ArrayList<String>();
-			scoresligne.add(k, res);
+			scoresligne.add(k, str.toString());
 		}
 			try {
 				//créé l'objet qui va écrire dans le fichier
@@ -121,7 +130,7 @@ public class ScoreSheet {
 		
 		
 	
-	
+	//retournle score en haut du tableau
 	public  String getHighScore(){	
     	
     		if (scoresligne!=null && scoresligne.size()>0){
