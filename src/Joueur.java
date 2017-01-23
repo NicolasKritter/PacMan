@@ -2,6 +2,7 @@
 public class Joueur extends Perso{
 	int score;
 	int vie;
+	boolean bonus;
 	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
 		super(x0, y0, dir0, nom,pic);
 		score = 0;

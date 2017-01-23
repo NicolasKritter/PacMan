@@ -334,11 +334,13 @@ public class Main {
 	    public static void afficherMur(Mur listemur){
 	    	
 	    	Mur mur = listemur;
+	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, WIN_WIDTH/2-15, WIN_HEIGHT/2-15);
 	    	//parcour la liste chaînée des murs et on les dessines
 	        while(mur!=null){
-
-	        	StdDraw.setPenColor(StdDraw.BLUE);
-		    	StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
+	        		
+	        	//StdDraw.setPenColor(StdDraw.BLUE);
+	        	StdDraw.picture(mur.x, mur.y, Main.dossierImage+"mur.jpg",2*mur.large,2*mur.longe);
 		    	mur = mur.suivant;
 	        }
 	    	

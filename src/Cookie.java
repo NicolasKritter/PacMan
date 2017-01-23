@@ -3,7 +3,7 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Cookie {
 	double x;
 	double y;
-
+	boolean bonus;
 	int taille;
 	Cookie suivant;
 	int tabx;
@@ -20,8 +20,8 @@ public class Cookie {
 
 		Cookie courant = liste;
 		if(courant==null){
-			courant = next;
-			return courant;
+			liste = next;
+			
 		}
 		else if (courant.suivant==null){
 			

@@ -64,9 +64,9 @@ public class Map {
 	 
 	 public void generateWall(){
 		 //TODO possibilité de passer d'un coté à l'autre ?
-		 
+
 		 //Création des bords
-		 listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -2),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -2));
+		 //listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -2),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -2));
 		 //On met des murs sur les bordures de la carte
 		 for(int x = 1;x<lar;x = x+1) {			
 			 coord[x][0] = 2;
@@ -78,13 +78,13 @@ public class Map {
 			 coord[lar][y] = 2;
 			}
 		
-		
+		 listemur = null;
 //TODO empêcher la création de mur aux endroits de spawn
 		 //On place des murs sur la carte et on crée la liste des murs à afficher
 		for(int x = 4;x<lar-2;x = x+2) {
 			for(int y = 4;y<lon-2;y = y+4) {
 				if(Main.random.nextInt(10)<8){
-					 Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
+					 listemur = Mur.addMur(listemur,  new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 
 					 coord[x][y] = 2;
 				  	}
@@ -92,11 +92,11 @@ public class Map {
 		}
 
 		for(int y = 6;y<lon-2;y = y+4) {
-			
+			//TODO methode addmur dans listemur
 				if(Main.random.nextInt(10)<8){
 					//On ajoute un mur par ligne sur la ligne de passage à un endroit aléatoire
 					int x = 2*Main.random.nextInt(lar/2 -4)+4;
-					 Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
+					 listemur = Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 
 					 coord[x][y] = 2;
 				  	}

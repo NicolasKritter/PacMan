@@ -13,10 +13,34 @@ public class Mur {
 		 suivant = null;
 	}
 
-	
+	public static Mur addMur(Mur liste ,Mur next) {
 
-	public static Mur addMur(Mur mur,Mur next) {
+		Mur courant = liste;
+		if(courant==null){
+			liste  = next;
+			
+			
+		}
+		else if (courant.suivant==null){
+			
+			courant.suivant = next;
+		}
+		else{
+			addMur(courant.suivant,next);
+		}
+		
+
+		return liste;
+	
+		
+	}
+
+	/*public static Mur addMur(Mur mur,Mur next) {
 		Mur courant = mur;
+		if (mur==null){
+			mur  = next;
+			return mur;
+		}
 		if (courant.suivant==null){
 			courant.suivant = next;
 		}
@@ -28,6 +52,6 @@ public class Mur {
 		return mur;
 	
 		
-	}
+	}*/
 	
 }

@@ -55,8 +55,8 @@ public class Perso {
 
 	 public boolean checkhitwall(Map map){
 		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
-		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
-		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
+		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar))) ;
+		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon))) ;
 		 int taille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
 		
 		
@@ -101,7 +101,7 @@ public class Perso {
 		//Pour savoir dans quel case de la carte il se trouve
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
-		 int taille = (int)(Math.round((((this.taille+5)/Main.WIN_WIDTH)*map.lon)));
+		 int taille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 
 		 int step = 1;
