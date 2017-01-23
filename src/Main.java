@@ -246,7 +246,7 @@ public class Main {
 		    			 menuScore();
 		    		 }
 	    		 }
-	    		 if(btnretour.hoovered){
+	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
 	    				 player.vie = 3;
 		    	    	 player.score = 0;
@@ -460,14 +460,15 @@ public class Main {
 	            	 player.buffer = 3;
 	             }
 	             
-	             //System.out.println((player.x - (int)player.x )+ " "+ (player.y - (int)player.y));
+	            
 	             
  	             if(!player.checkhitwall(map,  player.buffer) ){
-
+ 	            	
 	            	 //si la prochaine direction est libre, on la prend
-	            	// if (player.x - (int)player.x<0.3 && player.y - (int)player.y<0.3 || player.dir==-1){
+	            	
 	            	 player.dir =  player.buffer;
-	            	 //}
+	            	
+	            	 
 	            	 
 	             }
 	            
@@ -505,13 +506,16 @@ public class Main {
 
 	               player.move();
 	             player.checkhitcookie(map);
-	             player.checkhitwall(map);            	        
+	            if(player.checkhitwall(map)){
+	            	player.hitwall();
+	            }
 	             player.afficher();
 	             //Affichage du jeux
 	             
 	             
 	             
 	             StdDraw.show(10000/FPS);
+	            
 	             
 	        }
 	        else{
