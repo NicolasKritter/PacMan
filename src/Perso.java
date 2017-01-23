@@ -9,6 +9,7 @@ public class Perso {
 	String name;
 	String image;
 	double taille;
+	double taille2;
 	//sert a la direction de l'image
 	boolean imgdir;
 	public Perso (int x0, int y0,int dir0, String nom, String pic){
@@ -17,7 +18,8 @@ public class Perso {
 		name = nom;
 		dir = dir0;
 		buffer = dir0;
-		taille = Main.taille;
+		taille2 = Main.taille*2.2;
+		taille = Main.taille*1.3;
 		image = pic;
 	}
 	// 0: bas 1: haut 2: gauche 3: droite
@@ -57,14 +59,14 @@ public class Perso {
 		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar))) ;
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon))) ;
-		 int taille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
+		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
 		
 		
 		 	//On regarde si le perso touche un mur dans la direction dans laquelle il se déplace
 				 switch(this.dir){
 				 case 0:
 					//On prend en compte la taille/épaisseur (+ - taille)
-					 if (map.coord[x][y-taille]==2 || map.coord[x-taille][y-taille]==2 || map.coord[x+taille][y-taille]==2){
+					 if (map.coord[x][y-ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
 						 //on fait rebondir le perso si il touche un mur
 						 this.y = this.y+Main.STEP;
 						
@@ -72,19 +74,19 @@ public class Perso {
 					 }
 					 break;
 				 case 1:
-					 if (map.coord[x][y+taille]==2 || map.coord[x-taille][y+taille]==2 || map.coord[x+taille][y+taille]==2){
+					 if (map.coord[x][y+ntaille]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x+ntaille][y+ntaille]==2){
 						 this.y = this.y-Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 2:
-					 if (map.coord[x-taille][y]==2 || map.coord[x-taille][y+taille]==2 || map.coord[x-taille][y-taille]==2){
+					 if (map.coord[x-ntaille][y]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2){
 						 this.x = this.x+Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 3:
-					 if (map.coord[x+taille][y]==2 || map.coord[x+taille][y+taille]==2 || map.coord[x+taille][y-taille]==2){
+					 if (map.coord[x+ntaille][y]==2 || map.coord[x+ntaille][y+ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
 						 this.x = this.x-Main.STEP;
 						 return true;
 					 }
@@ -101,7 +103,7 @@ public class Perso {
 		//Pour savoir dans quel case de la carte il se trouve
 		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
 		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
-		 int taille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
+		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 
 		 int step = 1;
@@ -112,25 +114,25 @@ public class Perso {
 				 switch(direc){
 				 case 0:
 					 //On prend en compte la taille/épaisseur (+ - taille) du perso ainsi que ça prochaine position (+ - step)
-					 if (map.coord[x-(taille)][y-(taille)-step]==2 || map.coord[x+(taille)][y-(taille)-step]==2 || map.coord[x][y-(taille)-step]==2){
+					 if (map.coord[x-(ntaille)][y-(ntaille)-step]==2 || map.coord[x+(ntaille)][y-(ntaille)-step]==2 || map.coord[x][y-(ntaille)-step]==2){
 						 // la prochaine direction n'est pas libre
 						 return true;
 					 }
 					 break;
 				 case 1:
-					 if (map.coord[x-(taille)][y+(taille)+step]==2 || map.coord[x+(taille)][y+(taille)+step]==2 || map.coord[x][y+(taille)+step]==2){
+					 if (map.coord[x-(ntaille)][y+(ntaille)+step]==2 || map.coord[x+(ntaille)][y+(ntaille)+step]==2 || map.coord[x][y+(ntaille)+step]==2){
 						
 						 return true;
 					 }
 					 break;
 				 case 2:
-					 if (map.coord[x-(taille)-step][y+(taille)]==2 || map.coord[x-(taille)-step][y-(taille)]==2 || map.coord[x-(taille)-step][y]==2){
+					 if (map.coord[x-(ntaille)-step][y+(ntaille)]==2 || map.coord[x-(ntaille)-step][y-(ntaille)]==2 || map.coord[x-(ntaille)-step][y]==2){
 						 
 						 return true;
 					 }
 					 break;
 				 case 3:
-					 if (map.coord[x+(taille)+step][y+(taille)]==2 || map.coord[x+(taille)+step][y-(taille)]==2 || map.coord[x+(taille)+step][y]==2){
+					 if (map.coord[x+(ntaille)+step][y+(ntaille)]==2 || map.coord[x+(ntaille)+step][y-(ntaille)]==2 || map.coord[x+(ntaille)+step][y]==2){
 						
 						 return true;
 					 }
