@@ -18,7 +18,7 @@ public class Perso {
 		name = nom;
 		dir = dir0;
 		buffer = dir0;
-		taille2 = Main.taille*1.3;
+		taille2 = Main.taille;
 		taille = Main.taille*1.3;
 		image = pic;
 	}
@@ -57,8 +57,9 @@ public class Perso {
 
 	 public boolean checkhitwall(Map map){
 		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
-		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar))) ;
-		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon))) ;
+			int[]coordcase = map.toCase(this.x, this.y);
+			int x = coordcase [0];
+			int y = coordcase[1];
 		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
 		
 		
@@ -101,8 +102,10 @@ public class Perso {
 		
 		//on transcrit la position du perso en case sur le tableau de la carte
 		//Pour savoir dans quel case de la carte il se trouve
-		 int x = (int)(Math.round(((this.x/Main.WIN_WIDTH)*map.lar)));
-		 int y = (int)(Math.round(((this.y/Main.WIN_WIDTH)*map.lon)));
+		int[]coordcase = map.toCase(this.x, this.y);
+		int x = coordcase [0];
+		int y = coordcase[1];
+
 		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 

@@ -35,16 +35,7 @@ public class Map {
 		  //TODO placer un endroit de spawn commun au milieu?
 		  //placement des endroit d'apparition des personnages
 		  
-		  xRSpawn = largeur/2 +10;
-		  yRSpawn = longeur/2+lar +10;
-		  xOSpawn =  largeur/2 +4*lon +10;
-		  yOSpawn = longeur/2+lar +10;
-		  xBSpawn =  largeur/2  ;
-		  yBSpawn =  longeur/2 -4*lar+10;
-		  xPSpawn =  largeur/2 +10;
-		  yPSpawn = longeur/2 +4*lar -10;
-		  xStart = largeur -lar-10+2;
-		  yStart = lon+10-2;
+
 		  nbcookie = 0;
 		  
 		  //création de la carte vide
@@ -59,8 +50,25 @@ public class Map {
 		  
 		 generatecookie();
 		 
+		  xRSpawn = largeur/2 +10;
+		  yRSpawn = longeur/2+lar +10;
+		  xOSpawn =  largeur/2 +4*lon +10;
+		  yOSpawn = longeur/2+lar +10;
+		  xBSpawn =  largeur/2  ;
+		  yBSpawn =  longeur/2 -4*lar+10;
+		  xPSpawn =  largeur/2 +10;
+		  yPSpawn = longeur/2 +4*lar -10;
+		  xStart = largeur -lar-10+2;
+		  yStart = lon+10-2;
+		 
 	 }
-
+	 
+	 public int[] toCase(Double x, Double y){
+		int nx = (int)(Math.round(((x/Main.WIN_WIDTH)*lar)));
+		 int ny = (int)(Math.round(((y/Main.WIN_WIDTH)*lon)));
+		 int[]res = {nx,ny};
+		 return res;
+	 }
 	 
 	 public void generateWall(){
 		 //TODO possibilité de passer d'un coté à l'autre ?
