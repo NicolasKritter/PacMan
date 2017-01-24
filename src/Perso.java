@@ -9,7 +9,6 @@ public class Perso {
 	String name;
 	String image;
 	double taille;
-	double taille2;
 	//sert a la direction de l'image
 	boolean imgdir;
 	public Perso (int x0, int y0,int dir0, String nom, String pic){
@@ -18,8 +17,7 @@ public class Perso {
 		name = nom;
 		dir = dir0;
 		buffer = dir0;
-		taille2 = Main.taille;
-		taille = Main.taille*1.3;
+		taille = Main.taille;
 		image = pic;
 	}
 	// 0: bas 1: haut 2: gauche 3: droite
@@ -60,7 +58,7 @@ public class Perso {
 			int[]coordcase = map.toCase(this.x, this.y);
 			int x = coordcase [0];
 			int y = coordcase[1];
-		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
+		 int ntaille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
 		
 		
 		 	//On regarde si le perso touche un mur dans la direction dans laquelle il se déplace
@@ -106,10 +104,10 @@ public class Perso {
 		int x = coordcase [0];
 		int y = coordcase[1];
 
-		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
+		 int ntaille = (int)(Math.round((((this.taille)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 
-		 int step = (int)(Math.round((((Main.STEP*this.taille2)/Main.WIN_WIDTH)*map.lon)));
+		 int step = (int)(Math.round((((Main.STEP*this.taille)/Main.WIN_WIDTH)*map.lon)));
 
 		// 0: bas 1: haut 2: gauche 3: droite
 		
@@ -156,9 +154,9 @@ public class Perso {
 	public void afficher(){		
 		if (this.imgdir){
 			//dessine l'image du fantome avec la bonne direction
-			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"d"+".png",this.taille*2,this.taille*2);
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"d"+".png",this.taille*2.6,this.taille*2.6);
 		}else{
-			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"l"+".png",this.taille*2,this.taille*2);
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"l"+".png",this.taille*2.6,this.taille*2.6);
 		}
 		
 	}
@@ -166,7 +164,7 @@ public class Perso {
 	public void effacer(){
 		StdDraw.setPenColor(StdDraw.BLACK);
 		//+1 due au décalage
-    	StdDraw.filledSquare(x,y,taille+1);
+    	StdDraw.filledSquare(x,y,1.3*taille+1);
 	}
 	 
 }
