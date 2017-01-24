@@ -98,9 +98,9 @@ public class Map {
 				  	}
 			}
 		}
-
+		//ajout de murs "verticalement"
 		for(int y = 6;y<lon-2;y = y+4) {
-			//TODO methode addmur dans listemur
+
 				if(Main.random.nextInt(10)<8){
 					//On ajoute un mur par ligne sur la ligne de passage à un endroit aléatoire
 					int x = 2*Main.random.nextInt(lar/2 -4)+4;

@@ -11,6 +11,9 @@ public class Perso {
 	double taille;
 	//sert a la direction de l'image
 	boolean imgdir;
+	
+	
+	
 	public Perso (int x0, int y0,int dir0, String nom, String pic){
 		x = x0;
 		y = y0;
@@ -164,7 +167,21 @@ public class Perso {
 	public void effacer(){
 		StdDraw.setPenColor(StdDraw.BLACK);
 		//+1 due au décalage
-    	StdDraw.filledSquare(x,y,1.3*taille+1);
+		switch(dir){
+		case 0:
+			StdDraw.filledSquare(x,y+1,1.2*taille+2);
+			break;
+		case 1:
+			StdDraw.filledSquare(x,y-1,1.2*taille+2);
+			break;
+		case 2:
+			StdDraw.filledSquare(x+1,y,1.2*taille+2);
+			break;
+		case 3:
+			StdDraw.filledSquare(x-1,y,1.2*taille+2);
+			break;
+    	
+		}
 	}
 	 
 }

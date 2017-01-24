@@ -279,7 +279,6 @@ public class Main {
 	   	 btnretour.dessiner();
 	   		
 	    }
-	    //TOD0 refaire le ini plus propre
 	    public  static void init(){
 	    	
 	    	if (player.vie<1){
@@ -368,7 +367,7 @@ public class Main {
 
 
 	public  static void main(String[] args)  {
-		//controle
+		
 		 boolean play = true;
 	     int pause = 0;
 	     fscore = new ScoreSheet(cheminFeuilleDeScore);
@@ -474,7 +473,14 @@ public class Main {
 	            	 
 	             }
 	            
-	                        
+	             player.move();
+		             
+	            player.checkhitcookie(map);
+	            if(player.checkhitwall(map)){
+	            	player.hitwall();
+	            }
+	             player.afficher();   
+	             
 	             for (Ghost ghost: listGhost){  
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(100)<15 &&  ghost.buffer ==  ghost.dir){
@@ -485,9 +491,9 @@ public class Main {
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
 	            		 //si sa prochaine direction est libre, le fantome la prend
-	            		 //if(ghost.x - (int)ghost.x<0.3 && ghost.y - (int)ghost.y<0.3){
+
 	            		 ghost.dir = ghost.buffer;
-	            		 //}
+
 	            		
 	            		//TODO chrono
 		             }
@@ -506,13 +512,7 @@ public class Main {
 	             }
 	                          
 	             
-	               player.move();
-	             
-	             player.checkhitcookie(map);
-	            if(player.checkhitwall(map)){
-	            	player.hitwall();
-	            }
-	             player.afficher();
+
 	             //Affichage du jeux
 	             
 	             
