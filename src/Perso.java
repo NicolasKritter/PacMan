@@ -50,8 +50,7 @@ public class Perso {
 			 imgdir = true;
 			 this.x = this.x+Main.STEP; 
 			 break;
-		default:
-			break;
+
 		 }
 		 
 	 }
@@ -71,7 +70,7 @@ public class Perso {
 					 if (map.coord[x][y-ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
 						 //on fait rebondir le perso si il touche un mur
 						 this.y = this.y+2*Main.STEP;
-						
+		
 						 return true;
 					 }
 					 break;
@@ -169,16 +168,18 @@ public class Perso {
 		//+1 due au décalage
 		switch(dir){
 		case 0:
-			StdDraw.filledSquare(x,y+1,1.2*taille+2);
+			StdDraw.filledSquare(x,y+1,1.1*taille+2);
 			break;
 		case 1:
-			StdDraw.filledSquare(x,y-1,1.2*taille+2);
+			StdDraw.filledSquare(x,y-1,1.1*taille+2);
 			break;
 		case 2:
-			StdDraw.filledSquare(x+1,y,1.2*taille+2);
+			StdDraw.filledSquare(x+1,y,1.1*taille+2);
+			
 			break;
 		case 3:
-			StdDraw.filledSquare(x-1,y,1.2*taille+2);
+			StdDraw.filledSquare(x-1,y,1.1*taille+2);
+			
 			break;
     	
 		}

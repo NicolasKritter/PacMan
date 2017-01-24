@@ -36,6 +36,7 @@ public class Main {
 	    static Button btnrename;
 	    static EditText editnom;
 	    static ScoreSheet fscore;
+	    static int duree;
 	    //chemin du dossieur feuille de score
 	    static String cheminFeuilleDeScore = "GameData/Score/scoreSheet.csv";
 	    //chemin du dossier image
@@ -216,10 +217,17 @@ public class Main {
 	    }
 	    public static void fin(){
 	    	StdDraw.clear(StdDraw.BLACK);
-	    	
-	    	
+	    	//calcul le temps qu'à durée la partie
+	    	duree = (int) ((System.currentTimeMillis()/1000) - duree);
+	    	StdDraw.setPenColor(StdDraw.YELLOW);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-20, player.name);
 	    	StdDraw.setPenColor(StdDraw.WHITE);
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
+
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-100,player.vie+" vie(s) restantes");
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" "+(int)(300/duree)+" x "+player.vie);
+	    	player.score = player.score+(int)(300/duree)*player.vie;
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-175,"Score Final: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
@@ -230,7 +238,7 @@ public class Main {
 	    		if(btnMenujouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;		    	    		
-		    			 map = new Map();
+		    			 
 		    	    		
 		    	    		init();
 		    		 }
@@ -260,6 +268,7 @@ public class Main {
 	    	
 	    }
 	    public static void panelJeux(){
+	    	
 	     StdDraw.clear(StdDraw.BLACK);
 	   	 //Afficher tous les murs
 	   	 afficherMur(map.listemur);
@@ -277,13 +286,16 @@ public class Main {
 	   		 StdDraw.picture(365+25*k, -4,dossierImage+"vie.png", 25, 25);
 	   	 }
 	   	 btnretour.dessiner();
-	   		
+	   	if(player.vie>2){
+	    	duree = (int)(System.currentTimeMillis()/1000);
+	    	}
 	    }
 	    public  static void init(){
-	    	
+	    	// reinit a la mort
 	    	if (player.vie<1){
 	    		player.vie = 3;
 	    		player.score = 0;
+	    		map = new Map();
 	    	}
 	    	//Affiche  le nombre de vie restante
 	    	 StdDraw.clear(StdDraw.BLACK);
@@ -496,7 +508,6 @@ public class Main {
 	            		 ghost.dir = ghost.buffer;
 
 	            		
-	            		//TODO chrono
 		             }
 	            	 ghost.move();
 	            	 
@@ -532,7 +543,7 @@ public class Main {
 	        		pause=0;
 	        	}
 	        	
-	        	StdDraw.pause(100);
+	        	StdDraw.pause(50);
 	        	
 	        	
 	        }
