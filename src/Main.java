@@ -460,12 +460,12 @@ public class Main {
 	            	 player.buffer = 3;
 	             }
 	             
-	            
 	             
  	             if(!player.checkhitwall(map,  player.buffer)){
  	            	
 	            	 //si la prochaine direction est libre, on la prend
- 	            	 
+
+
 	            	 player.dir =  player.buffer;
  	            	
 	            	
@@ -474,6 +474,7 @@ public class Main {
 	             }
 	            
 	             player.move();
+	             
 		             
 	            player.checkhitcookie(map);
 	            if(player.checkhitwall(map)){

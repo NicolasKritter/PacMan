@@ -40,7 +40,7 @@ public class Cookie {
 
 	public void effacer(){
 		StdDraw.setPenColor(StdDraw.BLACK);
-    	StdDraw.filledSquare(x,y,taille+1);
+    	StdDraw.filledSquare(x,y,taille);
 	}
 
 
