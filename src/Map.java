@@ -43,16 +43,16 @@ public class Map {
 		  yBSpawn =  longeur/2 -4*lar+10;
 		  xPSpawn =  largeur/2 +10;
 		  yPSpawn = longeur/2 +4*lar -10;
-		  xStart = largeur -lar-10;
-		  yStart = lon+10;
+		  xStart = largeur -lar-10+2;
+		  yStart = lon+10-2;
 		  nbcookie = 0;
 		  
 		  //création de la carte vide
-		  coord = new int[lar+1 ][lon+1 ];
+		  coord = new int[lar +1][lon+1];
 		  
 		  //carte où se trouvent les cookies 
 		  //(pour savoir lequel est à effacer quand on marche dessus)
-		  coordcookie = new Cookie[lar+1 ][lon+1 ];
+		  coordcookie = new Cookie[lar][lon];
 		  
 
 		 generateWall();
@@ -151,7 +151,7 @@ public class Map {
 	//check si le joueur toucche un fantôme en regardant la distance entre les 2
 	 public void checkhitghost(Joueur perso,Ghost ghost){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
-		 if (distance <= Main.taille *2){
+		 if (distance <= perso.taille *2+2){
 			 perso.vie = perso.vie-1;
 			 if(perso.vie>0){
 			 Main.init();

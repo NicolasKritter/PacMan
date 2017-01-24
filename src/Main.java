@@ -18,7 +18,7 @@ public class Main {
 	 	static int WIN_WIDTH= 640;
 	    static int WIN_HEIGHT= 640;
 	    static int FPS= 1000;
-	    static double STEP= 1.6;
+	    static double STEP= 2;
 	    static Joueur player;
 	    static Ghost red;
 	    static Ghost blue;
@@ -441,7 +441,6 @@ public class Main {
 		        		pause=0;
 		        	}
 	        	
-	        	
 	        	 //TODO bonus
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
@@ -464,11 +463,12 @@ public class Main {
 	             
 	            
 	             
- 	             if(!player.checkhitwall(map,  player.buffer) ){
+ 	             if(!player.checkhitwall(map,  player.buffer)){
  	            	
 	            	 //si la prochaine direction est libre, on la prend
-	            	
+ 	            	 
 	            	 player.dir =  player.buffer;
+ 	            	
 	            	
 	            	 
 	            	 
@@ -505,8 +505,9 @@ public class Main {
 	            	  
 	             }
 	                          
-
+	             
 	               player.move();
+	             
 	             player.checkhitcookie(map);
 	            if(player.checkhitwall(map)){
 	            	player.hitwall();

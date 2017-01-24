@@ -18,7 +18,7 @@ public class Perso {
 		name = nom;
 		dir = dir0;
 		buffer = dir0;
-		taille2 = Main.taille*2.2;
+		taille2 = Main.taille*1.3;
 		taille = Main.taille*1.3;
 		image = pic;
 	}
@@ -68,26 +68,26 @@ public class Perso {
 					//On prend en compte la taille/épaisseur (+ - taille)
 					 if (map.coord[x][y-ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
 						 //on fait rebondir le perso si il touche un mur
-						 this.y = this.y+Main.STEP;
+						 this.y = this.y+2*Main.STEP;
 						
 						 return true;
 					 }
 					 break;
 				 case 1:
 					 if (map.coord[x][y+ntaille]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x+ntaille][y+ntaille]==2){
-						 this.y = this.y-Main.STEP;
+						 this.y = this.y-2*Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 2:
 					 if (map.coord[x-ntaille][y]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2){
-						 this.x = this.x+Main.STEP;
+						 this.x = this.x+2*Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 3:
 					 if (map.coord[x+ntaille][y]==2 || map.coord[x+ntaille][y+ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
-						 this.x = this.x-Main.STEP;
+						 this.x = this.x-2*Main.STEP;
 						 return true;
 					 }
 					 break;
@@ -106,35 +106,43 @@ public class Perso {
 		 int ntaille = (int)(Math.round((((this.taille2)/Main.WIN_WIDTH)*map.lon)));
 		 //int step = (int)(Math.round(Main.STEP));
 
-		 int step = 1;
+		 int step = (int)(Math.round((((Main.STEP*this.taille2)/Main.WIN_WIDTH)*map.lon)));
 
 		// 0: bas 1: haut 2: gauche 3: droite
 		
 		 //On vérifie si la prochaine direction (celle dans le buffer ) est libre
 				 switch(direc){
+				 //y
 				 case 0:
 					 //On prend en compte la taille/épaisseur (+ - taille) du perso ainsi que ça prochaine position (+ - step)
 					 if (map.coord[x-(ntaille)][y-(ntaille)-step]==2 || map.coord[x+(ntaille)][y-(ntaille)-step]==2 || map.coord[x][y-(ntaille)-step]==2){
 						 // la prochaine direction n'est pas libre
+						 
+				
 						 return true;
+
 					 }
 					 break;
 				 case 1:
 					 if (map.coord[x-(ntaille)][y+(ntaille)+step]==2 || map.coord[x+(ntaille)][y+(ntaille)+step]==2 || map.coord[x][y+(ntaille)+step]==2){
-						
+					
 						 return true;
+						 
 					 }
 					 break;
+					 //x
 				 case 2:
 					 if (map.coord[x-(ntaille)-step][y+(ntaille)]==2 || map.coord[x-(ntaille)-step][y-(ntaille)]==2 || map.coord[x-(ntaille)-step][y]==2){
-						 
+						 			
 						 return true;
+						
 					 }
 					 break;
 				 case 3:
 					 if (map.coord[x+(ntaille)+step][y+(ntaille)]==2 || map.coord[x+(ntaille)+step][y-(ntaille)]==2 || map.coord[x+(ntaille)+step][y]==2){
-						
+						 				
 						 return true;
+						 
 					 }
 					 break;
 				 } 
