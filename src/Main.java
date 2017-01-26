@@ -201,6 +201,7 @@ public class Main {
 
 	    	 btnrename.dessiner();
 	    	 btnretour.dessiner();
+	    	 StdDraw.pause(200);
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
@@ -567,7 +568,7 @@ public class Main {
  		 btnsaveScore = new Button(WIN_WIDTH/2,60,80,20,"Sauver le Score");
  		 btnMenujouer = new Button(WIN_WIDTH/2,20,80,20,"Jouer");
  		//Boutons du menu edition du pseudo
- 		 btnrename = new Button(WIN_WIDTH/2,75,80,20,"Accepter");
+ 		 btnrename = new Button(WIN_WIDTH/2,150,80,20,"Accepter");
  		editnom = new EditText(WIN_WIDTH/2,WIN_HEIGHT/2);
  		 //bouton de retour au menu Principal
  		 btnretour = new Button(90,-20,80,20,"Menu");
