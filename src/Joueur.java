@@ -2,13 +2,14 @@
 public class Joueur extends Perso{
 	int score;
 	int vie;
+	boolean bonus;
 	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
 		super(x0, y0, dir0, nom,pic);
 		score = 0;
 		vie = 3;
 		
 	}
-	//TODO a supprimer ?
+
 	public void hitwall(){
 		this.dir = -1;
 		 }
@@ -16,8 +17,9 @@ public class Joueur extends Perso{
 	//On regarde si le joueur est sur la même case qu'un cookie
 	 public void checkhitcookie(Map map){
 		 //On convertit la coordonnée du personnage en coordonnée du tableau de la carte
-		 int nx = (int)(Math.round((this.x/Main.WIN_WIDTH)*map.lar));
-		 int ny = (int)(Math.round((this.y/Main.WIN_WIDTH)*map.lon)); 
+			int[]coordcase = map.toCase(this.x, this.y);
+			int nx = coordcase [0];
+			int ny = coordcase[1];
 
 		
 			 if (map.coord[nx][ny]==1){

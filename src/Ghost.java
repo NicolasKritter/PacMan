@@ -30,7 +30,7 @@ public void bounchehitwall(Map map){
 	 //Le fantôme choisis une nouvelle direction au hasard
 	 //ordre: en arrière au dernier recours
 	 int k = 0;
-	 while(this.checkhitwall(map, newdir[k]) && k<3){
+	 while( k<3 && this.checkhitwall(map, newdir[k])){
 		 k = k+1;
 	 }
 	 this.dir = newdir[k];

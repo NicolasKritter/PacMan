@@ -14,8 +14,9 @@ public class Button extends Component{
 		StdDraw.rectangle(x, y, width-6, height-4);
 		StdDraw.text(x, y, text);
 		StdDraw.show();
-		
 	}
+	
+//TODO CALL LE HOOVER 1 FOIS?
 	//check si la souris est dessus
 	public boolean hoover(){
 		 if(StdDraw.mouseX()>x-width && StdDraw.mouseX()<x+width && StdDraw.mouseY()>y-height && StdDraw.mouseY() <y+height){

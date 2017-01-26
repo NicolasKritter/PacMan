@@ -62,7 +62,7 @@ public class ScoreSheet {
 			//close les readers
 			reader.close();
 			buffreader.close();
-			//TODO garder seulement les ligne pour gagner de la mémoire
+			
 			//on garede le score en mode ligne par ligne
 			scoresligne = temp;
 			

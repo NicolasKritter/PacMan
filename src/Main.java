@@ -8,14 +8,17 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Main {
 		static Random random = new Random(System.currentTimeMillis());
-		//TODO faire des list pour listcookie
-	
+		//TODO Score
+		//TODO multi
+		//TODO centrage
+		//TODO uml
+		//TODO livrable
+		//TODO animation ?
 		//Display
-		//640
 	 	static int WIN_WIDTH= 640;
 	    static int WIN_HEIGHT= 640;
 	    static int FPS= 1000;
-	    static double STEP= 1.6;
+	    static double STEP= 2;
 	    static Joueur player;
 	    static Ghost red;
 	    static Ghost blue;
@@ -33,6 +36,7 @@ public class Main {
 	    static Button btnrename;
 	    static EditText editnom;
 	    static ScoreSheet fscore;
+	    static int duree;
 	    //chemin du dossieur feuille de score
 	    static String cheminFeuilleDeScore = "GameData/Score/scoreSheet.csv";
 	    //chemin du dossier image
@@ -42,7 +46,7 @@ public class Main {
 	    static Font fontTitrePrincipal = new Font("Georgia", Font.BOLD, 60);
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
-	    //TODO class menu ?
+
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -122,7 +126,7 @@ public class Main {
 	    	
 	    }
 
-	    //TODO score: prendre en compte le nombre max de cooie dispo
+
 	    public static void menuScore(){
 	    	boolean menu = true;
 	    	
@@ -156,7 +160,7 @@ public class Main {
 	    }
 	    public static void menuNom(){
 	    	boolean menu = true;
-	    	//TODO dessiner les vies
+
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	 StdDraw.setPenColor(StdDraw.BLUE);
 	    	//change la police
@@ -199,8 +203,7 @@ public class Main {
 			 StdDraw.setFont();
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/1.2, "Images: https://pixabay.com/");
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2.2, "KRITTER Nicolas G6C ISEP");
-	    	 //TODO a changer
-	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3.2, "VANACKER Eliott G7Gay ISEP");
+	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/3.2, "VANACKER Eliott G7B ISEP");
 	    	 btnretour.dessiner();
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
@@ -214,10 +217,17 @@ public class Main {
 	    }
 	    public static void fin(){
 	    	StdDraw.clear(StdDraw.BLACK);
-	    	
-	    	
+	    	//calcul le temps qu'à durée la partie
+	    	duree = (int) ((System.currentTimeMillis()/1000) - duree);
+	    	StdDraw.setPenColor(StdDraw.YELLOW);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-20, player.name);
 	    	StdDraw.setPenColor(StdDraw.WHITE);
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50,player.name+": "+player.vie+" vie(s) & Score: "+player.score);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
+
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-100,player.vie+" vie(s) restantes");
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" "+(int)(300/duree)+" x "+player.vie);
+	    	player.score = player.score+(int)(300/duree)*player.vie;
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-175,"Score Final: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
@@ -228,7 +238,7 @@ public class Main {
 	    		if(btnMenujouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;		    	    		
-		    			 map = new Map();
+		    			 
 		    	    		
 		    	    		init();
 		    		 }
@@ -244,7 +254,7 @@ public class Main {
 		    			 menuScore();
 		    		 }
 	    		 }
-	    		 if(btnretour.hoovered){
+	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
 	    				 player.vie = 3;
 		    	    	 player.score = 0;
@@ -254,29 +264,38 @@ public class Main {
 	    		 }
 	    		
 	    	}
-	    		//TODO changer la vitesse du jeux ?
+
 	    	
 	    }
 	    public static void panelJeux(){
+	    	
 	     StdDraw.clear(StdDraw.BLACK);
 	   	 //Afficher tous les murs
 	   	 afficherMur(map.listemur);
 	     //Afficher tous les coockies
 	     afficherCookie(map.listcookie);
+	     //affiche les éléments du tableau de bord
+	     StdDraw.setPenColor(StdDraw.YELLOW);
+	     StdDraw.text(220, -16,player.name+":");
 	     StdDraw.setPenColor(StdDraw.WHITE);
-	     StdDraw.text(320, -4,player.name+":");
-	     StdDraw.text(220, -30,"Vie(s): "+player.vie);
+	     StdDraw.text(320, -4,"Vie(s): ");
 	   	 StdDraw.text(320 , -30,"Score: "+player.score);
 	   	 StdDraw.text(500, -30,"High Score: "+ fscore.getHighScore());
+	   	 
+	   	 for(int k = 0; k<player.vie;k++){
+	   		 StdDraw.picture(365+25*k, -4,dossierImage+"vie.png", 25, 25);
+	   	 }
 	   	 btnretour.dessiner();
-	   		
+	   	if(player.vie>2){
+	    	duree = (int)(System.currentTimeMillis()/1000);
+	    	}
 	    }
-	    //TOD0 refaire le ini plus propre
 	    public  static void init(){
-	    	
+	    	// reinit a la mort
 	    	if (player.vie<1){
 	    		player.vie = 3;
 	    		player.score = 0;
+	    		map = new Map();
 	    	}
 	    	//Affiche  le nombre de vie restante
 	    	 StdDraw.clear(StdDraw.BLACK);
@@ -326,11 +345,13 @@ public class Main {
 	    public static void afficherMur(Mur listemur){
 	    	
 	    	Mur mur = listemur;
+	    	 StdDraw.setPenColor(StdDraw.BLUE);
+	    	StdDraw.rectangle(WIN_WIDTH/2, WIN_HEIGHT/2, WIN_WIDTH/2-15, WIN_HEIGHT/2-15);
 	    	//parcour la liste chaînée des murs et on les dessines
 	        while(mur!=null){
-
-	        	StdDraw.setPenColor(StdDraw.BLUE);
-		    	StdDraw.rectangle(mur.x,mur.y,mur.large-1,mur.longe-1);
+	        		
+	        	//StdDraw.setPenColor(StdDraw.BLUE);
+	        	StdDraw.picture(mur.x, mur.y, Main.dossierImage+"mur.jpg",2*mur.large,2*mur.longe);
 		    	mur = mur.suivant;
 	        }
 	    	
@@ -343,7 +364,7 @@ public class Main {
 	        while(cookie!=null){
 	        	
 		    	 StdDraw.setPenColor(StdDraw.WHITE);
-		    	 StdDraw.picture(cookie.x, cookie.y, Main.dossierImage+"cookie"+".png",cookie.taille,cookie.taille);
+		    	 StdDraw.picture(cookie.x, cookie.y, Main.dossierImage+"cookie.png",cookie.taille,cookie.taille);
 	       	 
 
 	      
@@ -355,13 +376,10 @@ public class Main {
 	    }
 	    
 
-	    //TODO mettre des images ?
-	    //TODO menu credit
 
-	    //TODO afficher pause ?
-	    //TODO IA
+
 	public  static void main(String[] args)  {
-		//controle
+		
 		 boolean play = true;
 	     int pause = 0;
 	     fscore = new ScoreSheet(cheminFeuilleDeScore);
@@ -412,7 +430,7 @@ public class Main {
      panelJeux();
    	 
    	 
-    //TODO fonction jouer
+
    	 
         while(true){
         	
@@ -434,8 +452,7 @@ public class Main {
 		        		pause=0;
 		        	}
 	        	
-	        	
-	        	 
+	        	 //TODO bonus
 	        	 // Changement de direction avec les flèches
 	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
 	        		 //la prochaine direction sera vers le haut
@@ -455,14 +472,28 @@ public class Main {
 	            	 player.buffer = 3;
 	             }
 	             
-	             if(!player.checkhitwall(map,  player.buffer)){
+	             
+ 	             if(!player.checkhitwall(map,  player.buffer)){
+ 	            	
 	            	 //si la prochaine direction est libre, on la prend
-	            	 
+
+
 	            	 player.dir =  player.buffer;
+ 	            	
+	            	
+	            	 
 	            	 
 	             }
 	            
-	                        
+	             player.move();
+	             
+		             
+	            player.checkhitcookie(map);
+	            if(player.checkhitwall(map)){
+	            	player.hitwall();
+	            }
+	             player.afficher();   
+	             
 	             for (Ghost ghost: listGhost){  
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(100)<15 &&  ghost.buffer ==  ghost.dir){
@@ -473,8 +504,9 @@ public class Main {
 	            	 }
 	            	 if(!ghost.checkhitwall(map, ghost.buffer)){
 	            		 //si sa prochaine direction est libre, le fantome la prend
+
 	            		 ghost.dir = ghost.buffer;
-	            		
+
 	            		
 		             }
 	            	 ghost.move();
@@ -491,17 +523,14 @@ public class Main {
 	            	  
 	             }
 	                          
+	             
 
-	               player.move();
-	             player.checkhitcookie(map);
-	             player.checkhitwall(map);
-	             //TODO combiner les check ?	            	        
-	             player.afficher();
 	             //Affichage du jeux
 	             
 	             
 	             
 	             StdDraw.show(10000/FPS);
+	            
 	             
 	        }
 	        else{
@@ -514,7 +543,7 @@ public class Main {
 	        		pause=0;
 	        	}
 	        	
-	        	StdDraw.pause(100);
+	        	StdDraw.pause(50);
 	        	
 	        	
 	        }
