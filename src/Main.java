@@ -34,8 +34,12 @@ public class Main {
 	    static Button btnMenujouer;
 	    static Button btnretour;
 	    static Button btnrename;
+	    static Button btn2joueur;
 	    static EditText editnom;
 	    static ScoreSheet fscore;
+	    static boolean mode2joueur;
+	    
+	    //sert pour le timer du jeux
 	    static int duree;
 	    //chemin du dossieur feuille de score
 	    static String cheminFeuilleDeScore = "GameData/Score/scoreSheet.csv";
@@ -47,6 +51,8 @@ public class Main {
 	    static Font fontTitre = new Font("Georgia", Font.BOLD, 30);
 	    
 
+	    
+	  //############################################## MENUS ####################################################### 
 	    public static void menuPrincipal(){
 	    	boolean menu = true;
 	    	StdDraw.clear(StdDraw.BLACK);
@@ -65,14 +71,26 @@ public class Main {
 	    	//bouton changer de nom
 	    	 btnChnom.dessiner();
 	    	 
+	    	//bouton 2 joueurs
+	    	 btn2joueur.dessiner();
+	    	 
 	    	 //bouton crédit
 	    	 btncredit.dessiner();
 	    	 
 	    	 //bouton 2 joueurs ?
+
 	    	 while(menu){
+	    		 //supprime le 2ème joueur
+	    		
 	    		 if(btnjouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
+		    			 //initialise le mode 1 joueur
+		    			 player.alive = true;
+		    	    	 player.suivant = null;
+		    			 mode2joueur = false;
+		    			 init();
+	
 		    			 
 		    		 }
 	    		 }
@@ -97,8 +115,17 @@ public class Main {
 		    			 credit();
 		    		 }
 	    		 }
-	    	 
-	    	 
+	    		 if(btn2joueur.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;
+		    			 mode2joueur = true;
+		    			 player.suivant = new Joueur(map.xStart,map.yStart,-1,"Invité","pac2");
+		    			 //on ajoute un joueur
+		    			 
+		    			 init2joueurs();
+		    		 }
+	    		 }
+	    		
 	    	 
 	    	 }
 	    	
@@ -152,6 +179,7 @@ public class Main {
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;	
 		    			 menuPrincipal();
+
 	    			 }
 	    		 }
 	    		 
@@ -215,6 +243,7 @@ public class Main {
 	    		 
 	    	 }
 	    }
+
 	    public static void fin(){
 	    	StdDraw.clear(StdDraw.BLACK);
 	    	//calcul le temps qu'à durée la partie
@@ -267,6 +296,7 @@ public class Main {
 
 	    	
 	    }
+	    //############################################## Mode 1 joueur ####################################################### 
 	    public static void panelJeux(){
 	    	
 	     StdDraw.clear(StdDraw.BLACK);
@@ -281,18 +311,27 @@ public class Main {
 	     StdDraw.text(320, -4,"Vie(s): ");
 	   	 StdDraw.text(320 , -30,"Score: "+player.score);
 	   	 StdDraw.text(500, -30,"High Score: "+ fscore.getHighScore());
-	   	 
+	   	 //dessine les vies
 	   	 for(int k = 0; k<player.vie;k++){
 	   		 StdDraw.picture(365+25*k, -4,dossierImage+"vie.png", 25, 25);
 	   	 }
+	   	 
 	   	 btnretour.dessiner();
+	   	 
+	   	 //intitialise le timer
 	   	if(player.vie>2){
 	    	duree = (int)(System.currentTimeMillis()/1000);
 	    	}
+	   	
 	    }
+	    
+	    //mode 1 joueur (init servira à recommencer la partie ou faire la pause après la mort d'un joueur
+		//initialise le jeux (pour débuter une nouvelle partie ou pour afficher la perte d'une vie)
+	   
 	    public  static void init(){
 	    	// reinit a la mort
 	    	if (player.vie<1){
+
 	    		player.vie = 3;
 	    		player.score = 0;
 	    		map = new Map();
@@ -302,11 +341,11 @@ public class Main {
 	    	 StdDraw.setPenColor(StdDraw.WHITE);
 	    	 StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT/2,player.name+": "+player.vie+" vie(s)");
 	    	 
-	    	 //affiche et pause pendant 3 secondes
-	    	 StdDraw.show(3000);
+	    	 //affiche et pause pendant 2 secondes
+	    	 StdDraw.show(2000);
 	    	 //nécessaire pour ne pas passer à l'affichage suivant 
 	    	 //avant la fin de la pause
-	    	 StdDraw.pause(0);
+	    	 StdDraw.pause(2);
         	
 	    	 //réaffiche le panel pour le jeu
 	    	 panelJeux();
@@ -323,13 +362,10 @@ public class Main {
 	    	pink.x = map.xPSpawn;
 	    	pink.y = map.yPSpawn;
 	    	orange.x = map.xOSpawn;
-	    	orange.y = map.yOSpawn;
-	    	 
-	    	
-	    	
+	    	orange.y = map.yOSpawn;	    	 	    	
 	    	
 	    }
-	    
+	  //############################################## Affichage Dans le Jeux #######################################################    
 	   public static void refreshScore(){
 	   StdDraw.setPenColor(StdDraw.BLACK);
 	    	 
@@ -377,14 +413,133 @@ public class Main {
 
 	    	 
 	    }
+	    //####################### MODE 2 JOUEURS###############################
+	    public static void panelJeux2(){
+		     StdDraw.clear(StdDraw.BLACK);
+		   	 //Afficher tous les murs
+		   	 afficherMur(map.listemur);
+		     //Afficher tous les coockies
+		     afficherCookie(map.listcookie);
+		     
+		     //affiche les éléments du tableau de bord pour le Joueur 1
+		     StdDraw.setPenColor(StdDraw.YELLOW);
+		     StdDraw.text(300, -4,"Joueur 1: Flèches");
+		     StdDraw.setPenColor(StdDraw.PINK);
+		   	 StdDraw.text(300 , -30,"Invité: Z,Q,S,D");
+
+		   	 
+		   	 //affiche les éléments du tableau de bord pour le Joueur 2
+		     StdDraw.setPenColor(StdDraw.WHITE);
+		     StdDraw.text(500, -4,"Vies de départ: ");
+		     for(int k = 0; k<player.vie;k++){
+		   		 StdDraw.picture(500+25*k, -30,dossierImage+"vie.png", 25, 25);
+		   	 }
+
+
+		   	
+		   	
+		   	 btnretour.dessiner();
+		   	 
+		   	 //initialise le timer
+		    	duree = (int)(System.currentTimeMillis()/1000);
+		     
+	    }
 	    
+	  //initialize lemode 2 joueur
+	    public static void init2joueurs(){
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	
+	    	red.x = map.xRSpawn;
+	    	red.y = map.yRSpawn;
+	    	blue.x = map.xBSpawn;
+	    	blue.y = map.yBSpawn;
+	    	pink.x = map.xPSpawn;
+	    	pink.y = map.yPSpawn;
+	    	orange.x = map.xOSpawn;
+	    	orange.y = map.yOSpawn;
+	    	Joueur courant = player;
+	    	//initialise les joueurs
+	    	while(courant!=null){
+	    		courant.x = map.xStart;
+	    		courant.y = map.yStart;
+	    		courant.buffer = -1;
+	    		courant.dir = -1;
+	    		courant.alive = true;
+	    		courant.score = 0;
+	    		courant.vie = 3;
+	    		courant = courant.suivant;
 
+	    	}
+   		map = new Map();
+   		
+   		panelJeux2();
+   		
+	    }
+	    
+	    public static void menuFin2joueurs(){
+	    	StdDraw.clear(StdDraw.BLACK);
+	    	//calcul le temps qu'à durée la partie
+	    	duree = (int) ((System.currentTimeMillis()/1000) - duree);
+	    	
+	    	//affichage pour le joueur 1
+	    	StdDraw.setPenColor(StdDraw.YELLOW);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-20, player.name);
+	    	StdDraw.setPenColor(StdDraw.WHITE);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-100,player.vie+" vie(s) restantes");
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" + "+(int)(300/duree)+" x "+player.vie);
+	    	player.score = player.score+(int)(300/duree)*player.vie;
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-175,"Score Final: "+player.score);
+    		
+    		//affichage pour le joueur 2
+	    	StdDraw.setPenColor(StdDraw.YELLOW);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-20, player.suivant.name);
+	    	StdDraw.setPenColor(StdDraw.WHITE);
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-100,player.suivant.vie+" vie(s) restantes");
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-140,player.suivant.score+" + "+(int)(300/duree)+" x "+player.vie);
+	    	player.score = player.score+(int)(300/duree)*player.suivant.vie;
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-175,"Score Final: "+player.suivant.score);
+    		if(player.score>player.suivant.score){
+    			StdDraw.setPenColor(StdDraw.YELLOW);
+    			StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-250,"Vainqueur: "+player.name);
+    		}else{
+    			StdDraw.setPenColor(StdDraw.YELLOW);
+    			StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-300-250,"Vainqueur: "+player.suivant.name);
+    		}
+    		btnMenujouer.dessiner();
+    		btnretour.dessiner();
+    		boolean menu = true;
+	    	while(menu){
+	    		
+	    		if(btnMenujouer.hoover()){
+	    			 if(StdDraw.mousePressed()){
+		    			 menu = false;		    	    		
+		    			 
+		    	    		
+		    	    		init2joueurs();
+		    		 }
+	    		 }
+	    		
+	    		 if(btnretour.hoover()){
+	    			 if(StdDraw.mousePressed()){
+	    				 player.vie = 3;
+		    	    	 player.score = 0;
+		    			 menu = false;	
+		    			 menuPrincipal();
+	    			 }
+	    		 }
+	    		
+	    	}
 
+    		
+	    }
+	    
+//###########################################################################################################
 
 	public  static void main(String[] args)  {
 		
 		 boolean play = true;
-	     int pause = 0;
 	     fscore = new ScoreSheet(cheminFeuilleDeScore);
 	     fscore.init();
 	     fscore.readFile();
@@ -392,22 +547,30 @@ public class Main {
 
 	    //Jeux
 		  map = new Map();
-	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur","pac");
+	     player = new Joueur(map.xStart,map.yStart,-1,"Joueur1","pac");
+	    
 	     red = new Ghost(map.xRSpawn, map.yRSpawn, 1,"red","red");
 	     blue = new Ghost(map.xBSpawn, map.yBSpawn, 3,"blue","blue");
 	     pink = new Ghost(map.xPSpawn, map.yPSpawn, 0,"pink","pink");
 	     orange = new Ghost(map.xOSpawn, map.yOSpawn, 2,"orange","orange");
 	     
 	     //Boutons
+	     //Boutons du menu Principal (créé les un en dssous des autres)
 	     btnjouer = new Button(WIN_WIDTH/2,WIN_HEIGHT/2,80,20,"Play");
 		 btnscore = new Button(btnjouer.x,btnjouer.y-2*btnjouer.height-30,80,20,"Score");
 	     btnChnom = new Button(btnscore.x,btnscore.y-2*btnscore.height-30,80,20,"Changer de nom");
-	     btncredit = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"Credits");	     
+	     btn2joueur = new Button(btnChnom.x,btnChnom.y-2*btnChnom.height-30,80,20,"2 joueurs");	
+	     btncredit = new Button(btnChnom.x,btn2joueur.y-2*btnChnom.height-30,80,20,"Credits");	
+	     
+	   //Boutons du menu de fin 1 joueur
  		 btnsaveScore = new Button(WIN_WIDTH/2,60,80,20,"Sauver le Score");
  		 btnMenujouer = new Button(WIN_WIDTH/2,20,80,20,"Jouer");
- 		 btnretour = new Button(90,-20,80,20,"retour");
+ 		//Boutons du menu edition du pseudo
  		 btnrename = new Button(WIN_WIDTH/2,20,80,20,"Accepter");
  		editnom = new EditText(WIN_WIDTH/2,WIN_HEIGHT/2);
+ 		 //bouton de retour au menu Principal
+ 		 btnretour = new Button(90,-20,80,20,"Menu");
+ 		
  		
 	     Ghost[] listGhost= {red,blue,pink,orange};
 
@@ -425,22 +588,15 @@ public class Main {
          * 
          * 
          */
-     StdDraw.clear(StdDraw.BLACK);
-     
-    
-	 
-	 //affiche le panel du jeux
-     panelJeux();
-   	 
-   	 
-
-   	 
+ 	 
         while(true){
         	
         	//bouton retour au menu
         	if(btnretour.hoover()){
 	   			if(StdDraw.mousePressed()){		    		
 		    		 menuPrincipal();
+	    			 //réinitialiste le jeux
+	    			 player.vie = -1;
 	   			 }
         	}
         	
@@ -448,65 +604,97 @@ public class Main {
 	        if(play){
 	        	//affiche les cookies
 	        	afficherCookie(map.listcookie);
-	        	//éviter la répétition lorsque que la touche P est pressée
-	        	if (pause>1){
-		        	pause -= 1;
-		        	}else{
-		        		pause=0;
-		        	}
 	        	
-	        	 //TODO bonus
-	        	 // Changement de direction avec les flèches
-	        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
-	        		 //la prochaine direction sera vers le haut
-	                 player.buffer = 0;
-	                 
-	             }
-	             if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {
-	            	
-	            	 player.buffer = 1;
-	             }
-	             if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)) {
-	            	
-	            	 player.buffer = 2;
-	             }
-	             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
-	            	 
-	            	 player.buffer = 3;
-	             }
-	             
-	             
- 	             if(!player.checkhitwall(map,  player.buffer)){
- 	            	
-	            	 //si la prochaine direction est libre, on la prend
-
-
-	            	 player.dir =  player.buffer;
- 	            	
-	            	
-	            	 
-	            	 
-	             }
-	            
-	             player.move();
-	             
+	        	//sert pour parcourir a liste chainée des joueurs
+	        	 Joueur joueurcourant = player;
+	        	 //servira à identifier le numéro du joueur (pas un booléen pour faciliter l'ajout de N joueur en plus
+	        	 int numeroJoueur = 1;
+	        	 while(joueurcourant!=null){
+	        		 //détecte quel joueur est entrain de joueur
+	        		 if(joueurcourant.alive){
+	        			 if(numeroJoueur==1){
+		        		//Si le joueur est vivant, il peu se déplacer
+		        		
+		        		
+		        			// Changement de direction avec les flèches
+				        	 if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
+				        		 //la prochaine direction sera vers le haut
+				        		 joueurcourant.buffer = 0;
+				                 
+				             }
+				             if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {
+				            	
+				            	 joueurcourant.buffer = 1;
+				             }
+				             if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)) {
+				            	
+				            	 joueurcourant.buffer = 2;
+				             }
+				             if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
+				            	 
+				            	 joueurcourant.buffer = 3;
+				             }
+		        		}
+	        			 //Pour le joueur 2 seuleent
+				        	if(numeroJoueur==2){
+				        		if (StdDraw.isKeyPressed(KeyEvent.VK_S)) {
+					        		 //la prochaine direction sera vers le haut
+					        		 joueurcourant.buffer = 0;
+					                 
+					             }
+					             if (StdDraw.isKeyPressed(KeyEvent.VK_Z)) {
+					            	
+					            	 joueurcourant.buffer = 1;
+					             }
+					             if (StdDraw.isKeyPressed(KeyEvent.VK_Q)) {
+					            	
+					            	 joueurcourant.buffer = 2;
+					             }
+					             if (StdDraw.isKeyPressed(KeyEvent.VK_D)) {
+					            	 
+					            	 joueurcourant.buffer = 3;
+					             }
+			        		
+				        	}
+				        	
+				        	//Détecte si la direction enregistrée dans le bugger est libre
+				        	if(!joueurcourant.checkhitwall(map,  joueurcourant.buffer)){				 	            	
+				            	 //si la prochaine direction est libre, on la prend
+			 	            	joueurcourant.dir =  joueurcourant.buffer;
+			 	            	    	 
+				             }
+				        	
+				           //déplace le joueur
+			 	           joueurcourant.move();				            
+			 	           //détecte si le joueur touche un cookie
+			 	           joueurcourant.checkhitcookie(map);
+			 	           
+			 	           //détecte si le joueur touche un mur et on agit en conséquence
+				           if(joueurcourant.checkhitwall(map)){
+				            	joueurcourant.hitwall();
+				           }
+				           //affiche le joueur
+				           joueurcourant.afficher();  
+		        		}
+        		 
 		             
-	            player.checkhitcookie(map);
-	            if(player.checkhitwall(map)){
-	            	player.hitwall();
-	            }
-	            //on regarde si le joueur as un bonus
-	            
-	            if(player.bonus){
-	            	
-	            	//si ça fait plus de 2 secondes qu'il a eu le bonus, on lui retire
-	            	if((int) ((System.currentTimeMillis()/1000) - player.timer)>2){
-	            		player.bonus = false;
-	            		player.bonustVit = 1;
-	            	}
-	            }
-	             player.afficher();   
-	             
+	 	            
+		            //on regarde si le joueur as un bonus
+		            
+		            if(joueurcourant.bonus){
+		            	
+		            	//si ça fait plus de 1 secondes qu'il a eu le bonus, on lui retire
+		            	if((int) ((System.currentTimeMillis()/1000) - joueurcourant.timer)>1){
+		            		joueurcourant.bonus = false;
+		            		joueurcourant.bonustVit = 1;
+		            	}
+		            }
+		             
+		             joueurcourant  = joueurcourant.suivant;
+		             numeroJoueur = numeroJoueur+1;
+        	 
+	        	 }
+	        		 
 	             for (Ghost ghost: listGhost){  
 	            	 //Le fantome choisis sa prochaine direction si il suit l'ancienne 1 fois sur 200
 	            	 if(random.nextInt(100)<15 &&  ghost.buffer ==  ghost.dir){
@@ -528,14 +716,25 @@ public class Main {
 	            		 //si il touche un mur, on le fait rebondir
 	            		 ghost.bounchehitwall(map);
 	            	 }
-	            	 map.checkhitghost(player, ghost);
+	            	 //parcour la liste chaînée des joueurs pour savoir si l'un d'eux touche un fantome
+	            	 Joueur courant = player;
+	            	 while(courant!=null){
+	            	 map.checkhitghost(courant, ghost);
+	            	 courant = courant.suivant;
+	            	 }
+	            	 
 	            		 
 	            	 
 	            	
-	            	 ghost.afficher();;
+	            	 ghost.afficher();
 	            	  
 	             }
-	                          
+	             if(mode2joueur){
+		           //si les 2 joueurs sont mort
+					 if(!player.alive && !player.suivant.alive){
+						 menuFin2joueurs();
+					 }   
+	             }
 	             
 
 	             //Affichage du jeux
@@ -546,26 +745,14 @@ public class Main {
 	            
 	             
 	        }
-	        else{
-	        	
-	        	//Pour éviter la répétition de l'inversion play pause on met un timer avant 
-	        	//de pouvoir réactiver la touche P
-	        	if (pause>1 ){
-	        	pause -= 1;
-	        	}else{
-	        		pause=0;
+	       //détecte si un touche à été pressé
+	        if (StdDraw.hasNextKeyTyped()){
+	        	//Si la touche qui à été pressé est P
+	        	if(StdDraw.nextKeyTyped() ==  112){
+	        		play = !play;
 	        	}
-	        	
-	        	StdDraw.pause(50);
-	        	
-	        	
 	        }
-	        
-	        if (StdDraw.isKeyPressed(KeyEvent.VK_P) && pause==0) {
-	        	pause = 10;
-	        	play = !play;
-	       	 
-	        }
+	      
 	        	
         }
 

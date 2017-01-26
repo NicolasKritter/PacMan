@@ -1,3 +1,5 @@
+import edu.princeton.cs.introcs.StdDraw;
+
 //true mur false vide
 // case: 1 cookie, 2 mur, 0 vide
 public class Map {
@@ -21,6 +23,7 @@ public class Map {
 	 int lar;
 	 Cookie[][] coordcookie;
 	 int nbcookie;
+
 	 public Map(){
 		 
 		 //échelle de l'écran d'affichage
@@ -185,12 +188,35 @@ public class Map {
 				 ghost.x =(Main.random.nextInt(lar-4)+2) *(largeur/lar);
 			 }else{
 			 perso.vie = perso.vie-1;
-			 
-			 if(perso.vie>0){
-				 Main.init();
-				 }else{
-					 Main.fin();
+			 	// En mode 2 joueur, on "supprime le perso" si il meur
+				 if(Main.mode2joueur){
+					 //Le perso est touché, donc on l'efface
+					 perso.effacer();
+					 if(perso.vie<1){
+						 perso.alive = false;
+						 perso.vie = 0;
+					 }else{
+						 //Si il est encore vivant,  on le remet à l'endroit d'apparition						 
+						 perso.x = xStart;
+						 perso.y = yStart;
+						 perso.dir = -1;
+						 ghost.y = yBSpawn;
+						 ghost.x =(Main.random.nextInt(lar-4)+2) *(largeur/lar);
+					 }
+					 
+					 
+				 }else{//mode 1 joueur
+					 if(perso.vie>0){
+						 //Si il es encore vivant, on met une pause et on affiche le nombre de vie (init())
+						 Main.init();
+						 }else{
+							 //Si il meurt, on arrête le jeux
+							 Main.fin();
+						 }
+					 
 				 }
+			 
+
 			 }
 			 		 
 			 }

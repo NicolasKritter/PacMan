@@ -5,11 +5,15 @@ public class Joueur extends Perso{
 	boolean bonus;
 	//sert à déteminer la durée du mode bonus
 	int timer;
+	Joueur suivant;
+	 //détermine si le joueur est en vie
+	 boolean alive;
 	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
 		super(x0, y0, dir0, nom,pic);
 		score = 0;
 		vie = 3;
 		bonus = false;
+		alive = true;
 		
 	}
 
@@ -46,8 +50,10 @@ public class Joueur extends Perso{
 					 //augmente le score
 					 this.score = this.score+2;
 					 
-					 //rafraichit l'affichage du score
+					 if(!Main.mode2joueur){
+					 //rafraichit l'affichage du score en mode 1 joueur
 					 Main.refreshScore();
+					 }
 					 
 					 //efface le cookie de l'affichage
 					 supp.effacer();

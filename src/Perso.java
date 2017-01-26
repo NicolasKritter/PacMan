@@ -180,6 +180,8 @@ public class Perso {
 			break;
 		case 3:
 			StdDraw.filledSquare(x-1,y,1.1*taille+2);
+		default:
+			StdDraw.filledSquare(x,y,1.1*taille+2);
 			
 			break;
     	
