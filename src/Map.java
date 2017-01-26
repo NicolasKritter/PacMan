@@ -158,7 +158,9 @@ public class Map {
 				listcookie = listcookie.suivant;
 				
 			}else{
+				//On parcour toutes la liste pour la reconstruire
 				while(courant.suivant !=null){
+					// on ommet d'ajouter le cookie à supprimer
 					if (courant.suivant.equals(cookie)){
 						courant.suivant = courant.suivant.suivant;
 						break;

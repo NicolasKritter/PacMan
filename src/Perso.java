@@ -55,7 +55,7 @@ public class Perso {
 		 }
 		 
 	 }
-
+	 
 	 public boolean checkhitwall(Map map){
 		 //On passe la coordonnée du personnage en numéro de case du tableau de la carte
 			int[]coordcase = map.toCase(this.x, this.y);
@@ -95,7 +95,7 @@ public class Perso {
 					 break;
 				 } 
 				 return false;
-			 //TODO expliquer méthode des cases
+			//return false si il n'y a pas de mur
 	}
 
 	
@@ -150,6 +150,7 @@ public class Perso {
 					 }
 					 break;
 				 } 
+				 //return false si il n'y a pas de murs
 				 return false;
 	}
 	 
