@@ -22,15 +22,15 @@ public class Joueur extends Perso{
 			int ny = coordcase[1];
 
 		
-			 if (map.coord[nx][ny]==1){
+			 if (map.coordcookie[nx][ny]!=null){
 				 
 				 //identifie le cookie touché
 				 Cookie supp = map.coordcookie[nx][ny];
 				 
-				 if (supp!=null){
+
 					 
 					//retire le cookie de la map
-					 map.coord[nx][ny]=0;
+					 map.coordcookie[nx][ny]=null;
 					 
 					 //décompte du nombre de cookie
 					 map.nbcookie = map.nbcookie-1;
@@ -51,7 +51,7 @@ public class Joueur extends Perso{
 					 if(map.nbcookie<1){
 							  Main.fin();
 					  }
-				 }
+				 
 					
 					 
 			 }
