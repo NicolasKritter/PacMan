@@ -3,10 +3,13 @@ public class Joueur extends Perso{
 	int score;
 	int vie;
 	boolean bonus;
+	//sert à déteminer la durée du mode bonus
+	int timer;
 	public Joueur(int x0, int y0, int dir0, String nom, String pic) {
 		super(x0, y0, dir0, nom,pic);
 		score = 0;
 		vie = 3;
+		bonus = false;
 		
 	}
 
@@ -27,7 +30,12 @@ public class Joueur extends Perso{
 				 //identifie le cookie touché
 				 Cookie supp = map.coordcookie[nx][ny];
 				 
-
+				 if(supp.bonus){
+					 timer = (int) ((System.currentTimeMillis()/1000));
+					 score = score+8;
+					 bonus = true;
+					 bonustVit = 2;
+				 }
 					 
 					//retire le cookie de la map
 					 map.coordcookie[nx][ny]=null;

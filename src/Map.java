@@ -115,11 +115,15 @@ public class Map {
 
 	 public void generatecookie(){
 		 listcookie = null;
+		 Cookie nouveau;
+		 int xb;
+		 int yb;
 		 for(int x = 2;x<lar-1;x = x+2) {
 				for(int y = 2;y<lon-1;y = y+2) {
 					 if(!coord[x][y]){
 					  		
-					  		Cookie nouveau =new Cookie(x*(largeur/lar),y*(longeur/lon),x,y);
+					  		nouveau =new Cookie(x*(largeur/lar),y*(longeur/lon),x,y);
+					  		
 					  		nbcookie=  nbcookie+1;
 					  		
 					  		listcookie = Cookie.addCookie(listcookie, nouveau);
@@ -129,7 +133,18 @@ public class Map {
 					  	}
 				}
 		 }
-		
+		for (int k = 0;k<4;k++){
+			//aléatoire de 0 à n non inclus
+			//Choisis des coordonnées aléatoires
+			xb = Main.random.nextInt(lar-3)+2;
+			yb = Main.random.nextInt(lar-3)+2;
+			//tant que ces coordonnées sont celles d'un cookie bonus ou son vide, on en choisit des nouvelles
+			while(coordcookie[xb][yb]==null || coordcookie[xb][yb].bonus){
+				xb = Main.random.nextInt(lar-4)+2;
+				yb = Main.random.nextInt(lar-4)+2;
+			}
+			coordcookie[xb][yb].bonus = true;
+		}
 	 }
 		public  void  deleteCookie(Cookie cookie){
 			
@@ -160,14 +175,24 @@ public class Map {
 	 public void checkhitghost(Joueur perso,Ghost ghost){
 		 double distance = Math.abs(perso.x-ghost.x)+Math.abs(perso.y-ghost.y);
 		 if (distance <= perso.taille *2+2){
-			 perso.vie = perso.vie-1;
-			 if(perso.vie>0){
-			 Main.init();
+			 
+			 if (perso.bonus){
+				 //Ajoute un bonus au score
+				 perso.score = perso.score+5;
+				 Main.refreshScore();
+				 //replace le fantome a l'endroit de spawn (même coordonéne Y et coordonnée x différente pour éviter le camping)
+				 ghost.y = yBSpawn;
+				 ghost.x =(Main.random.nextInt(lar-4)+2) *(largeur/lar);
 			 }else{
-				 Main.fin();
+			 perso.vie = perso.vie-1;
+			 
+			 if(perso.vie>0){
+				 Main.init();
+				 }else{
+					 Main.fin();
+				 }
 			 }
-			 
-			 
+			 		 
 			 }
 		 }
 	 

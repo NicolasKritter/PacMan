@@ -225,7 +225,7 @@ public class Main {
 	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
 
     		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-100,player.vie+" vie(s) restantes");
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" "+(int)(300/duree)+" x "+player.vie);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" + "+(int)(300/duree)+" x "+player.vie);
 	    	player.score = player.score+(int)(300/duree)*player.vie;
     		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-175,"Score Final: "+player.score);
     		btnsaveScore.dessiner();
@@ -350,7 +350,7 @@ public class Main {
 	    	//parcour la liste chaînée des murs et on les dessines
 	        while(mur!=null){
 	        		
-	        	//StdDraw.setPenColor(StdDraw.BLUE);
+
 	        	StdDraw.picture(mur.x, mur.y, Main.dossierImage+"mur.jpg",2*mur.large,2*mur.longe);
 		    	mur = mur.suivant;
 	        }
@@ -363,9 +363,12 @@ public class Main {
 	    	//parcour la liste chaînée des cookies et dessine les cookies
 	        while(cookie!=null){
 	        	
-		    	 StdDraw.setPenColor(StdDraw.WHITE);
+	        	if(cookie.bonus){
+	        		StdDraw.picture(cookie.x, cookie.y,  Main.dossierImage+"bonus.png",cookie.taille,cookie.taille);
+	        	}else{
+	        	
 		    	 StdDraw.picture(cookie.x, cookie.y, Main.dossierImage+"cookie.png",cookie.taille,cookie.taille);
-	       	 
+	        	}
 
 	      
 	        	cookie = cookie.suivant;
@@ -491,6 +494,16 @@ public class Main {
 	            player.checkhitcookie(map);
 	            if(player.checkhitwall(map)){
 	            	player.hitwall();
+	            }
+	            //on regarde si le joueur as un bonus
+	            
+	            if(player.bonus){
+	            	
+	            	//si ça fait plus de 2 secondes qu'il a eu le bonus, on lui retire
+	            	if((int) ((System.currentTimeMillis()/1000) - player.timer)>2){
+	            		player.bonus = false;
+	            		player.bonustVit = 1;
+	            	}
 	            }
 	             player.afficher();   
 	             

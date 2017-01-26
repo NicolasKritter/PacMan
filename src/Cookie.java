@@ -14,6 +14,7 @@ public class Cookie {
 		tabx = tx;
 		taby = ty;
 		taille = Main.taille*2;
+		bonus  = false;
 
 	}
 	public static Cookie addCookie(Cookie liste ,Cookie next) {

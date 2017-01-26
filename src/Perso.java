@@ -11,6 +11,7 @@ public class Perso {
 	double taille;
 	//sert a la direction de l'image
 	boolean imgdir;
+	int bonustVit = 1;
 	
 	
 	
@@ -32,23 +33,23 @@ public class Perso {
 		 switch(this.dir){
 		 case 0:
 			 
-			 this.y = this.y-Main.STEP;
+			 this.y = this.y-bonustVit*Main.STEP;
 			
 			 break;
 		 case 1:
 			 
-			 this.y = this.y+Main.STEP;
+			 this.y = this.y+bonustVit*Main.STEP;
 			 
 			 break;
 		 case 2:
 			 //sert pour l'affichage de l'image, définit si la dernière direction est droite ou gauche(false)
 			 imgdir = false;
-			 this.x = this.x-Main.STEP;
+			 this.x = this.x-bonustVit*Main.STEP;
 			
 			 break;
 		 case 3:
 			 imgdir = true;
-			 this.x = this.x+Main.STEP; 
+			 this.x = this.x+bonustVit*Main.STEP; 
 			 break;
 
 		 }
