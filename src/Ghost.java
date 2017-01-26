@@ -38,10 +38,7 @@ public void bounchehitwall(Map map){
 	 while(Math.abs(this.buffer-this.dir)==1){
 	 this.buffer = newdir[Main.random.nextInt(3)];
 	 }
-/*
-	if(!this.checkhitwall(map, this.dir)){
-		this.buffer = newdir[Main.random.nextInt(2)];
-	}*/
+
 
 	//On met cette direction en prochaine direction pour éviter les aller-retour sur place
 	
