@@ -78,7 +78,7 @@ public class Main {
 	    	 btncredit.dessiner();
 	    	 
 	    	 //bouton 2 joueurs ?
-
+	    	
 	    	 while(menu){
 	    		 //supprime le 2ème joueur
 	    		
@@ -201,7 +201,6 @@ public class Main {
 
 	    	 btnrename.dessiner();
 	    	 btnretour.dessiner();
-	    	 StdDraw.pause(200);
 	    	 while(menu){
 	    		 if(btnretour.hoover()){
 	    			 if(StdDraw.mousePressed()){
@@ -255,10 +254,10 @@ public class Main {
 	    	StdDraw.setPenColor(StdDraw.WHITE);
 	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
 
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-100,player.vie+" vie(s) restantes");
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,player.score+" + "+(int)(300/duree)+" x "+player.vie);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-80,player.vie+" vie(s) restantes");
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-110,player.score+" + "+(int)(300/duree)+" x "+player.vie);
 	    	player.score = player.score+(int)(300/duree)*player.vie;
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-175,"Score Final: "+player.score);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,"Score Final: "+player.score);
     		btnsaveScore.dessiner();
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
