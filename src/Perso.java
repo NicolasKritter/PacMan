@@ -67,7 +67,7 @@ public class Perso {
 				 switch(this.dir){
 				 case 0:
 					//On prend en compte la taille/épaisseur (+ - taille)
-					 if (map.coord[x][y-ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
+					 if (map.coord[x][y-ntaille] || map.coord[x-ntaille][y-ntaille] || map.coord[x+ntaille][y-ntaille]){
 						 //on fait rebondir le perso si il touche un mur
 						 this.y = this.y+2*Main.STEP;
 		
@@ -75,19 +75,19 @@ public class Perso {
 					 }
 					 break;
 				 case 1:
-					 if (map.coord[x][y+ntaille]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x+ntaille][y+ntaille]==2){
+					 if (map.coord[x][y+ntaille] || map.coord[x-ntaille][y+ntaille] || map.coord[x+ntaille][y+ntaille]){
 						 this.y = this.y-2*Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 2:
-					 if (map.coord[x-ntaille][y]==2 || map.coord[x-ntaille][y+ntaille]==2 || map.coord[x-ntaille][y-ntaille]==2){
+					 if (map.coord[x-ntaille][y] || map.coord[x-ntaille][y+ntaille] || map.coord[x-ntaille][y-ntaille]){
 						 this.x = this.x+2*Main.STEP;
 						 return true;
 					 }
 					 break;
 				 case 3:
-					 if (map.coord[x+ntaille][y]==2 || map.coord[x+ntaille][y+ntaille]==2 || map.coord[x+ntaille][y-ntaille]==2){
+					 if (map.coord[x+ntaille][y] || map.coord[x+ntaille][y+ntaille] || map.coord[x+ntaille][y-ntaille]){
 						 this.x = this.x-2*Main.STEP;
 						 return true;
 					 }
@@ -118,7 +118,7 @@ public class Perso {
 				 //y
 				 case 0:
 					 //On prend en compte la taille/épaisseur (+ - taille) du perso ainsi que ça prochaine position (+ - step)
-					 if (map.coord[x-(ntaille)][y-(ntaille)-step]==2 || map.coord[x+(ntaille)][y-(ntaille)-step]==2 || map.coord[x][y-(ntaille)-step]==2){
+					 if (map.coord[x-(ntaille)][y-(ntaille)-step] || map.coord[x+(ntaille)][y-(ntaille)-step] || map.coord[x][y-(ntaille)-step]){
 						 // la prochaine direction n'est pas libre
 						 
 				
@@ -127,7 +127,7 @@ public class Perso {
 					 }
 					 break;
 				 case 1:
-					 if (map.coord[x-(ntaille)][y+(ntaille)+step]==2 || map.coord[x+(ntaille)][y+(ntaille)+step]==2 || map.coord[x][y+(ntaille)+step]==2){
+					 if (map.coord[x-(ntaille)][y+(ntaille)+step] || map.coord[x+(ntaille)][y+(ntaille)+step] || map.coord[x][y+(ntaille)+step]){
 					
 						 return true;
 						 
@@ -135,14 +135,14 @@ public class Perso {
 					 break;
 					 //x
 				 case 2:
-					 if (map.coord[x-(ntaille)-step][y+(ntaille)]==2 || map.coord[x-(ntaille)-step][y-(ntaille)]==2 || map.coord[x-(ntaille)-step][y]==2){
+					 if (map.coord[x-(ntaille)-step][y+(ntaille)] || map.coord[x-(ntaille)-step][y-(ntaille)] || map.coord[x-(ntaille)-step][y]){
 						 			
 						 return true;
 						
 					 }
 					 break;
 				 case 3:
-					 if (map.coord[x+(ntaille)+step][y+(ntaille)]==2 || map.coord[x+(ntaille)+step][y-(ntaille)]==2 || map.coord[x+(ntaille)+step][y]==2){
+					 if (map.coord[x+(ntaille)+step][y+(ntaille)] || map.coord[x+(ntaille)+step][y-(ntaille)] || map.coord[x+(ntaille)+step][y]){
 						 				
 						 return true;
 						 
@@ -156,9 +156,9 @@ public class Perso {
 	public void afficher(){		
 		if (this.imgdir){
 			//dessine l'image du fantome avec la bonne direction
-			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"d"+".png",this.taille*2.6,this.taille*2.6);
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"d"+".png",this.taille*2.5,this.taille*2.5);
 		}else{
-			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"l"+".png",this.taille*2.6,this.taille*2.6);
+			StdDraw.picture(this.x, this.y, Main.dossierImage+this.image+"l"+".png",this.taille*2.5,this.taille*2.5);
 		}
 		
 	}

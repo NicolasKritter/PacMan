@@ -1,4 +1,4 @@
-
+//true mur false vide
 // case: 1 cookie, 2 mur, 0 vide
 public class Map {
 
@@ -16,7 +16,7 @@ public class Map {
 	 int longeur;
 	 Mur listemur;
 	 Cookie listcookie;
-	 int [][] coord;
+	 boolean [][] coord;
 	 int lon;
 	 int lar;
 	 Cookie[][] coordcookie;
@@ -35,7 +35,7 @@ public class Map {
 		  nbcookie = 0;
 		  
 		  //création de la carte vide
-		  coord = new int[lar +1][lon+1];
+		  coord = new boolean[lar +1][lon+1];
 		  
 		  //carte où se trouvent les cookies 
 		  //(pour savoir lequel est à effacer quand on marche dessus)
@@ -78,13 +78,13 @@ public class Map {
 		 //listemur = new Mur(Main.WIN_WIDTH/2,Main.WIN_HEIGHT/2,(Main.WIN_WIDTH/2-(largeur/lar)/2 -2),(Main.WIN_HEIGHT/2 -(longeur/lon)/2 -2));
 		 //On met des murs sur les bordures de la carte
 		 for(int x = 1;x<lar;x = x+1) {			
-			 coord[x][0] = 2;
-			 coord[x][lon] = 2;
+			 coord[x][0] = true;
+			 coord[x][lon] = true;
 		 }
 				
 		 for(int y = 1;y<lon;y++) {
-			 coord[0][y] = 2;
-			 coord[lar][y] = 2;
+			 coord[0][y] = true;
+			 coord[lar][y] = true;
 			}
 		
 		 listemur = null;
@@ -94,7 +94,7 @@ public class Map {
 				if(Main.random.nextInt(10)<8){
 					 listemur = Mur.addMur(listemur,  new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 
-					 coord[x][y] = 2;
+					 coord[x][y] = true;
 				  	}
 			}
 		}
@@ -106,7 +106,7 @@ public class Map {
 					int x = 2*Main.random.nextInt(lar/2 -4)+4;
 					 listemur = Mur.addMur(listemur, new Mur(x*(largeur/lar),y*(longeur/lon),(longeur/lon),(longeur/lon)));
 					 
-					 coord[x][y] = 2;
+					 coord[x][y] = true;
 				  	}
 				}
 			
@@ -117,13 +117,13 @@ public class Map {
 		 listcookie = null;
 		 for(int x = 2;x<lar-1;x = x+2) {
 				for(int y = 2;y<lon-1;y = y+2) {
-					 if(coord[x][y]!=2){
+					 if(!coord[x][y]){
 					  		
 					  		Cookie nouveau =new Cookie(x*(largeur/lar),y*(longeur/lon),x,y);
 					  		nbcookie=  nbcookie+1;
 					  		
 					  		listcookie = Cookie.addCookie(listcookie, nouveau);
-					  		this.coord[x][y] = 1;
+					  		
 					  		this.coordcookie[x][y] = nouveau; 
 					  		
 					  	}
