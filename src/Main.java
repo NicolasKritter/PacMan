@@ -89,6 +89,7 @@ public class Main {
 		    			 player.alive = true;
 		    	    	 player.suivant = null;
 		    			 mode2joueur = false;
+		    			 map = new Map();
 		    			 init();
 	
 		    			 
