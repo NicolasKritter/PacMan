@@ -252,10 +252,10 @@ public class Main {
 	    	StdDraw.setPenColor(StdDraw.YELLOW);
 	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-20, player.name);
 	    	StdDraw.setPenColor(StdDraw.WHITE);
-	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(300/duree));
+	    	StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-50, "Temps:"+duree+"s  => Bonus:"+(int)(600/duree));
 
     		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-80,player.vie+" vie(s) restantes");
-    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-110,player.score+" + "+(int)(300/duree)+" x "+player.vie);
+    		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-110,player.score+" + "+(int)(600/duree)+" x "+player.vie);
 	    	player.score = player.score+(int)(300/duree)*player.vie;
     		StdDraw.text(WIN_WIDTH/2, WIN_HEIGHT-140,"Score Final: "+player.score);
     		btnsaveScore.dessiner();
