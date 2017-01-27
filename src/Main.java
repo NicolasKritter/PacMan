@@ -8,12 +8,6 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Main {
 		static Random random = new Random(System.currentTimeMillis());
-		//TODO Score
-		//TODO multi
-		//TODO centrage
-		//TODO uml
-		//TODO livrable
-		//TODO animation ?
 		//Display
 	 	static int WIN_WIDTH= 640;
 	    static int WIN_HEIGHT= 640;
