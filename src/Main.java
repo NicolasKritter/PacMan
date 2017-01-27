@@ -173,6 +173,10 @@ public class Main {
 	    		 if(btnMenujouer.hoover()){
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
+		    			 player.alive = true;
+		    	    	 player.suivant = null;
+		    			 mode2joueur = false;
+		    			 map = new Map();
 		    			 init();
 		    			 
 		    		 }
@@ -472,7 +476,7 @@ public class Main {
 	    		courant = courant.suivant;
 
 	    	}
-   		map = new Map();
+
    		
    		panelJeux2();
    		
@@ -512,6 +516,7 @@ public class Main {
     		btnMenujouer.dessiner();
     		btnretour.dessiner();
     		boolean menu = true;
+    		map = new Map();
 	    	while(menu){
 	    		
 	    		if(btnMenujouer.hoover()){
