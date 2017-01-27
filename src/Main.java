@@ -114,6 +114,7 @@ public class Main {
 	    			 if(StdDraw.mousePressed()){
 		    			 menu = false;
 		    			 mode2joueur = true;
+		    			 map = new Map();
 		    			 player.suivant = new Joueur(map.xStart,map.yStart,-1,"Invité","pac2");
 		    			 //on ajoute un joueur
 		    			 
